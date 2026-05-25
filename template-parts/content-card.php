@@ -28,21 +28,17 @@ if ( 0 === $index ) {
 		<div class="post-card__media post-card__media--placeholder" aria-hidden="true"></div>
 	<?php endif; ?>
 	<div class="post-card__content">
-		<?php if ( has_category() || has_tag() ) : ?>
+		<?php
+		$cats = clrthm_get_public_terms_html( get_the_ID(), 'category' );
+		$tags = clrthm_get_public_terms_html( get_the_ID(), 'post_tag' );
+		if ( $cats || $tags ) :
+			?>
 			<p class="post-card__tax">
-				<?php
-				$cats = get_the_category_list( ', ' );
-				$tags = get_the_tag_list( '', ', ' );
-				if ( $cats ) {
-					echo wp_kses_post( $cats );
-				}
-				if ( $tags ) {
-					if ( $cats ) {
-						echo ' <span aria-hidden="true">·</span> ';
-					}
-					echo wp_kses_post( $tags );
-				}
-				?>
+				<?php echo wp_kses_post( $cats ); ?>
+				<?php if ( $cats && $tags ) : ?>
+					<span aria-hidden="true">·</span>
+				<?php endif; ?>
+				<?php echo wp_kses_post( $tags ); ?>
 			</p>
 		<?php endif; ?>
 		<h2 class="post-card__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
