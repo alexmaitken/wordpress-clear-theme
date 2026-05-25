@@ -14,7 +14,7 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <a class="skip-link" href="#content"><?php esc_html_e( 'Skip to content', 'clear-theme' ); ?></a>
-<header class="site-header">
+<header class="site-header site-header--<?php echo esc_attr( get_theme_mod( 'clrthm_header_layout', 'left' ) ); ?>">
 	<div class="site-branding">
 		<?php if ( has_custom_logo() ) : ?>
 			<div class="site-logo"><?php the_custom_logo(); ?></div>

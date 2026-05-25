@@ -10,6 +10,7 @@ get_header();
 <section class="editorial-intro">
 	<h1><?php single_post_title(); ?></h1>
 </section>
+<?php clrthm_render_home_author_strip(); ?>
 <?php if ( have_posts() ) : ?>
 	<section class="entry-list">
 		<?php

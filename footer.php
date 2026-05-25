@@ -17,7 +17,7 @@
 		);
 		?>
 	</nav>
-	<p><?php echo esc_html( sprintf( __( '© %1$s %2$s. Powered by WordPress.', 'clear-theme' ), gmdate( 'Y' ), get_bloginfo( 'name' ) ) ); ?></p>
+	<p><?php echo esc_html( clrthm_get_footer_copyright_text() ); ?></p>
 </footer>
 <?php wp_footer(); ?>
 </body>
