@@ -180,6 +180,9 @@ add_action( 'customize_register', 'clrthm_customize_register' );
 
 /**
  * Get reading time.
+ *
+ * @param int|null $post_id Post ID, defaults to current post.
+ * @return string
  */
 function clrthm_get_reading_time( $post_id = null ) {
 	$post_id = $post_id ? absint( $post_id ) : get_the_ID();
@@ -281,6 +284,9 @@ function clrthm_get_layout_control_tag_slugs() {
 
 /**
  * Get single layout class.
+ *
+ * @param int $post_id Post ID.
+ * @return string
  */
 function clrthm_get_single_layout_class( $post_id ) {
 	$post_id = absint( $post_id );
@@ -300,6 +306,10 @@ function clrthm_get_single_layout_class( $post_id ) {
 
 /**
  * Get public terms html.
+ *
+ * @param int    $post_id  Post ID.
+ * @param string $taxonomy Taxonomy slug.
+ * @return string
  */
 function clrthm_get_public_terms_html( $post_id, $taxonomy ) {
 	$terms = get_the_terms( $post_id, $taxonomy );
@@ -324,6 +334,10 @@ function clrthm_get_public_terms_html( $post_id, $taxonomy ) {
 
 /**
  * Get featured image html.
+ *
+ * @param int    $post_id Post ID.
+ * @param string $size    Image size.
+ * @return string
  */
 function clrthm_get_featured_image_html( $post_id, $size = 'clrthm-single-hero' ) {
 	$thumbnail_id = get_post_thumbnail_id( $post_id );
