@@ -24,20 +24,14 @@
 		<?php else : ?>
 			<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
 		<?php endif; ?>
-		<?php $description = get_bloginfo( 'description', 'display' ); ?>
-		<?php if ( $description ) : ?>
-			<p class="site-description"><?php echo esc_html( $description ); ?></p>
-		<?php endif; ?>
 	</div>
-	<nav class="main-navigation" aria-label="<?php esc_attr_e( 'Primary menu', 'clear-theme' ); ?>">
-		<?php
-		wp_nav_menu(
-			array(
-				'theme_location' => 'primary',
-				'fallback_cb'    => false,
-			)
-		);
-		?>
-	</nav>
+	<div class="site-header__navs">
+		<nav class="main-navigation" aria-label="<?php esc_attr_e( 'Primary menu', 'clear-theme' ); ?>">
+			<?php wp_nav_menu( array( 'theme_location' => 'primary', 'fallback_cb' => false ) ); ?>
+		</nav>
+		<nav class="util-navigation" aria-label="<?php esc_attr_e( 'Utility menu', 'clear-theme' ); ?>">
+			<?php wp_nav_menu( array( 'theme_location' => 'util', 'fallback_cb' => false ) ); ?>
+		</nav>
+	</div>
 </header>
 <main id="content" class="site-main">
