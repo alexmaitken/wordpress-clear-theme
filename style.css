@@ -254,3 +254,122 @@ a:focus-visible {
 		scroll-behavior: auto !important;
 	}
 }
+
+.single-entry {
+	display: grid;
+	gap: 2rem;
+}
+
+.single-hero {
+	display: grid;
+	gap: 1.25rem;
+	background: var(--clrthm-surface);
+	border: 1px solid var(--clrthm-border);
+	padding: clamp(1rem, 2.4vw, 2rem);
+}
+
+.single-layout--left-image .single-hero,
+.single-layout--right-image .single-hero {
+	align-items: center;
+}
+
+.single-layout--right-image .single-hero__media {
+	order: 2;
+}
+
+.single-layout--right-image .single-hero__content {
+	order: 1;
+}
+
+.single-hero__tax,
+.single-hero__meta {
+	margin: 0;
+	color: var(--clrthm-muted);
+	font-size: 0.95rem;
+}
+
+.single-hero__excerpt {
+	max-width: 58ch;
+}
+
+.single-hero__excerpt p {
+	margin-bottom: 0;
+}
+
+.single-hero__media img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 10;
+	object-fit: cover;
+	border-radius: 0.4rem;
+}
+
+.single-entry__inner,
+.author-box,
+.related-posts,
+.comments-area,
+.post-navigation {
+	width: min(100%, 720px);
+	margin-inline: auto;
+}
+
+.single-share ul {
+	display: flex;
+	gap: 0.8rem;
+	list-style: none;
+	padding: 0;
+	margin: 0 0 1.2rem;
+	flex-wrap: wrap;
+}
+
+.entry-content {
+	background: var(--clrthm-surface);
+	border: 1px solid var(--clrthm-border);
+	padding: clamp(1rem, 2.4vw, 2rem);
+}
+
+.entry-content blockquote,
+.entry-content .wp-block-pullquote {
+	border-left: 4px solid var(--clrthm-text);
+	margin: 1.5rem 0;
+	padding: 0.2rem 0 0.2rem 1rem;
+}
+
+.entry-content pre,
+.entry-content code,
+.entry-content table {
+	max-width: 100%;
+}
+
+.entry-content table {
+	border-collapse: collapse;
+}
+
+.entry-content th,
+.entry-content td {
+	border: 1px solid var(--clrthm-border);
+	padding: 0.5rem;
+}
+
+.author-box,
+.related-posts {
+	margin-top: 2rem;
+}
+
+.author-box__inner {
+	display: flex;
+	gap: 1rem;
+	align-items: flex-start;
+}
+
+.author-box__avatar {
+	border-radius: 50%;
+}
+
+@media (min-width: 62rem) {
+	.single-layout--left-image .single-hero,
+	.single-layout--right-image .single-hero {
+		grid-template-columns: minmax(0, 1fr) minmax(18rem, 48%);
+	}
+}
