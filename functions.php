@@ -60,6 +60,9 @@ add_action( 'wp_enqueue_scripts', 'clrthm_scripts' );
 
 /**
  * Sanitize checkbox.
+ *
+ * @param mixed $value Checkbox value.
+ * @return int
  */
 function clrthm_sanitize_checkbox( $value ) {
 	return ( isset( $value ) && true === (bool) $value ) ? 1 : 0;
@@ -67,6 +70,9 @@ function clrthm_sanitize_checkbox( $value ) {
 
 /**
  * Sanitize header layout.
+ *
+ * @param string $value Header layout slug.
+ * @return string
  */
 function clrthm_sanitize_header_layout( $value ) {
 	$value   = sanitize_key( $value );
@@ -76,7 +82,10 @@ function clrthm_sanitize_header_layout( $value ) {
 }
 
 /**
- * Customize register.
+ * Register Customizer settings.
+ *
+ * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+ * @return void
  */
 function clrthm_customize_register( $wp_customize ) {
 	$wp_customize->add_section(
