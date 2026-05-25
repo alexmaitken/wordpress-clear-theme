@@ -29,6 +29,7 @@ if ( ! function_exists( 'clrthm_setup' ) ) {
 			array(
 				'primary' => esc_html__( 'Primary Menu', 'clear-theme' ),
 				'footer'  => esc_html__( 'Footer Menu', 'clear-theme' ),
+				'util'    => esc_html__( 'Utility Menu', 'clear-theme' ),
 			)
 		);
 
@@ -49,23 +50,39 @@ function clrthm_scripts() {
 add_action( 'wp_enqueue_scripts', 'clrthm_scripts' );
 
 /**
- * Add class to posts based on index for alternating layouts.
+ * Estimated reading time in minutes.
  *
- * @param array $classes Existing classes.
- * @return array
+ * @param int|null $post_id Post ID.
+ * @return string
  */
-function clrthm_post_class_layout( $classes ) {
-	if ( is_home() || is_archive() || is_search() ) {
-		global $wp_query;
-		$index = absint( $wp_query->current_post );
-		if ( 0 === $index % 3 ) {
-			$classes[] = 'post-card--full';
-		} elseif ( 0 === $index % 2 ) {
-			$classes[] = 'post-card--left';
-		} else {
-			$classes[] = 'post-card--right';
-		}
-	}
-	return $classes;
+function clrthm_get_reading_time( $post_id = null ) {
+	$post_id = $post_id ? absint( $post_id ) : get_the_ID();
+	$content = get_post_field( 'post_content', $post_id );
+	$words   = str_word_count( wp_strip_all_tags( (string) $content ) );
+	$minutes = max( 1, (int) ceil( $words / 220 ) );
+
+	/* translators: %s: number of minutes. */
+	return sprintf( _n( '%s min read', '%s mins read', $minutes, 'clear-theme' ), number_format_i18n( $minutes ) );
 }
-add_filter( 'post_class', 'clrthm_post_class_layout' );
+
+/**
+ * Post byline HTML.
+ *
+ * @return string
+ */
+function clrthm_get_post_byline() {
+	$author = sprintf(
+		'<a href="%1$s" rel="author">%2$s</a>',
+		esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+		esc_html( get_the_author() )
+	);
+	$date = sprintf(
+		'<time datetime="%1$s">%2$s</time>',
+		esc_attr( get_the_date( DATE_W3C ) ),
+		esc_html( get_the_date() )
+	);
+	$read = esc_html( clrthm_get_reading_time() );
+
+	/* translators: 1: author link, 2: date, 3: reading time. */
+	return sprintf( __( 'By %1$s · %2$s · %3$s', 'clear-theme' ), $author, $date, $read );
+}
