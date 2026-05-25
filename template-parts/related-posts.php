@@ -27,8 +27,10 @@ if ( empty( $clrthm_related ) ) {
 <section class="related-posts">
 	<h2><?php esc_html_e( 'Related stories', 'clear-theme' ); ?></h2>
 	<ul>
-		<?php foreach ( $clrthm_related as $post ) : setup_postdata( $post ); ?>
+		<?php foreach ( $clrthm_related as $related_post ) :
+			setup_postdata( $related_post ); ?>
 			<li><a href="<?php echo esc_url( get_permalink() ); ?>"><?php the_title(); ?></a></li>
-		<?php endforeach; wp_reset_postdata(); ?>
+		<?php endforeach; ?>
+		<?php wp_reset_postdata(); ?>
 	</ul>
 </section>

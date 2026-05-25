@@ -4,6 +4,7 @@
  *
  * @package Clear
  */
+
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -27,10 +28,20 @@
 	</div>
 	<div class="site-header__navs">
 		<nav class="main-navigation" aria-label="<?php esc_attr_e( 'Primary menu', 'clear-theme' ); ?>">
-			<?php wp_nav_menu( array( 'theme_location' => 'primary', 'fallback_cb' => false ) ); ?>
+			<?php wp_nav_menu(
+				array(
+					'theme_location' => 'primary',
+					'fallback_cb'    => false,
+				)
+			); ?>
 		</nav>
 		<nav class="util-navigation" aria-label="<?php esc_attr_e( 'Utility menu', 'clear-theme' ); ?>">
-			<?php wp_nav_menu( array( 'theme_location' => 'util', 'fallback_cb' => false ) ); ?>
+			<?php wp_nav_menu(
+				array(
+					'theme_location' => 'util',
+					'fallback_cb'    => false,
+				)
+			); ?>
 		</nav>
 	</div>
 </header>

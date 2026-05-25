@@ -4,6 +4,7 @@
 
   <file>./</file>
   <exclude-pattern>./vendor/*</exclude-pattern>
+  <exclude-pattern>./scripts/*</exclude-pattern>
 
   <arg name="extensions" value="php"/>
   <arg value="sp"/>
@@ -11,7 +12,9 @@
   <rule ref="WordPress-Core"/>
   <rule ref="WordPress-Docs"/>
   <rule ref="WordPress-Extra"/>
-  <rule ref="WPThemeReview"/>
+  <rule ref="WPThemeReview">
+    <exclude name="WPThemeReview.Templates.ReservedFileNamePrefix.ReservedTemplatePrefixFound"/>
+  </rule>
   <rule ref="PHPCompatibilityWP">
     <properties>
       <property name="testVersion" value="7.4-"/>

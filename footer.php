@@ -4,6 +4,7 @@
  *
  * @package Clear
  */
+
 ?>
 </main>
 <footer class="site-footer">
