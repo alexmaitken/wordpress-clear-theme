@@ -5,6 +5,7 @@
  * @package Clear
  */
 
+global $wp_query;
 $index        = (int) $wp_query->current_post;
 $layout_class = 'post-card--compact';
 
