@@ -20,6 +20,36 @@ Clear provides text-first layouts, featured image cards, archive pages, and poli
 2. Activate Clear in Appearance > Themes.
 3. Configure menus in Appearance > Menus.
 
+== Development & Testing ==
+
+Run quality checks locally:
+
+1. `composer install`
+2. `composer test`
+
+Available commands:
+
+- `composer lint` for PHP syntax validation.
+- `composer phpcs` for WordPress coding standards and theme review sniffs.
+- `composer test` for lint + coding standards + smoke checks.
+
+Docker local WordPress environment:
+
+1. `docker compose up -d`
+2. Open `http://localhost:8080`
+3. Activate **Clear Theme**
+
+The docker configuration enables `WP_DEBUG`, `WP_DEBUG_LOG`, and `SCRIPT_DEBUG`.
+
+Optional Theme Check command:
+
+- `composer docker:theme-check`
+
+Theme Unit Test content import:
+
+- Manual: wp-admin → Tools → Import → WordPress importer.
+- WP-CLI: install `wordpress-importer`, download XML from WPTRT, run `wp import`.
+
 == Changelog ==
 
 = 1.0.0 =
