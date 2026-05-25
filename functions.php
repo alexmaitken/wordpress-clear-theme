@@ -117,7 +117,7 @@ function clrthm_customize_register( $wp_customize ) {
 
 	$checkbox_controls = array(
 		'clrthm_show_reading_time'  => esc_html__( 'Show reading time', 'clear-theme' ),
-		'clrthm_show_author_strip' => esc_html__( 'Show author strip on homepage', 'clear-theme' ),
+		'clrthm_show_author_strip'  => esc_html__( 'Show author strip on homepage', 'clear-theme' ),
 		'clrthm_show_related_posts' => esc_html__( 'Show related posts', 'clear-theme' ),
 	);
 
