@@ -1,11 +1,28 @@
-<?php get_header(); ?>
-<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-	<?php get_template_part( 'template-parts/content', 'single' ); ?>
-	<?php get_template_part( 'template-parts/author', 'box' ); ?>
-	<?php if ( get_theme_mod( 'clrthm_show_related_posts', 1 ) ) : ?>
-		<?php get_template_part( 'template-parts/related', 'posts' ); ?>
-	<?php endif; ?>
-	<?php if ( comments_open() || get_comments_number() ) { comments_template(); } ?>
-	<?php the_post_navigation(); ?>
-<?php endwhile; endif; ?>
-<?php get_footer(); ?>
+<?php
+/**
+ * Single post template.
+ *
+ * @package Clear
+ */
+
+get_header();
+
+if ( have_posts() ) :
+	while ( have_posts() ) :
+		the_post();
+		get_template_part( 'template-parts/content', 'single' );
+		get_template_part( 'template-parts/author', 'box' );
+
+		if ( get_theme_mod( 'clrthm_show_related_posts', 1 ) ) :
+			get_template_part( 'template-parts/related', 'posts' );
+		endif;
+
+		if ( comments_open() || get_comments_number() ) {
+			comments_template();
+		}
+
+		the_post_navigation();
+	endwhile;
+endif;
+
+get_footer();
