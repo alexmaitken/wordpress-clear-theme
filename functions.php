@@ -203,13 +203,13 @@ function clrthm_get_post_byline() {
 		esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
 		esc_html( get_the_author() )
 	);
-	$date = sprintf(
+	$date   = sprintf(
 		'<time datetime="%1$s">%2$s</time>',
 		esc_attr( get_the_date( DATE_W3C ) ),
 		esc_html( get_the_date() )
 	);
 	if ( get_theme_mod( 'clrthm_show_reading_time', 1 ) ) {
-		$read = esc_html( clrthm_get_reading_time() );
+		$read   = esc_html( clrthm_get_reading_time() );
 		/* translators: 1: post author link, 2: post date, 3: reading time. */
 		return sprintf( __( 'By %1$s · %2$s · %3$s', 'clear-theme' ), $author, $date, $read );
 	}

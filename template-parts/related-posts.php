@@ -32,8 +32,8 @@ if ( empty( $clrthm_related ) ) {
 			setup_postdata( $related_post );
 			?>
 			<li><a href="<?php echo esc_url( get_permalink() ); ?>"><?php the_title(); ?></a></li>
-		<?php
-		endforeach;
+			<?php
+			endforeach;
 		?>
 		<?php
 		wp_reset_postdata();
