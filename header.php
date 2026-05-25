@@ -26,7 +26,7 @@
 			<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
 		<?php endif; ?>
 	</div>
-	<div class="site-header__navs">
+		<div class="site-header__navs">
 			<nav class="main-navigation" aria-label="<?php esc_attr_e( 'Primary menu', 'clear-theme' ); ?>">
 				<?php
 				wp_nav_menu(
@@ -47,6 +47,6 @@
 				);
 				?>
 			</nav>
-	</div>
+		</div>
 </header>
 <main id="content" class="site-main">

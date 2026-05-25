@@ -17,7 +17,7 @@ if ( post_password_required() ) {
 			echo esc_html( sprintf( _n( '%s comment', '%s comments', get_comments_number(), 'clear-theme' ), number_format_i18n( get_comments_number() ) ) );
 			?>
 		</h2>
-		<?php the_comments_navigation(); ?>
+			<?php the_comments_navigation(); ?>
 			<ol>
 				<?php
 				wp_list_comments(
