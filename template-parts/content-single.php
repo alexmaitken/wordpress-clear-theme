@@ -5,7 +5,7 @@
  * @package Clear
  */
 
-$entry_id       = get_the_ID();
+$entry_id      = get_the_ID();
 $layout_class  = clrthm_get_single_layout_class( $entry_id );
 $category_list = clrthm_get_public_terms_html( $entry_id, 'category' );
 $tag_list      = clrthm_get_public_terms_html( $entry_id, 'post_tag' );
