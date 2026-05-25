@@ -21,6 +21,7 @@ Tags: blog, one-column, two-columns, custom-logo, custom-menu, featured-images, 
 	--clrthm-muted: #6c6c6c;
 	--clrthm-border: #dfdfdf;
 	--clrthm-focus: #0a66d1;
+	--clrthm-accent: #0a66d1;
 	--clrthm-content: 72rem;
 	--clrthm-space: clamp(1rem, 2vw, 1.75rem);
 }
@@ -49,9 +50,14 @@ img {
 }
 
 a {
-	color: inherit;
+	color: var(--clrthm-accent);
 	text-underline-offset: 0.2em;
 	text-decoration-thickness: 1px;
+}
+
+.site-title a,
+.post-card__title a {
+	color: inherit;
 }
 
 a:hover,
@@ -93,6 +99,15 @@ a:focus-visible {
 	gap: 1rem;
 	padding: 2rem 0;
 	border-bottom: 1px solid var(--clrthm-border);
+}
+
+.site-header--centered {
+	justify-content: center;
+	text-align: center;
+}
+
+.site-header--centered .site-header__navs {
+	align-items: center;
 }
 
 .site-header__navs {
@@ -206,6 +221,18 @@ a:focus-visible {
 
 .archive-read-more {
 	margin-top: 2rem;
+}
+
+.home-author-strip {
+	margin: 0 0 1.25rem;
+	padding: 0.75rem 1rem;
+	background: var(--clrthm-surface);
+	border: 1px solid var(--clrthm-border);
+	color: var(--clrthm-muted);
+}
+
+.home-author-strip p {
+	margin: 0;
 }
 
 .empty-state {

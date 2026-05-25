@@ -47,6 +47,108 @@ function clrthm_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'clrthm_scripts' );
 
+function clrthm_sanitize_checkbox( $value ) {
+	return ( isset( $value ) && true === (bool) $value ) ? 1 : 0;
+}
+
+function clrthm_sanitize_header_layout( $value ) {
+	$value   = sanitize_key( $value );
+	$allowed = array( 'centered', 'left' );
+
+	return in_array( $value, $allowed, true ) ? $value : 'left';
+}
+
+function clrthm_customize_register( $wp_customize ) {
+	$wp_customize->add_section(
+		'clrthm_presentation',
+		array(
+			'title'       => esc_html__( 'Theme Presentation', 'clear-theme' ),
+			'priority'    => 40,
+			'description' => esc_html__( 'Visual-only options for this theme.', 'clear-theme' ),
+		)
+	);
+
+	$wp_customize->add_setting(
+		'clrthm_accent_color',
+		array(
+			'default'           => '#0a66d1',
+			'sanitize_callback' => 'sanitize_hex_color',
+		)
+	);
+	$wp_customize->add_control(
+		new WP_Customize_Color_Control(
+			$wp_customize,
+			'clrthm_accent_color',
+			array(
+				'label'   => esc_html__( 'Accent color', 'clear-theme' ),
+				'section' => 'clrthm_presentation',
+			)
+		)
+	);
+
+	$checkbox_controls = array(
+		'clrthm_show_reading_time' => esc_html__( 'Show reading time', 'clear-theme' ),
+		'clrthm_show_author_strip' => esc_html__( 'Show author strip on homepage', 'clear-theme' ),
+		'clrthm_show_related_posts' => esc_html__( 'Show related posts', 'clear-theme' ),
+	);
+
+	foreach ( $checkbox_controls as $setting_id => $label ) {
+		$wp_customize->add_setting(
+			$setting_id,
+			array(
+				'default'           => 1,
+				'sanitize_callback' => 'clrthm_sanitize_checkbox',
+			)
+		);
+		$wp_customize->add_control(
+			$setting_id,
+			array(
+				'type'    => 'checkbox',
+				'label'   => $label,
+				'section' => 'clrthm_presentation',
+			)
+		);
+	}
+
+	$wp_customize->add_setting(
+		'clrthm_header_layout',
+		array(
+			'default'           => 'left',
+			'sanitize_callback' => 'clrthm_sanitize_header_layout',
+		)
+	);
+	$wp_customize->add_control(
+		'clrthm_header_layout',
+		array(
+			'type'    => 'radio',
+			'label'   => esc_html__( 'Header layout', 'clear-theme' ),
+			'section' => 'clrthm_presentation',
+			'choices' => array(
+				'left'     => esc_html__( 'Left-aligned', 'clear-theme' ),
+				'centered' => esc_html__( 'Centered', 'clear-theme' ),
+			),
+		)
+	);
+
+	$wp_customize->add_setting(
+		'clrthm_footer_copyright_text',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'sanitize_text_field',
+		)
+	);
+	$wp_customize->add_control(
+		'clrthm_footer_copyright_text',
+		array(
+			'type'        => 'text',
+			'label'       => esc_html__( 'Footer copyright text', 'clear-theme' ),
+			'section'     => 'clrthm_presentation',
+			'description' => esc_html__( 'Optional. If empty, a default copyright line is shown.', 'clear-theme' ),
+		)
+	);
+}
+add_action( 'customize_register', 'clrthm_customize_register' );
+
 function clrthm_get_reading_time( $post_id = null ) {
 	$post_id = $post_id ? absint( $post_id ) : get_the_ID();
 	$content = get_post_field( 'post_content', $post_id );
@@ -67,9 +169,59 @@ function clrthm_get_post_byline() {
 		esc_attr( get_the_date( DATE_W3C ) ),
 		esc_html( get_the_date() )
 	);
-	$read = esc_html( clrthm_get_reading_time() );
+	if ( get_theme_mod( 'clrthm_show_reading_time', 1 ) ) {
+		$read = esc_html( clrthm_get_reading_time() );
+		return sprintf( __( 'By %1$s · %2$s · %3$s', 'clear-theme' ), $author, $date, $read );
+	}
 
-	return sprintf( __( 'By %1$s · %2$s · %3$s', 'clear-theme' ), $author, $date, $read );
+	return sprintf( __( 'By %1$s · %2$s', 'clear-theme' ), $author, $date );
+}
+
+function clrthm_get_footer_copyright_text() {
+	$custom = trim( (string) get_theme_mod( 'clrthm_footer_copyright_text', '' ) );
+	if ( '' !== $custom ) {
+		return $custom;
+	}
+
+	return sprintf( __( '© %1$s %2$s. Powered by WordPress.', 'clear-theme' ), gmdate( 'Y' ), get_bloginfo( 'name' ) );
+}
+
+function clrthm_print_customizer_css() {
+	$accent = sanitize_hex_color( get_theme_mod( 'clrthm_accent_color', '#0a66d1' ) );
+	if ( ! $accent ) {
+		$accent = '#0a66d1';
+	}
+	?>
+	<style id="clrthm-customizer-css">:root{--clrthm-focus:<?php echo esc_html( $accent ); ?>;--clrthm-accent:<?php echo esc_html( $accent ); ?>;}</style>
+	<?php
+}
+add_action( 'wp_head', 'clrthm_print_customizer_css' );
+
+function clrthm_render_home_author_strip() {
+	if ( ! get_theme_mod( 'clrthm_show_author_strip', 1 ) ) {
+		return;
+	}
+	$author_ids = get_posts(
+		array(
+			'post_type'           => 'post',
+			'posts_per_page'      => 6,
+			'fields'              => 'ids',
+			'ignore_sticky_posts' => true,
+			'no_found_rows'       => true,
+		)
+	);
+	if ( empty( $author_ids ) ) {
+		return;
+	}
+	$names = array();
+	foreach ( $author_ids as $post_id ) {
+		$names[] = get_the_author_meta( 'display_name', (int) get_post_field( 'post_author', $post_id ) );
+	}
+	$names = array_unique( array_filter( $names ) );
+	if ( empty( $names ) ) {
+		return;
+	}
+	echo '<section class="home-author-strip" aria-label="' . esc_attr__( 'Featured authors', 'clear-theme' ) . '"><p><strong>' . esc_html__( 'Featured authors:', 'clear-theme' ) . '</strong> ' . esc_html( implode( ' · ', $names ) ) . '</p></section>';
 }
 
 function clrthm_get_layout_control_tag_slugs() {

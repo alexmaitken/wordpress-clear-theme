@@ -13,6 +13,7 @@ get_header();
 		<p><?php bloginfo( 'description' ); ?></p>
 	<?php endif; ?>
 </section>
+<?php clrthm_render_home_author_strip(); ?>
 
 <?php if ( have_posts() ) : ?>
 	<section class="entry-list" aria-label="<?php esc_attr_e( 'Latest stories', 'clear-theme' ); ?>">

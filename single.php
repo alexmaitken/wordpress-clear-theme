@@ -2,7 +2,9 @@
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 	<?php get_template_part( 'template-parts/content', 'single' ); ?>
 	<?php get_template_part( 'template-parts/author', 'box' ); ?>
-	<?php get_template_part( 'template-parts/related', 'posts' ); ?>
+	<?php if ( get_theme_mod( 'clrthm_show_related_posts', 1 ) ) : ?>
+		<?php get_template_part( 'template-parts/related', 'posts' ); ?>
+	<?php endif; ?>
 	<?php if ( comments_open() || get_comments_number() ) { comments_template(); } ?>
 	<?php the_post_navigation(); ?>
 <?php endwhile; endif; ?>
