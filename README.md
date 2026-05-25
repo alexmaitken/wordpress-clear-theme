@@ -56,7 +56,10 @@ You can import the Theme Unit Test XML data either manually in wp-admin or via W
 2. In wp-admin, go to **Tools → Import → WordPress**.
 3. Upload the XML file and assign authors.
 
-### WP-CLI import (inside container)
+### WP-CLI import (inside container, requires WP-CLI in `wordpress:php8.2-apache`)
+
+> The `wordpress:php8.2-apache` image does not include `wp` by default.
+> Install WP-CLI in that container, or run these commands from a dedicated WP-CLI image.
 
 ```bash
 docker compose exec -T wordpress wp plugin install wordpress-importer --activate --allow-root
