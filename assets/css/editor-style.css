@@ -1,0 +1,9 @@
+body.block-editor-page .editor-styles-wrapper {
+	font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+	color: #181818;
+	line-height: 1.7;
+	max-width: 45rem;
+}
+.editor-styles-wrapper .wp-block { max-width: 45rem; }
+.editor-styles-wrapper .alignwide { max-width: 64rem; }
+.editor-styles-wrapper .alignfull { max-width: none; }

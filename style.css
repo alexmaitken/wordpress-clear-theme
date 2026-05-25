@@ -1,0 +1,200 @@
+/*
+Theme Name: Clear
+Theme URI: https://example.com/clear-theme
+Author: Alex Aitken
+Author URI: https://alexaitken.nz/
+Description: A minimalist editorial WordPress theme for text-first publishing with refined typography, calm spacing, and elegant archives.
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.6
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: clear-theme
+Tags: blog, one-column, two-columns, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, rtl-language-support, editor-style
+*/
+
+:root {
+	--clrthm-bg: #f7f6f3;
+	--clrthm-surface: #ffffff;
+	--clrthm-text: #181818;
+	--clrthm-muted: #626262;
+	--clrthm-border: #dddddd;
+	--clrthm-focus: #0a66d1;
+	--clrthm-content: 45rem;
+	--clrthm-list: 70rem;
+	--clrthm-space: clamp(1rem, 2vw, 1.75rem);
+}
+
+* { box-sizing: border-box; }
+
+html { font-size: 100%; }
+
+body {
+	margin: 0;
+	background: var(--clrthm-bg);
+	color: var(--clrthm-text);
+	font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+	line-height: 1.7;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+a {
+	color: inherit;
+	text-underline-offset: 0.2em;
+	text-decoration-thickness: 1px;
+}
+
+a:hover,
+a:focus-visible { text-decoration-thickness: 2px; }
+
+:focus-visible {
+	outline: 3px solid var(--clrthm-focus);
+	outline-offset: 2px;
+}
+
+.skip-link {
+	position: absolute;
+	top: -100px;
+	left: 1rem;
+	background: var(--clrthm-text);
+	color: #fff;
+	padding: 0.75rem 1rem;
+	z-index: 999;
+}
+
+.skip-link:focus { top: 1rem; }
+
+.site-header,
+.site-footer,
+.site-main { width: min(100% - 2rem, var(--clrthm-list)); margin-inline: auto; }
+
+.site-header {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 2rem 0;
+	border-bottom: 1px solid var(--clrthm-border);
+}
+
+.site-branding { max-width: 34rem; }
+.site-title {
+	margin: 0;
+	font-size: clamp(1.4rem, 2.6vw, 2rem);
+	line-height: 1.1;
+}
+.site-description { margin: 0.4rem 0 0; color: var(--clrthm-muted); font-size: 0.95rem; }
+
+.main-navigation ul,
+.footer-navigation ul {
+	list-style: none;
+	display: flex;
+	gap: 1rem;
+	margin: 0;
+	padding: 0;
+	flex-wrap: wrap;
+}
+
+.site-main { padding: 2rem 0 4rem; }
+
+.page-header,
+.archive-grid,
+.post-grid,
+.search-grid { max-width: var(--clrthm-list); margin-inline: auto; }
+
+.entry-list {
+	display: grid;
+	gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.post-card {
+	display: grid;
+	grid-template-columns: 1fr;
+	background: var(--clrthm-surface);
+	border: 1px solid var(--clrthm-border);
+	padding: clamp(1rem, 2vw, 1.5rem);
+	gap: 1rem;
+}
+
+.post-card__media img,
+.entry-thumbnail img,
+.wp-post-image {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 0.35rem;
+}
+
+.post-card--left,
+.post-card--right { grid-template-columns: minmax(0, 1fr); }
+
+@media (min-width: 48rem) {
+	.post-card--left,
+	.post-card--right { grid-template-columns: minmax(0, 1fr) minmax(16rem, 42%); align-items: center; }
+	.post-card--right .post-card__content { order: 1; }
+	.post-card--right .post-card__media { order: 2; }
+}
+
+.post-card__title,
+.entry-title { margin: 0; line-height: 1.2; }
+.post-card__meta,
+.entry-meta,
+.entry-footer,
+.author-box__meta { color: var(--clrthm-muted); font-size: 0.95rem; }
+
+.entry-content,
+.entry-header,
+.entry-footer,
+.comments-area,
+.author-box,
+.related-posts {
+	max-width: var(--clrthm-content);
+	margin-inline: auto;
+}
+
+.entry-content > * { margin-block: 1.15rem; }
+.entry-content img { height: auto; max-width: 100%; }
+.entry-content .alignwide { max-width: min(100vw - 2rem, 64rem); margin-inline: auto; }
+.entry-content .alignfull { width: min(100vw, 100%); margin-inline: calc(50% - 50vw); }
+
+.wp-block-quote,
+blockquote {
+	border-left: 3px solid var(--clrthm-border);
+	margin: 1.5rem 0;
+	padding-left: 1rem;
+	font-style: italic;
+}
+
+.site-footer {
+	border-top: 1px solid var(--clrthm-border);
+	padding: 2rem 0 3rem;
+	color: var(--clrthm-muted);
+	font-size: 0.95rem;
+}
+
+.pagination .nav-links,
+.post-navigation .nav-links {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	max-width: var(--clrthm-content);
+	margin: 2rem auto 0;
+}
+
+.screen-reader-text {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
