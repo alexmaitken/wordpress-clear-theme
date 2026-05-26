@@ -117,15 +117,20 @@ function clrthm_customize_register( $wp_customize ) {
 
 	$checkbox_controls = array(
 		'clrthm_show_reading_time'  => esc_html__( 'Show reading time', 'clear-theme' ),
-		'clrthm_show_author_strip'  => esc_html__( 'Show author strip on homepage', 'clear-theme' ),
+		'clrthm_show_author_strip'  => esc_html__( 'Show featured authors strip on homepage', 'clear-theme' ),
 		'clrthm_show_related_posts' => esc_html__( 'Show related posts', 'clear-theme' ),
+	);
+	$checkbox_defaults = array(
+		'clrthm_show_reading_time'  => 1,
+		'clrthm_show_author_strip'  => 0,
+		'clrthm_show_related_posts' => 1,
 	);
 
 	foreach ( $checkbox_controls as $setting_id => $label ) {
 		$wp_customize->add_setting(
 			$setting_id,
 			array(
-				'default'           => 1,
+				'default'           => $checkbox_defaults[ $setting_id ],
 				'sanitize_callback' => 'clrthm_sanitize_checkbox',
 			)
 		);
@@ -266,7 +271,7 @@ add_action( 'wp_head', 'clrthm_print_customizer_css' );
  * Render home author strip.
  */
 function clrthm_render_home_author_strip() {
-	if ( ! get_theme_mod( 'clrthm_show_author_strip', 1 ) ) {
+	if ( ! get_theme_mod( 'clrthm_show_author_strip', 0 ) ) {
 		return;
 	}
 	global $wp_query;
