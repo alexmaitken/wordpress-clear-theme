@@ -22,7 +22,15 @@ if ( ! function_exists( 'clrthm_setup' ) ) {
 		add_theme_support( 'responsive-embeds' );
 		add_theme_support( 'align-wide' );
 		add_theme_support( 'editor-styles' );
-		add_theme_support( 'custom-logo', array( 'height' => 120, 'width' => 320, 'flex-height' => true, 'flex-width' => true ) );
+		add_theme_support(
+			'custom-logo',
+			array(
+				'height'      => 120,
+				'width'       => 320,
+				'flex-height' => true,
+				'flex-width'  => true,
+			)
+		);
 		add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
 
 		register_nav_menus(
@@ -42,15 +50,30 @@ if ( ! function_exists( 'clrthm_setup' ) ) {
 }
 add_action( 'after_setup_theme', 'clrthm_setup' );
 
+/**
+ * Scripts.
+ */
 function clrthm_scripts() {
 	wp_enqueue_style( 'clrthm-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
 }
 add_action( 'wp_enqueue_scripts', 'clrthm_scripts' );
 
+/**
+ * Sanitize checkbox.
+ *
+ * @param mixed $value Checkbox value.
+ * @return int
+ */
 function clrthm_sanitize_checkbox( $value ) {
 	return ( isset( $value ) && true === (bool) $value ) ? 1 : 0;
 }
 
+/**
+ * Sanitize header layout.
+ *
+ * @param string $value Header layout slug.
+ * @return string
+ */
 function clrthm_sanitize_header_layout( $value ) {
 	$value   = sanitize_key( $value );
 	$allowed = array( 'centered', 'left' );
@@ -58,6 +81,12 @@ function clrthm_sanitize_header_layout( $value ) {
 	return in_array( $value, $allowed, true ) ? $value : 'left';
 }
 
+/**
+ * Register Customizer settings.
+ *
+ * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+ * @return void
+ */
 function clrthm_customize_register( $wp_customize ) {
 	$wp_customize->add_section(
 		'clrthm_presentation',
@@ -87,8 +116,8 @@ function clrthm_customize_register( $wp_customize ) {
 	);
 
 	$checkbox_controls = array(
-		'clrthm_show_reading_time' => esc_html__( 'Show reading time', 'clear-theme' ),
-		'clrthm_show_author_strip' => esc_html__( 'Show author strip on homepage', 'clear-theme' ),
+		'clrthm_show_reading_time'  => esc_html__( 'Show reading time', 'clear-theme' ),
+		'clrthm_show_author_strip'  => esc_html__( 'Show author strip on homepage', 'clear-theme' ),
 		'clrthm_show_related_posts' => esc_html__( 'Show related posts', 'clear-theme' ),
 	);
 
@@ -149,43 +178,62 @@ function clrthm_customize_register( $wp_customize ) {
 }
 add_action( 'customize_register', 'clrthm_customize_register' );
 
+/**
+ * Get reading time.
+ *
+ * @param int|null $post_id Post ID, defaults to current post.
+ * @return string
+ */
 function clrthm_get_reading_time( $post_id = null ) {
 	$post_id = $post_id ? absint( $post_id ) : get_the_ID();
 	$content = get_post_field( 'post_content', $post_id );
 	$words   = str_word_count( wp_strip_all_tags( (string) $content ) );
 	$minutes = max( 1, (int) ceil( $words / 220 ) );
 
+	/* translators: %s: estimated reading time in minutes. */
 	return sprintf( _n( '%s min read', '%s mins read', $minutes, 'clear-theme' ), number_format_i18n( $minutes ) );
 }
 
+/**
+ * Get post byline.
+ */
 function clrthm_get_post_byline() {
 	$author = sprintf(
 		'<a href="%1$s" rel="author">%2$s</a>',
 		esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
 		esc_html( get_the_author() )
 	);
-	$date = sprintf(
+	$date   = sprintf(
 		'<time datetime="%1$s">%2$s</time>',
 		esc_attr( get_the_date( DATE_W3C ) ),
 		esc_html( get_the_date() )
 	);
 	if ( get_theme_mod( 'clrthm_show_reading_time', 1 ) ) {
 		$read = esc_html( clrthm_get_reading_time() );
+		/* translators: 1: post author link, 2: post date, 3: reading time. */
 		return sprintf( __( 'By %1$s · %2$s · %3$s', 'clear-theme' ), $author, $date, $read );
 	}
 
+	/* translators: 1: post author link, 2: post date. */
 	return sprintf( __( 'By %1$s · %2$s', 'clear-theme' ), $author, $date );
 }
 
+/**
+ * Get footer copyright text.
+ */
 function clrthm_get_footer_copyright_text() {
 	$custom = trim( (string) get_theme_mod( 'clrthm_footer_copyright_text', '' ) );
 	if ( '' !== $custom ) {
 		return $custom;
 	}
 
+	/* translators: 1: year, 2: site name. */
 	return sprintf( __( '© %1$s %2$s. Powered by WordPress.', 'clear-theme' ), gmdate( 'Y' ), get_bloginfo( 'name' ) );
 }
 
+/**
+ * Print customizer css.
+ */
 function clrthm_print_customizer_css() {
 	$accent = sanitize_hex_color( get_theme_mod( 'clrthm_accent_color', '#0a66d1' ) );
 	if ( ! $accent ) {
@@ -197,6 +245,9 @@ function clrthm_print_customizer_css() {
 }
 add_action( 'wp_head', 'clrthm_print_customizer_css' );
 
+/**
+ * Render home author strip.
+ */
 function clrthm_render_home_author_strip() {
 	if ( ! get_theme_mod( 'clrthm_show_author_strip', 1 ) ) {
 		return;
@@ -224,10 +275,19 @@ function clrthm_render_home_author_strip() {
 	echo '<section class="home-author-strip" aria-label="' . esc_attr__( 'Featured authors', 'clear-theme' ) . '"><p><strong>' . esc_html__( 'Featured authors:', 'clear-theme' ) . '</strong> ' . esc_html( implode( ' · ', $names ) ) . '</p></section>';
 }
 
+/**
+ * Get layout control tag slugs.
+ */
 function clrthm_get_layout_control_tag_slugs() {
 	return array( 'layout-left-image', 'layout-right-image', 'layout-full-width-image' );
 }
 
+/**
+ * Get single layout class.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
 function clrthm_get_single_layout_class( $post_id ) {
 	$post_id = absint( $post_id );
 
@@ -244,6 +304,13 @@ function clrthm_get_single_layout_class( $post_id ) {
 	return 'single-layout--text-first';
 }
 
+/**
+ * Get public terms html.
+ *
+ * @param int    $post_id  Post ID.
+ * @param string $taxonomy Taxonomy slug.
+ * @return string
+ */
 function clrthm_get_public_terms_html( $post_id, $taxonomy ) {
 	$terms = get_the_terms( $post_id, $taxonomy );
 	if ( empty( $terms ) || is_wp_error( $terms ) ) {
@@ -265,6 +332,13 @@ function clrthm_get_public_terms_html( $post_id, $taxonomy ) {
 	return implode( ', ', $items );
 }
 
+/**
+ * Get featured image html.
+ *
+ * @param int    $post_id Post ID.
+ * @param string $size    Image size.
+ * @return string
+ */
 function clrthm_get_featured_image_html( $post_id, $size = 'clrthm-single-hero' ) {
 	$thumbnail_id = get_post_thumbnail_id( $post_id );
 	if ( ! $thumbnail_id ) {

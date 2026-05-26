@@ -1,0 +1,31 @@
+{
+  "name": "clear/theme",
+  "description": "Clear WordPress theme quality checks",
+  "type": "project",
+  "require": {},
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.1",
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "squizlabs/php_codesniffer": "^3.10",
+    "wp-coding-standards/wpcs": "^2.3",
+    "wptrt/wpthemereview": "^0.2.1"
+  },
+  "scripts": {
+    "lint": "@php scripts/lint.php",
+    "phpcs": "phpcs --standard=phpcs.xml.dist",
+    "smoke": "@php scripts/smoke.php",
+    "test": [
+      "@lint",
+      "@phpcs",
+      "@smoke"
+    ],
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down -v",
+    "docker:theme-check": "docker compose exec -T wordpress wp plugin install theme-check --activate --allow-root && docker compose exec -T wordpress wp theme check clear-theme --allow-root"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}
