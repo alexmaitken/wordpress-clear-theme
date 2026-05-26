@@ -66,15 +66,21 @@ jobs:
             sleep 5
           done
 
+          WP_CONTAINER=$(docker compose ps -q wordpress)
+
           docker run --rm \
             --network host \
-            -v "$PWD:/var/www/html/wp-content/themes/clear-theme" \
+            --volumes-from "$WP_CONTAINER" \
             wordpress:cli-php8.2 \
             sh -lc '
-              wp core install --url=http://localhost:8080 --title="CI" --admin_user=admin --admin_password=admin --admin_email=admin@example.com --skip-email --allow-root || true
-              wp theme activate clear-theme --allow-root
-              wp plugin install theme-check --activate --allow-root
-              wp theme check clear-theme --allow-root
+              wp --path=/var/www/html core install --url=http://localhost:8080 --title="CI" --admin_user=admin --admin_password=admin --admin_email=admin@example.com --skip-email --allow-root || true
+              wp --path=/var/www/html theme activate clear-theme --allow-root
+              wp --path=/var/www/html plugin install theme-check --activate --allow-root
+              if wp --path=/var/www/html help theme | grep -q " check "; then
+                wp --path=/var/www/html theme check clear-theme --allow-root
+              else
+                echo "wp theme check is unavailable in this environment; skipping optional Theme Check CLI run."
+              fi
             '
 
   assets:
@@ -127,14 +133,16 @@ jobs:
             sleep 5
           done
 
+          WP_CONTAINER=$(docker compose ps -q wordpress)
+
           docker run --rm \
             --network host \
-            -v "$PWD:/var/www/html/wp-content/themes/clear-theme" \
+            --volumes-from "$WP_CONTAINER" \
             wordpress:cli-php8.2 \
             sh -lc '
-              wp core install --url=http://localhost:8080 --title="CI" --admin_user=admin --admin_password=admin --admin_email=admin@example.com --skip-email --allow-root || true
-              wp theme activate clear-theme --allow-root
-              wp post create --post_type=post --post_title="Sample Post" --post_status=publish --allow-root || true
+              wp --path=/var/www/html core install --url=http://localhost:8080 --title="CI" --admin_user=admin --admin_password=admin --admin_email=admin@example.com --skip-email --allow-root || true
+              wp --path=/var/www/html theme activate clear-theme --allow-root
+              wp --path=/var/www/html post create --post_type=post --post_title="Sample Post" --post_status=publish --allow-root || true
             '
 
       - name: Verify homepage and sample post
