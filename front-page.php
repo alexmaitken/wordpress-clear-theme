@@ -16,14 +16,27 @@ get_header();
 <?php clrthm_render_home_author_strip(); ?>
 
 <?php if ( have_posts() ) : ?>
-	<section class="entry-list" aria-label="<?php esc_attr_e( 'Latest stories', 'clear-theme' ); ?>">
+	<section class="featured-grid" aria-label="<?php esc_attr_e( 'Featured stories', 'clear-theme' ); ?>">
 		<?php
-		while ( have_posts() ) :
+		$count = 0;
+		while ( have_posts() && $count < 4 ) :
 			the_post();
+			$count++;
 			get_template_part( 'template-parts/content', 'card' );
 		endwhile;
 		?>
 	</section>
+
+	<?php if ( have_posts() ) : ?>
+		<section class="entry-list" aria-label="<?php esc_attr_e( 'Latest stories', 'clear-theme' ); ?>">
+			<?php
+			while ( have_posts() ) :
+				the_post();
+				get_template_part( 'template-parts/content', 'card' );
+			endwhile;
+			?>
+		</section>
+	<?php endif; ?>
 
 	<section class="archive-read-more" aria-label="<?php esc_attr_e( 'Read more', 'clear-theme' ); ?>">
 		<h2><?php esc_html_e( 'Read more', 'clear-theme' ); ?></h2>
