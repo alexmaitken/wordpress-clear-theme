@@ -75,4 +75,4 @@ GitHub Actions runs the same command used locally:
 composer test
 ```
 
-Workflow file: `.github/workflows/tests.yml`.
+Workflow file: `.github/workflows/ci.yml`.

@@ -1,0 +1,155 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  php-quality:
+    name: PHP quality (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        php: ['7.4', '8.2']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: none
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.composer/cache/files
+            vendor
+          key: ${{ runner.os }}-php${{ matrix.php }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php${{ matrix.php }}-composer-
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: PHP lint
+        run: composer lint
+
+      - name: PHPCS
+        run: composer phpcs
+
+      - name: Theme Check (optional)
+        run: |
+          if [ "${{ matrix.php }}" != "8.2" ]; then
+            echo "Skipping Theme Check on PHP ${{ matrix.php }}."
+            exit 0
+          fi
+
+          docker compose up -d
+          trap 'docker compose down -v' EXIT
+
+          for i in {1..30}; do
+            if curl -fsS http://localhost:8080 >/dev/null; then
+              break
+            fi
+            sleep 5
+          done
+
+          WP_CONTAINER=$(docker compose ps -q wordpress)
+
+          docker run --rm \
+            --network host \
+            --volumes-from "$WP_CONTAINER" \
+            wordpress:cli-php8.2 \
+            sh -lc '
+              wp --path=/var/www/html core install --url=http://localhost:8080 --title="CI" --admin_user=admin --admin_password=admin --admin_email=admin@example.com --skip-email --allow-root || true
+              wp --path=/var/www/html theme activate clear-theme --allow-root
+              wp --path=/var/www/html plugin install theme-check --activate --allow-root
+              if wp --path=/var/www/html help theme | grep -q " check "; then
+                wp --path=/var/www/html theme check clear-theme --allow-root
+              else
+                echo "wp theme check is unavailable in this environment; skipping optional Theme Check CLI run."
+              fi
+            '
+
+  assets:
+    name: Assets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        if: ${{ hashFiles('package.json') != '' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        if: ${{ hashFiles('package.json') != '' }}
+        run: npm ci
+
+      - name: Run npm test
+        if: ${{ hashFiles('package.json') != '' }}
+        run: npm test --if-present
+
+      - name: Run npm build
+        if: ${{ hashFiles('package.json') != '' }}
+        run: npm run build --if-present
+
+      - name: No package.json
+        if: ${{ hashFiles('package.json') == '' }}
+        run: echo "No package.json found; skipping asset checks."
+
+  smoke-test:
+    name: Optional smoke test
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Start WordPress stack
+        run: docker compose up -d
+
+      - name: Install WP-CLI and configure site
+        run: |
+          for i in {1..40}; do
+            if curl -fsS http://localhost:8080 >/dev/null; then
+              break
+            fi
+            sleep 5
+          done
+
+          WP_CONTAINER=$(docker compose ps -q wordpress)
+
+          docker run --rm \
+            --network host \
+            --volumes-from "$WP_CONTAINER" \
+            wordpress:cli-php8.2 \
+            sh -lc '
+              wp --path=/var/www/html core install --url=http://localhost:8080 --title="CI" --admin_user=admin --admin_password=admin --admin_email=admin@example.com --skip-email --allow-root || true
+              wp --path=/var/www/html theme activate clear-theme --allow-root
+              wp --path=/var/www/html post create --post_type=post --post_title="Sample Post" --post_status=publish --allow-root || true
+            '
+
+      - name: Verify homepage and sample post
+        run: |
+          curl -fI http://localhost:8080/
+          curl -fsS http://localhost:8080/?p=1 >/dev/null
+
+      - name: Tear down
+        if: always()
+        run: docker compose down -v
