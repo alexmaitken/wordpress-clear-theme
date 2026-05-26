@@ -11,15 +11,29 @@ get_header();
 	<h1><?php single_post_title(); ?></h1>
 </section>
 <?php clrthm_render_home_author_strip(); ?>
+
 <?php if ( have_posts() ) : ?>
-	<section class="entry-list">
+	<section class="featured-grid" aria-label="<?php esc_attr_e( 'Featured stories', 'clear-theme' ); ?>">
 		<?php
-		while ( have_posts() ) :
+		$count = 0;
+		while ( have_posts() && $count < 4 ) :
 			the_post();
+			$count++;
 			get_template_part( 'template-parts/content', 'card' );
 		endwhile;
 		?>
 	</section>
+
+	<?php if ( have_posts() ) : ?>
+		<section class="entry-list" aria-label="<?php esc_attr_e( 'Latest stories', 'clear-theme' ); ?>">
+			<?php
+			while ( have_posts() ) :
+				the_post();
+				get_template_part( 'template-parts/content', 'card' );
+			endwhile;
+			?>
+		</section>
+	<?php endif; ?>
 	<?php
 	the_posts_pagination(
 		array(

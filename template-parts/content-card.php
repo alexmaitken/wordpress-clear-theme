@@ -43,6 +43,11 @@ if ( 0 === $index ) {
 		<?php endif; ?>
 		<h2 class="post-card__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 		<div class="post-card__excerpt"><?php the_excerpt(); ?></div>
-		<p class="post-card__meta"><?php echo wp_kses_post( clrthm_get_post_byline() ); ?></p>
+		<div class="post-card__author">
+			<a class="post-card__avatar" href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" aria-label="<?php echo esc_attr( get_the_author() ); ?>">
+				<?php echo wp_kses_post( clrthm_get_author_avatar( get_the_author_meta( 'ID' ) ) ); ?>
+			</a>
+			<p class="post-card__meta"><?php echo wp_kses_post( clrthm_get_post_byline() ); ?></p>
+		</div>
 	</div>
 </article>

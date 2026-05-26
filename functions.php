@@ -194,6 +194,23 @@ function clrthm_get_reading_time( $post_id = null ) {
 	return sprintf( _n( '%s min read', '%s mins read', $minutes, 'clear-theme' ), number_format_i18n( $minutes ) );
 }
 
+
+/**
+ * Get author avatar html for cards.
+ *
+ * @param int $author_id Author ID.
+ * @param int $size Avatar size.
+ * @return string
+ */
+function clrthm_get_author_avatar( $author_id, $size = 40 ) {
+	$author_id = absint( $author_id );
+	if ( ! $author_id ) {
+		return '';
+	}
+
+	return get_avatar( $author_id, absint( $size ), '', '', array( 'class' => 'post-card__avatar-image' ) );
+}
+
 /**
  * Get post byline.
  */
@@ -252,28 +269,30 @@ function clrthm_render_home_author_strip() {
 	if ( ! get_theme_mod( 'clrthm_show_author_strip', 1 ) ) {
 		return;
 	}
-	$author_ids = get_posts(
-		array(
-			'post_type'           => 'post',
-			'posts_per_page'      => 6,
-			'fields'              => 'ids',
-			'ignore_sticky_posts' => true,
-			'no_found_rows'       => true,
-		)
-	);
-	if ( empty( $author_ids ) ) {
+	global $wp_query;
+	$featured_posts = array_slice( (array) $wp_query->posts, 0, 4 );
+	if ( empty( $featured_posts ) ) {
 		return;
 	}
-	$names = array();
-	foreach ( $author_ids as $post_id ) {
-		$names[] = get_the_author_meta( 'display_name', (int) get_post_field( 'post_author', $post_id ) );
+
+	$authors = array();
+	foreach ( $featured_posts as $featured_post ) {
+		$author_id = (int) $featured_post->post_author;
+		if ( ! $author_id || isset( $authors[ $author_id ] ) ) {
+			continue;
+		}
+		$authors[ $author_id ] = get_the_author_meta( 'display_name', $author_id );
 	}
-	$names = array_unique( array_filter( $names ) );
-	if ( empty( $names ) ) {
+	if ( empty( $authors ) ) {
 		return;
 	}
-	echo '<section class="home-author-strip" aria-label="' . esc_attr__( 'Featured authors', 'clear-theme' ) . '"><p><strong>' . esc_html__( 'Featured authors:', 'clear-theme' ) . '</strong> ' . esc_html( implode( ' · ', $names ) ) . '</p></section>';
+	echo '<section class="home-author-strip" aria-label="' . esc_attr__( 'Featured authors', 'clear-theme' ) . '"><p><strong>' . esc_html__( 'Featured authors:', 'clear-theme' ) . '</strong></p><ul class="home-author-strip__list">';
+	foreach ( $authors as $author_id => $author_name ) {
+		echo '<li class="home-author-strip__item"><a href="' . esc_url( get_author_posts_url( $author_id ) ) . '">' . wp_kses_post( clrthm_get_author_avatar( $author_id, 36 ) ) . '<span>' . esc_html( $author_name ) . '</span></a></li>';
+	}
+	echo '</ul></section>';
 }
+
 
 /**
  * Get layout control tag slugs.
