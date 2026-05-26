@@ -37,9 +37,9 @@ $hero_image    = clrthm_get_featured_image_html( $entry_id );
 	<div class="single-entry__inner">
 		<nav class="single-share" aria-label="<?php esc_attr_e( 'Share this post', 'clear-theme' ); ?>">
 			<ul>
-				<li><a href="https://x.com/intent/tweet?url=<?php echo rawurlencode( get_permalink() ); ?>&text=<?php echo rawurlencode( get_the_title() ); ?>"><?php esc_html_e( 'Share on X', 'clear-theme' ); ?></a></li>
-				<li><a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo rawurlencode( get_permalink() ); ?>"><?php esc_html_e( 'Share on LinkedIn', 'clear-theme' ); ?></a></li>
-				<li><a href="mailto:?subject=<?php echo rawurlencode( get_the_title() ); ?>&body=<?php echo rawurlencode( get_permalink() ); ?>"><?php esc_html_e( 'Share via Email', 'clear-theme' ); ?></a></li>
+				<li><a href="<?php echo esc_url( 'https://x.com/intent/tweet?url=' . rawurlencode( get_permalink() ) . '&text=' . rawurlencode( get_the_title() ) ); ?>"><?php esc_html_e( 'Share on X', 'clear-theme' ); ?></a></li>
+				<li><a href="<?php echo esc_url( 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencode( get_permalink() ) ); ?>"><?php esc_html_e( 'Share on LinkedIn', 'clear-theme' ); ?></a></li>
+				<li><a href="<?php echo esc_url( 'mailto:?subject=' . rawurlencode( get_the_title() ) . '&body=' . rawurlencode( get_permalink() ) ); ?>"><?php esc_html_e( 'Share via Email', 'clear-theme' ); ?></a></li>
 			</ul>
 		</nav>
 		<div class="entry-content">
