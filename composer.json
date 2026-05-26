@@ -21,11 +21,14 @@
     ],
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down -v",
-    "docker:theme-check": "docker compose exec -T wordpress wp plugin install theme-check --activate --allow-root && docker compose exec -T wordpress wp theme check clear-theme --allow-root"
+    "docker:theme-check": "docker compose exec -T wordpress wp plugin install theme-check --activate --allow-root && docker compose exec -T wordpress wp theme check clear-theme --allow-root",
+    "validate-version": "bash scripts/validate-version.sh",
+    "build-release": "bash scripts/build-release.sh"
   },
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
-  }
+  },
+  "version": "1.0.0"
 }
