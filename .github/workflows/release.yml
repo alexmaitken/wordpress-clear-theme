@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+          coverage: none
+
+      - name: Derive version from tag
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Validate version consistency against tag
+        run: bash scripts/validate-version.sh "${GITHUB_REF_NAME}"
+
+      - name: Run full test suite
+        run: composer test
+
+      - name: Build release zip
+        run: bash scripts/build-release.sh
+
+      - name: Upload release asset and publish notes
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: dist/clear-theme-${{ env.VERSION }}.zip

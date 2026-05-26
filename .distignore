@@ -1,0 +1,44 @@
+# VCS and automation
+.git/
+.github/
+
+# Development dependencies and caches
+node_modules/
+vendor/
+
+# Tests, QA, and development scripts
+tests/
+scripts/
+phpcs.xml.dist
+
+# Local tooling and environment files
+docker/
+.docker/
+docker-compose*.yml
+.env
+.env.*
+*.local
+
+# Build/dev artifacts
+*.map
+*.log
+coverage/
+dist/
+
+# Repository docs and non-runtime metadata
+README.md
+LICENSE
+.gitignore
+.distignore
+
+# Dependency metadata not required at runtime
+composer.json
+composer.lock
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# OS/editor noise
+.DS_Store
+.vscode/
+.idea/
