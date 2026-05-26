@@ -4,7 +4,7 @@ Theme URI: https://example.com/clear-theme
 Author: Alex Aitken
 Author URI: https://alexaitken.nz/
 Description: A minimalist editorial WordPress theme for text-first publishing with refined typography, calm spacing, and elegant archives.
-Version: 1.0.2
+Version: 1.0.3
 Requires at least: 6.4
 Tested up to: 6.6
 Requires PHP: 7.4
@@ -165,6 +165,7 @@ a:focus-visible {
 	background: var(--clrthm-surface);
 	border: 1px solid var(--clrthm-border);
 	padding: clamp(1rem, 2vw, 1.5rem);
+	height: 100%;
 	overflow: hidden;
 }
 
@@ -293,7 +294,7 @@ a:focus-visible {
 	display: grid;
 	gap: 1.25rem;
 	background: var(--clrthm-surface);
-	border: 1px solid var(--clrthm-border);
+	border: 0;
 	padding: clamp(1rem, 2.4vw, 2rem);
 }
 
@@ -355,8 +356,8 @@ a:focus-visible {
 	background: var(--clrthm-surface);
 	border: 0;
 	padding: clamp(0.5rem, 1vw, 1rem) 0 0;
-	font-size: clamp(1.35rem, 1.95vw, 2rem);
-	line-height: 1.75;
+	font-size: 1.125em;
+	line-height: 1.6;
 }
 
 .single-entry .entry-content p {
