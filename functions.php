@@ -269,22 +269,15 @@ function clrthm_render_home_author_strip() {
 	if ( ! get_theme_mod( 'clrthm_show_author_strip', 1 ) ) {
 		return;
 	}
-	$author_ids = get_posts(
-		array(
-			'post_type'           => 'post',
-			'posts_per_page'      => 6,
-			'fields'              => 'ids',
-			'ignore_sticky_posts' => true,
-			'no_found_rows'       => true,
-		)
-	);
-	if ( empty( $author_ids ) ) {
+	global $wp_query;
+	$featured_posts = array_slice( (array) $wp_query->posts, 0, 4 );
+	if ( empty( $featured_posts ) ) {
 		return;
 	}
 
 	$authors = array();
-	foreach ( $author_ids as $post_id ) {
-		$author_id = (int) get_post_field( 'post_author', $post_id );
+	foreach ( $featured_posts as $featured_post ) {
+		$author_id = (int) $featured_post->post_author;
 		if ( ! $author_id || isset( $authors[ $author_id ] ) ) {
 			continue;
 		}

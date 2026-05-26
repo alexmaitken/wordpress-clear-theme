@@ -445,8 +445,16 @@ a:focus-visible {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.45rem;
-	text-decoration: none;
+	text-decoration: underline;
+	text-underline-offset: 0.15em;
+	text-decoration-thickness: 1px;
 	color: inherit;
+}
+
+
+.home-author-strip__item a:hover,
+.home-author-strip__item a:focus-visible {
+	text-decoration-thickness: 2px;
 }
 
 .post-card__author {
