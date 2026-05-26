@@ -13,6 +13,9 @@ $hero_image    = clrthm_get_featured_image_html( $entry_id );
 ?>
 <article <?php post_class( 'single-entry ' . $layout_class ); ?> id="post-<?php the_ID(); ?>">
 	<header class="single-hero">
+		<?php if ( $hero_image ) : ?>
+			<figure class="single-hero__media"><?php echo $hero_image; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></figure>
+		<?php endif; ?>
 		<div class="single-hero__content">
 			<?php if ( $category_list || $tag_list ) : ?>
 				<p class="single-hero__tax">
@@ -24,14 +27,11 @@ $hero_image    = clrthm_get_featured_image_html( $entry_id );
 				</p>
 			<?php endif; ?>
 			<h1 class="entry-title"><?php the_title(); ?></h1>
+			<p class="single-hero__meta"><?php echo wp_kses_post( clrthm_get_post_byline() ); ?></p>
 			<?php if ( has_excerpt() ) : ?>
 				<div class="single-hero__excerpt"><?php the_excerpt(); ?></div>
 			<?php endif; ?>
-			<p class="single-hero__meta"><?php echo wp_kses_post( clrthm_get_post_byline() ); ?></p>
 		</div>
-		<?php if ( $hero_image ) : ?>
-			<figure class="single-hero__media"><?php echo $hero_image; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></figure>
-		<?php endif; ?>
 	</header>
 
 	<div class="single-entry__inner">
