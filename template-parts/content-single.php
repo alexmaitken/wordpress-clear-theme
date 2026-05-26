@@ -37,9 +37,9 @@ $hero_image    = clrthm_get_featured_image_html( $entry_id );
 	<div class="single-entry__inner">
 		<nav class="single-share" aria-label="<?php esc_attr_e( 'Share this post', 'clear-theme' ); ?>">
 			<ul>
-				<li><a href="<?php echo esc_url( 'https://x.com/intent/tweet?url=' . rawurlencode( get_permalink() ) . '&text=' . rawurlencode( get_the_title() ) ); ?>" aria-label="<?php esc_attr_e( 'Share on X', 'clear-theme' ); ?>"><span aria-hidden="true">𝕏</span><span class="screen-reader-text"><?php esc_html_e( 'Share on X', 'clear-theme' ); ?></span></a></li>
-				<li><a href="<?php echo esc_url( 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencode( get_permalink() ) ); ?>" aria-label="<?php esc_attr_e( 'Share on LinkedIn', 'clear-theme' ); ?>"><span aria-hidden="true">in</span><span class="screen-reader-text"><?php esc_html_e( 'Share on LinkedIn', 'clear-theme' ); ?></span></a></li>
-				<li><a href="<?php echo esc_url( 'mailto:?subject=' . rawurlencode( get_the_title() ) . '&body=' . rawurlencode( get_permalink() ) ); ?>" aria-label="<?php esc_attr_e( 'Share via Email', 'clear-theme' ); ?>"><span aria-hidden="true">✉</span><span class="screen-reader-text"><?php esc_html_e( 'Share via Email', 'clear-theme' ); ?></span></a></li>
+				<li><a href="<?php echo esc_url( 'https://x.com/intent/tweet?url=' . rawurlencode( get_permalink() ) . '&text=' . rawurlencode( get_the_title() ) ); ?>" aria-label="<?php esc_attr_e( 'Share on X', 'clear-theme' ); ?>"><span aria-hidden="true">𝕏</span></a></li>
+				<li><a href="<?php echo esc_url( 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencode( get_permalink() ) ); ?>" aria-label="<?php esc_attr_e( 'Share on LinkedIn', 'clear-theme' ); ?>"><span aria-hidden="true">in</span></a></li>
+				<li><a href="<?php echo esc_url( 'mailto:?subject=' . rawurlencode( get_the_title() ) . '&body=' . rawurlencode( get_permalink() ) ); ?>" aria-label="<?php esc_attr_e( 'Share via Email', 'clear-theme' ); ?>"><span aria-hidden="true">✉</span></a></li>
 			</ul>
 		</nav>
 		<div class="entry-content">

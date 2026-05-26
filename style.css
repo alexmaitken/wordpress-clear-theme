@@ -19,6 +19,8 @@ Tags: blog, one-column, two-columns, custom-logo, custom-menu, featured-images, 
 	--clrthm-surface: #ffffff;
 	--clrthm-text: #181818;
 	--clrthm-muted: #6c6c6c;
+	--clrthm-excerpt: #242424;
+	--clrthm-hover-bg: #f7f7f7;
 	--clrthm-border: #dfdfdf;
 	--clrthm-focus: #0a66d1;
 	--clrthm-accent: #0a66d1;
@@ -346,11 +348,11 @@ a:focus-visible {
 	font-family: ui-sans-serif, -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;
 	font-size: clamp(1.15rem, 1.8vw, 1.95rem);
 	line-height: 1.45;
-	color: #242424;
+	color: var(--clrthm-excerpt);
 }
 
 .single-entry .entry-content {
-	background: #fff;
+	background: var(--clrthm-surface);
 	border: 0;
 	padding: clamp(0.5rem, 1vw, 1rem) 0 0;
 	font-size: clamp(1.35rem, 1.95vw, 2rem);
@@ -364,10 +366,6 @@ a:focus-visible {
 .single-share {
 	border-top: 1px solid var(--clrthm-border);
 	padding-top: 1.25rem;
-}
-
-.single-share ul {
-	justify-content: flex-end;
 }
 
 .single-share a {
@@ -386,7 +384,7 @@ a:focus-visible {
 
 .single-share a:hover,
 .single-share a:focus-visible {
-	background: #f7f7f7;
+	background: var(--clrthm-hover-bg);
 }
 
 .single-entry__inner,
@@ -405,6 +403,7 @@ a:focus-visible {
 	padding: 0;
 	margin: 0 0 1.2rem;
 	flex-wrap: wrap;
+	justify-content: flex-end;
 }
 
 .entry-content {
@@ -414,7 +413,7 @@ a:focus-visible {
 }
 
 .single-layout--full-width-image .entry-content {
-	background: #fff;
+	background: var(--clrthm-surface);
 	border: 0;
 }
 
@@ -454,6 +453,28 @@ a:focus-visible {
 
 .author-box__avatar {
 	border-radius: 50%;
+}
+
+
+.screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.screen-reader-text:focus {
+	position: static;
+	width: auto;
+	height: auto;
+	overflow: visible;
+	clip: auto;
+	white-space: normal;
 }
 
 @media (min-width: 62rem) {
