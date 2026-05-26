@@ -4,7 +4,7 @@ Theme URI: https://example.com/clear-theme
 Author: Alex Aitken
 Author URI: https://alexaitken.nz/
 Description: A minimalist editorial WordPress theme for text-first publishing with refined typography, calm spacing, and elegant archives.
-Version: 1.0.3
+Version: 1.0.4
 Requires at least: 6.4
 Tested up to: 6.6
 Requires PHP: 7.4
@@ -100,7 +100,7 @@ a:focus-visible {
 	align-items: flex-end;
 	gap: 1rem;
 	padding: 2rem 0;
-	border-bottom: 1px solid var(--clrthm-border);
+	border-bottom: 0;
 }
 
 .site-header--centered {
@@ -320,19 +320,31 @@ a:focus-visible {
 
 .single-hero__excerpt {
 	max-width: 58ch;
+	margin-inline: auto;
+}
+
+.single-hero__content {
+	text-align: center;
 }
 
 .single-hero__excerpt p {
 	margin-bottom: 0;
 }
 
+.single-hero__media {
+	aspect-ratio: 495 / 323;
+	max-height: 646px;
+	overflow: hidden;
+	border-radius: 0.4rem;
+}
+
 .single-hero__media img {
 	display: block;
 	width: 100%;
-	height: auto;
-	aspect-ratio: 16 / 10;
+	height: 100%;
 	object-fit: cover;
-	border-radius: 0.4rem;
+	object-position: center;
+	border-radius: 0;
 }
 
 
@@ -365,7 +377,7 @@ a:focus-visible {
 }
 
 .single-share {
-	border-top: 1px solid var(--clrthm-border);
+	border-top: 0;
 	padding-top: 1.25rem;
 }
 
@@ -572,4 +584,14 @@ a:focus-visible {
 	.featured-grid .post-card:first-child .post-card__media--placeholder {
 		aspect-ratio: 16 / 10;
 	}
+}
+
+/* Hide WordPress.com/Jetpack social and like widgets on single posts. */
+.single-entry .sharedaddy,
+.single-entry .sd-block,
+.single-entry .jp-sharing-input-touch,
+.single-entry .jp-relatedposts,
+.single-entry .post-likes-widget,
+.single-entry .wpl-button {
+	display: none !important;
 }
