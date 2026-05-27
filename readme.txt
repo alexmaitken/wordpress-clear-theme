@@ -4,7 +4,7 @@ Tags: blog, editorial, minimal
 Requires at least: 6.4
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,7 +52,7 @@ Theme Unit Test content import:
 
 == Changelog ==
 
-= 1.1.1 =
+= 1.1.2 =
 * Add Inter webfont as the default typography stack with system fallbacks.
 * Add `clrthm_show_site_tagline` and `clrthm_link_author_pages` customizer controls.
 * Refactor post byline and card layouts for improved responsive featured and entry-list presentation.
