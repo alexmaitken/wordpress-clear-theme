@@ -4,7 +4,7 @@ Theme URI: https://example.com/clear-theme
 Author: Alex Aitken
 Author URI: https://alexaitken.nz/
 Description: A minimalist editorial WordPress theme for text-first publishing with refined typography, calm spacing, and elegant archives.
-Version: 1.1.0
+Version: 1.1.1
 Requires at least: 6.4
 Tested up to: 6.6
 Requires PHP: 7.4
@@ -40,7 +40,7 @@ body {
 	margin: 0;
 	background: var(--clrthm-bg);
 	color: var(--clrthm-text);
-	font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 	line-height: 1.7;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizelegibility;
@@ -146,7 +146,7 @@ a:focus-visible {
 
 .editorial-intro,
 .page-header {
-	margin-bottom: 1.5rem;
+	margin-bottom: 2rem;
 }
 
 .editorial-intro p {
@@ -155,8 +155,10 @@ a:focus-visible {
 }
 
 .entry-list {
-	display: grid;
-	gap: 1.25rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.5rem;
+	margin-top: 2rem;
 }
 
 .post-card {
@@ -204,6 +206,24 @@ a:focus-visible {
 .post-card__excerpt p {
 	margin: 0.6rem 0 0;
 }
+.post-card__excerpt {
+	display: -webkit-box;
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	position: relative;
+	line-height: 1.6;
+	max-height: 8em;
+}
+
+.post-card__excerpt::after {
+	content: '...';
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	padding-left: 0.4rem;
+	background: linear-gradient(to right, transparent, var(--clrthm-surface) 30%);
+}
 
 .post-card__tax,
 .post-card__meta {
@@ -215,6 +235,12 @@ a:focus-visible {
 .post-card__tax a {
 	text-decoration: none;
 	border-bottom: 1px solid transparent;
+	font-size: 0.78rem;
+	background: #f4f6fb;
+	padding: 0.2rem 0.55rem;
+	border-radius: 999px;
+	display: inline-block;
+	margin-right: 0.35rem;
 }
 
 .post-card__tax a:hover,
@@ -232,6 +258,40 @@ a:focus-visible {
 	background: var(--clrthm-surface);
 	border: 1px solid var(--clrthm-border);
 	color: var(--clrthm-muted);
+}
+.featured-grid {
+	display: grid;
+	gap: 1.5rem;
+}
+
+.post-card__author {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	margin-top: auto;
+}
+
+.post-card__meta {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+}
+
+.post-card__meta .byline-author,
+.post-card__meta .byline-date,
+.post-card__meta .byline-read {
+	display: block;
+}
+
+.post-card--entry-row {
+	flex: 1 1 18rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.post-card--feature-hero .post-card__tax,
+.post-card--feature-hero .post-card__excerpt {
+	display: none;
 }
 
 .home-author-strip p {
@@ -257,6 +317,19 @@ a:focus-visible {
 }
 
 @media (min-width: 48rem) {
+	.featured-grid {
+		grid-template-columns: 2fr 1fr;
+		align-items: start;
+	}
+
+	.post-card--feature-hero {
+		grid-column: 1;
+	}
+
+	.post-card--feature-tile {
+		grid-column: 2;
+	}
+
 	.post-card--left,
 	.post-card--right {
 		grid-template-columns: minmax(0, 1fr) minmax(16rem, 42%);

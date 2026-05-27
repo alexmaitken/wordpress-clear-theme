@@ -54,7 +54,13 @@ add_action( 'after_setup_theme', 'clrthm_setup' );
  * Scripts.
  */
 function clrthm_scripts() {
-	wp_enqueue_style( 'clrthm-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
+	wp_enqueue_style(
+		'clrthm-inter-font',
+		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap',
+		array(),
+		null
+	);
+	wp_enqueue_style( 'clrthm-style', get_stylesheet_uri(), array( 'clrthm-inter-font' ), wp_get_theme()->get( 'Version' ) );
 }
 add_action( 'wp_enqueue_scripts', 'clrthm_scripts' );
 
@@ -119,11 +125,15 @@ function clrthm_customize_register( $wp_customize ) {
 		'clrthm_show_reading_time'  => esc_html__( 'Show reading time', 'clear-theme' ),
 		'clrthm_show_author_strip'  => esc_html__( 'Show featured authors strip on homepage', 'clear-theme' ),
 		'clrthm_show_related_posts' => esc_html__( 'Show related posts', 'clear-theme' ),
+		'clrthm_show_site_tagline'  => esc_html__( 'Show homepage tagline', 'clear-theme' ),
+		'clrthm_link_author_pages'  => esc_html__( 'Link author names and avatars to author pages', 'clear-theme' ),
 	);
 	$checkbox_defaults = array(
 		'clrthm_show_reading_time'  => 1,
 		'clrthm_show_author_strip'  => 0,
 		'clrthm_show_related_posts' => 1,
+		'clrthm_show_site_tagline'  => 1,
+		'clrthm_link_author_pages'  => 0,
 	);
 
 	foreach ( $checkbox_controls as $setting_id => $label ) {
@@ -220,24 +230,29 @@ function clrthm_get_author_avatar( $author_id, $size = 40 ) {
  * Get post byline.
  */
 function clrthm_get_post_byline() {
-	$author = sprintf(
-		'<a href="%1$s" rel="author">%2$s</a>',
-		esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
-		esc_html( get_the_author() )
-	);
+	$author_name = esc_html( get_the_author() );
+	$author      = $author_name;
+	if ( get_theme_mod( 'clrthm_link_author_pages', 0 ) ) {
+		$author = sprintf(
+			'<a href="%1$s" rel="author">%2$s</a>',
+			esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+			$author_name
+		);
+	}
 	$date   = sprintf(
-		'<time datetime="%1$s">%2$s</time>',
+		'<time class="byline-date" datetime="%1$s">%2$s</time>',
 		esc_attr( get_the_date( DATE_W3C ) ),
 		esc_html( get_the_date() )
 	);
+	$author = '<span class="byline-author">' . $author . '</span>';
 	if ( get_theme_mod( 'clrthm_show_reading_time', 1 ) ) {
-		$read = esc_html( clrthm_get_reading_time() );
-		/* translators: 1: post author link, 2: post date, 3: reading time. */
-		return sprintf( __( 'By %1$s · %2$s · %3$s', 'clear-theme' ), $author, $date, $read );
+		$read = '<span class="byline-read">' . esc_html( clrthm_get_reading_time() ) . '</span>';
+		/* translators: 1: post author, 2: post date, 3: reading time. */
+		return sprintf( __( '%1$s %2$s %3$s', 'clear-theme' ), $author, $date, $read );
 	}
 
-	/* translators: 1: post author link, 2: post date. */
-	return sprintf( __( 'By %1$s · %2$s', 'clear-theme' ), $author, $date );
+	/* translators: 1: post author, 2: post date. */
+	return sprintf( __( '%1$s %2$s', 'clear-theme' ), $author, $date );
 }
 
 /**
