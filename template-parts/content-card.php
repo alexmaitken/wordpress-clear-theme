@@ -32,19 +32,17 @@ if ( 'featured' === $context && null !== $slot && $slot >= 0 ) {
 	<div class="post-card__content">
 		<?php
 		$cats = clrthm_get_public_terms_html( get_the_ID(), 'category' );
-		if ( 'post-card--feature-tile' !== $layout_class && $cats ) :
-			?>
-			<p class="post-card__tax">
-				<?php echo wp_kses_post( $cats ); ?>
-			</p>
-			<?php
-		endif;
 		if ( 'post-card--feature-hero' === $layout_class || 'post-card--entry-row' === $layout_class ) :
 			?>
 			<h2 class="post-card__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 			<div class="post-card__excerpt"><?php echo esc_html( wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 30, '' ) ); ?></div>
 		<?php else : ?>
 			<h2 class="post-card__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+		<?php endif; ?>
+		<?php if ( $cats ) : ?>
+			<p class="post-card__tax">
+				<?php echo wp_kses_post( $cats ); ?>
+			</p>
 		<?php endif; ?>
 		<div class="post-card__author">
 			<?php if ( get_theme_mod( 'clrthm_link_author_pages', 0 ) ) : ?>
