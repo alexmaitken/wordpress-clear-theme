@@ -740,15 +740,19 @@ a:focus-visible {
 
 .post-card--entry-row {
 	display: grid;
-	grid-template-columns: 7.5rem minmax(0, 1fr);
+	grid-template-columns: 1fr;
 	gap: 1rem;
 	align-items: start;
 }
 
+.post-card--entry-row .post-card__media {
+	max-width: 100%;
+}
+
 .post-card--entry-row .post-card__media img,
 .post-card--entry-row .post-card__media--placeholder {
-	aspect-ratio: 1 / 1;
-	border-radius: 0.35rem;
+	aspect-ratio: 16 / 10;
+	border-radius: 0.6rem;
 }
 
 .post-card__excerpt p {
