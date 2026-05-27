@@ -19,8 +19,10 @@ get_header();
 	<section class="featured-grid" aria-label="<?php esc_attr_e( 'Featured stories', 'clear-theme' ); ?>">
 		<?php
 		$count = 0;
+		set_query_var( 'clrthm_card_context', 'featured' );
 		while ( have_posts() && $count < 4 ) :
 			the_post();
+			set_query_var( 'clrthm_card_slot', $count );
 			$count++;
 			get_template_part( 'template-parts/content', 'card' );
 		endwhile;
@@ -30,6 +32,7 @@ get_header();
 	<?php if ( have_posts() ) : ?>
 		<section class="entry-list" aria-label="<?php esc_attr_e( 'Latest stories', 'clear-theme' ); ?>">
 			<?php
+			set_query_var( 'clrthm_card_context', 'entry-list' );
 			while ( have_posts() ) :
 				the_post();
 				get_template_part( 'template-parts/content', 'card' );

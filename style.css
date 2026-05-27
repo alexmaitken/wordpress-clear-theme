@@ -4,7 +4,7 @@ Theme URI: https://example.com/clear-theme
 Author: Alex Aitken
 Author URI: https://alexaitken.nz/
 Description: A minimalist editorial WordPress theme for text-first publishing with refined typography, calm spacing, and elegant archives.
-Version: 1.0.4
+Version: 1.1.0
 Requires at least: 6.4
 Tested up to: 6.6
 Requires PHP: 7.4
@@ -594,4 +594,131 @@ a:focus-visible {
 .single-entry .post-likes-widget,
 .single-entry .wpl-button {
 	display: none !important;
+}
+
+/* Homepage layout refresh. */
+.home-author-strip,
+.post-card,
+.empty-state {
+	border: 0;
+}
+
+.home .site-footer {
+	border: 0;
+}
+
+.post-card {
+	padding: 0;
+	gap: 0;
+}
+
+.featured-grid {
+	display: grid;
+	gap: 1.25rem;
+	margin-bottom: 2rem;
+}
+
+.post-card--feature-hero {
+	position: relative;
+	border-radius: 0.75rem;
+	overflow: hidden;
+}
+
+.post-card--feature-hero .post-card__media img,
+.post-card--feature-hero .post-card__media--placeholder {
+	aspect-ratio: 16 / 10;
+	height: 100%;
+}
+
+.post-card--feature-hero .post-card__content {
+	position: absolute;
+	inset: auto 0 0;
+	padding: 1.25rem;
+	color: #fff;
+	background: linear-gradient(to top, rgb(0 0 0 / 78%), rgb(0 0 0 / 0%));
+}
+
+.post-card--feature-hero .post-card__tax,
+.post-card--feature-hero .post-card__meta,
+.post-card--feature-hero .post-card__title,
+.post-card--feature-hero .post-card__title a {
+	color: #fff;
+}
+
+.post-card--feature-hero .post-card__excerpt p {
+	margin: 0.4rem 0 0;
+	color: rgb(255 255 255 / 88%);
+}
+
+.post-card--feature-tile {
+	display: grid;
+	grid-template-columns: 6rem minmax(0, 1fr);
+	gap: 0.9rem;
+	align-items: start;
+}
+
+.post-card--feature-tile .post-card__media img,
+.post-card--feature-tile .post-card__media--placeholder {
+	aspect-ratio: 1 / 1;
+	border-radius: 0.35rem;
+}
+
+.post-card--feature-tile .post-card__title {
+	font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+.post-card--feature-tile .post-card__tax {
+	margin-bottom: 0.2rem;
+}
+
+.post-card__author {
+	display: flex;
+	align-items: center;
+	gap: 0.65rem;
+	margin-top: 0.4rem;
+}
+
+.entry-list {
+	display: grid;
+	gap: 1.25rem;
+	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+
+.post-card--entry-row {
+	display: grid;
+	grid-template-columns: 7.5rem minmax(0, 1fr);
+	gap: 1rem;
+	align-items: start;
+}
+
+.post-card--entry-row .post-card__media img,
+.post-card--entry-row .post-card__media--placeholder {
+	aspect-ratio: 1 / 1;
+	border-radius: 0.35rem;
+}
+
+.post-card__excerpt p {
+	margin: 0.5rem 0 0;
+}
+
+@media (min-width: 64rem) {
+	.featured-grid {
+		grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
+	}
+
+	.post-card--feature-hero {
+		grid-row: span 3;
+	}
+}
+
+@media (max-width: 40rem) {
+	.post-card--feature-tile,
+	.post-card--entry-row {
+		grid-template-columns: 1fr;
+	}
+
+	.post-card--feature-tile .post-card__media,
+	.post-card--entry-row .post-card__media {
+		max-width: 8rem;
+	}
 }

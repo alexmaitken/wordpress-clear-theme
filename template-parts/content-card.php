@@ -5,18 +5,20 @@
  * @package Clear
  */
 
-global $wp_query;
-$index        = (int) $wp_query->current_post;
+$context = (string) get_query_var( 'clrthm_card_context', '' );
+$slot_qv = get_query_var( 'clrthm_card_slot', null );
+$slot    = null !== $slot_qv ? (int) $slot_qv : null;
+
 $layout_class = 'post-card--compact';
 
-if ( 0 === $index ) {
-	$layout_class = 'post-card--feature';
-} elseif ( 0 === $index % 4 ) {
-	$layout_class = 'post-card--compact';
-} elseif ( 0 === $index % 2 ) {
-	$layout_class = 'post-card--left';
-} else {
-	$layout_class = 'post-card--right';
+if ( 'featured' === $context && null !== $slot && $slot >= 0 ) {
+	if ( 0 === $slot ) {
+		$layout_class = 'post-card--feature-hero';
+	} else {
+		$layout_class = 'post-card--feature-tile';
+	}
+} elseif ( 'entry-list' === $context ) {
+	$layout_class = 'post-card--entry-row';
 }
 ?>
 <article <?php post_class( 'post-card ' . $layout_class ); ?> id="post-<?php the_ID(); ?>">
@@ -42,7 +44,7 @@ if ( 0 === $index ) {
 			</p>
 		<?php endif; ?>
 		<h2 class="post-card__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-		<?php if ( 0 === $index ) : ?>
+		<?php if ( 'post-card--feature-hero' === $layout_class || 'post-card--entry-row' === $layout_class ) : ?>
 			<div class="post-card__excerpt"><?php the_excerpt(); ?></div>
 		<?php endif; ?>
 		<div class="post-card__author">
