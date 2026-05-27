@@ -4,7 +4,7 @@ Tags: blog, editorial, minimal
 Requires at least: 6.4
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,7 +52,7 @@ Theme Unit Test content import:
 
 == Changelog ==
 
-= 1.1.0 =
+= 1.1.1 =
 * Homepage hero/tile redesign and responsive entry card refresh.
 
 = 1.0.4 =

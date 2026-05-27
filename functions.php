@@ -58,7 +58,7 @@ function clrthm_scripts() {
 		'clrthm-inter-font',
 		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap',
 		array(),
-		null
+		wp_get_theme()->get( 'Version' )
 	);
 	wp_enqueue_style( 'clrthm-style', get_stylesheet_uri(), array( 'clrthm-inter-font' ), wp_get_theme()->get( 'Version' ) );
 }
