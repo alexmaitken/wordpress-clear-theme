@@ -32,25 +32,28 @@ if ( 'featured' === $context && null !== $slot && $slot >= 0 ) {
 	<div class="post-card__content">
 		<?php
 		$cats = clrthm_get_public_terms_html( get_the_ID(), 'category' );
-		$tags = clrthm_get_public_terms_html( get_the_ID(), 'post_tag' );
-		if ( $cats || $tags ) :
+		if ( 'post-card--feature-tile' !== $layout_class && $cats ) :
 			?>
 			<p class="post-card__tax">
 				<?php echo wp_kses_post( $cats ); ?>
-				<?php if ( $cats && $tags ) : ?>
-					<span aria-hidden="true">·</span>
-				<?php endif; ?>
-				<?php echo wp_kses_post( $tags ); ?>
 			</p>
-		<?php endif; ?>
-		<h2 class="post-card__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-		<?php if ( 'post-card--feature-hero' === $layout_class || 'post-card--entry-row' === $layout_class ) : ?>
-			<div class="post-card__excerpt"><?php the_excerpt(); ?></div>
+			<?php
+		endif;
+		if ( 'post-card--feature-hero' === $layout_class || 'post-card--entry-row' === $layout_class ) :
+			?>
+			<h2 class="post-card__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+			<div class="post-card__excerpt"><?php echo esc_html( wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 30, '' ) ); ?></div>
+		<?php else : ?>
+			<h2 class="post-card__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 		<?php endif; ?>
 		<div class="post-card__author">
-			<a class="post-card__avatar" href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" aria-label="<?php echo esc_attr( get_the_author() ); ?>">
-				<?php echo wp_kses_post( clrthm_get_author_avatar( get_the_author_meta( 'ID' ) ) ); ?>
-			</a>
+			<?php if ( get_theme_mod( 'clrthm_link_author_pages', 0 ) ) : ?>
+				<a class="post-card__avatar" href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" aria-label="<?php echo esc_attr( get_the_author() ); ?>">
+					<?php echo wp_kses_post( clrthm_get_author_avatar( get_the_author_meta( 'ID' ) ) ); ?>
+				</a>
+			<?php else : ?>
+				<span class="post-card__avatar"><?php echo wp_kses_post( clrthm_get_author_avatar( get_the_author_meta( 'ID' ) ) ); ?></span>
+			<?php endif; ?>
 			<p class="post-card__meta"><?php echo wp_kses_post( clrthm_get_post_byline() ); ?></p>
 		</div>
 	</div>

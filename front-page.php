@@ -8,8 +8,7 @@
 get_header();
 ?>
 <section class="editorial-intro">
-	<h1><?php bloginfo( 'name' ); ?></h1>
-	<?php if ( get_bloginfo( 'description' ) ) : ?>
+	<?php if ( get_theme_mod( 'clrthm_show_site_tagline', 1 ) && get_bloginfo( 'description' ) ) : ?>
 		<p><?php bloginfo( 'description' ); ?></p>
 	<?php endif; ?>
 </section>
