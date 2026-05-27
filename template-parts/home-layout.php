@@ -5,7 +5,7 @@
  * @package Clear
  */
 
-$show_intro      = ! empty( $args['show_intro'] );
+$show_intro    = ! empty( $args['show_intro'] );
 $empty_text    = isset( $args['empty_text'] ) ? (string) $args['empty_text'] : '';
 $is_paged      = is_paged();
 $show_featured = ! $is_paged;
