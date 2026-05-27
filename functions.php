@@ -248,11 +248,11 @@ function clrthm_get_post_byline() {
 	if ( get_theme_mod( 'clrthm_show_reading_time', 1 ) ) {
 		$read = '<span class="byline-read">' . esc_html( clrthm_get_reading_time() ) . '</span>';
 		/* translators: 1: post author, 2: post date, 3: reading time. */
-		return sprintf( __( '%1$s %2$s %3$s', 'clear-theme' ), $author, $date, $read );
+		return sprintf( __( 'By %1$s on %2$s · %3$s', 'clear-theme' ), $author, $date, $read );
 	}
 
 	/* translators: 1: post author, 2: post date. */
-	return sprintf( __( '%1$s %2$s', 'clear-theme' ), $author, $date );
+	return sprintf( __( 'By %1$s on %2$s', 'clear-theme' ), $author, $date );
 }
 
 /**

@@ -34,7 +34,9 @@ if ( 'featured' === $context && null !== $slot && $slot >= 0 ) {
 		$cats = clrthm_get_public_terms_html( get_the_ID(), 'category' );
 		if ( 'post-card--feature-tile' !== $layout_class && $cats ) :
 			?>
-			<p class="post-card__tax"><?php echo wp_kses_post( $cats ); ?></p>
+			<p class="post-card__tax">
+				<?php echo wp_kses_post( $cats ); ?>
+			</p>
 			<?php
 		endif;
 		if ( 'post-card--feature-hero' === $layout_class || 'post-card--entry-row' === $layout_class ) :

@@ -40,7 +40,7 @@ body {
 	margin: 0;
 	background: var(--clrthm-bg);
 	color: var(--clrthm-text);
-	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 	line-height: 1.7;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizelegibility;
@@ -155,9 +155,9 @@ a:focus-visible {
 }
 
 .entry-list {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1.5rem;
+	display: grid;
+	gap: 1.25rem;
+	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
 	margin-top: 2rem;
 }
 
@@ -203,9 +203,6 @@ a:focus-visible {
 	line-height: 1.2;
 }
 
-.post-card__excerpt p {
-	margin: 0.6rem 0 0;
-}
 .post-card__excerpt {
 	display: -webkit-box;
 	-webkit-line-clamp: 5;
@@ -261,14 +258,15 @@ a:focus-visible {
 }
 .featured-grid {
 	display: grid;
-	gap: 1.5rem;
+	gap: 1.25rem;
+	margin-bottom: 2rem;
 }
 
 .post-card__author {
 	display: flex;
 	align-items: center;
-	gap: 0.75rem;
-	margin-top: auto;
+	gap: 0.65rem;
+	margin-top: 0.4rem;
 }
 
 .post-card__meta {
@@ -591,12 +589,6 @@ a:focus-visible {
 	gap: 1.25rem;
 }
 
-.featured-grid {
-	display: grid;
-	gap: 1.25rem;
-	margin-bottom: 1.5rem;
-}
-
 .home-author-strip p {
 	margin-bottom: 0.6rem;
 }
@@ -624,13 +616,6 @@ a:focus-visible {
 .home-author-strip__item a:hover,
 .home-author-strip__item a:focus-visible {
 	text-decoration-thickness: 2px;
-}
-
-.post-card__author {
-	display: flex;
-	align-items: center;
-	gap: 0.65rem;
-	margin-top: 0.75rem;
 }
 
 .post-card__avatar,
@@ -685,12 +670,6 @@ a:focus-visible {
 	gap: 0;
 }
 
-.featured-grid {
-	display: grid;
-	gap: 1.25rem;
-	margin-bottom: 2rem;
-}
-
 .post-card--feature-hero {
 	position: relative;
 	border-radius: 0.75rem;
@@ -742,19 +721,6 @@ a:focus-visible {
 
 .post-card--feature-tile .post-card__tax {
 	margin-bottom: 0.2rem;
-}
-
-.post-card__author {
-	display: flex;
-	align-items: center;
-	gap: 0.65rem;
-	margin-top: 0.4rem;
-}
-
-.entry-list {
-	display: grid;
-	gap: 1.25rem;
-	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
 }
 
 .post-card--entry-row {
