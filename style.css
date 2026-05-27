@@ -256,6 +256,11 @@ a:focus-visible {
 	border-bottom-color: currentcolor;
 }
 
+
+.post-card__tax {
+	margin-top: 0.35rem;
+}
+
 .archive-read-more {
 	margin-top: 2rem;
 }
@@ -283,15 +288,13 @@ a:focus-visible {
 }
 
 .post-card__meta {
-	display: flex;
-	flex-direction: column;
-	gap: 0.2rem;
+	line-height: 1.35;
 }
 
 .post-card__meta .byline-author,
 .post-card__meta .byline-date,
 .post-card__meta .byline-read {
-	display: block;
+	display: inline;
 }
 
 .post-card--entry-row {
