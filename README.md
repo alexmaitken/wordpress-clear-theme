@@ -76,3 +76,19 @@ composer test
 ```
 
 Workflow file: `.github/workflows/ci.yml`.
+
+
+## Release version bumps
+
+When asked to bump the theme version, update all three locations together so release tooling stays in sync:
+
+- `style.css` header `Version:`
+- `readme.txt` `Stable tag:`
+- `composer.json` `version`
+
+Then validate with:
+
+```bash
+composer validate-version -- vX.Y.Z
+```
+
