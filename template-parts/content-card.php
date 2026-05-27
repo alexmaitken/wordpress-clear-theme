@@ -5,12 +5,13 @@
  * @package Clear
  */
 
-$context = (string) get_query_var( 'clrthm_card_context', 'featured' );
-$slot    = (int) get_query_var( 'clrthm_card_slot', 0 );
+$context = (string) get_query_var( 'clrthm_card_context', '' );
+$slot_qv = get_query_var( 'clrthm_card_slot', null );
+$slot    = null !== $slot_qv ? (int) $slot_qv : null;
 
 $layout_class = 'post-card--compact';
 
-if ( 'featured' === $context ) {
+if ( 'featured' === $context && null !== $slot && $slot >= 0 ) {
 	if ( 0 === $slot ) {
 		$layout_class = 'post-card--feature-hero';
 	} else {
