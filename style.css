@@ -675,6 +675,17 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 .entry-content p,
 .entry-content ul,
 .entry-content ol { line-height: 1.76; }
+.entry-content p,
+.entry-content li,
+.entry-content figcaption,
+.entry-content .wp-element-caption,
+.entry-content blockquote,
+.entry-content td,
+.entry-content th,
+.entry-content a {
+	overflow-wrap: anywhere;
+	word-break: break-word;
+}
 .entry-content ul,
 .entry-content ol { padding-left: 1.35em; }
 .entry-content blockquote,
