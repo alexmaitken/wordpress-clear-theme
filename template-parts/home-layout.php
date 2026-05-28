@@ -26,7 +26,8 @@ clrthm_render_home_author_strip();
 if ( have_posts() ) :
 	if ( $show_featured ) :
 		?>
-		<section class="featured-grid" aria-label="<?php esc_attr_e( 'Featured stories', 'clear-theme' ); ?>">
+		<section class="featured-grid" aria-labelledby="featured-stories-heading">
+			<h2 id="featured-stories-heading" class="screen-reader-text"><?php esc_html_e( 'Featured stories', 'clear-theme' ); ?></h2>
 			<?php
 			$count = 0;
 			set_query_var( 'clrthm_card_context', 'featured' );
@@ -43,7 +44,8 @@ if ( have_posts() ) :
 
 	if ( have_posts() ) :
 		?>
-		<section class="post-list" aria-label="<?php esc_attr_e( 'Latest stories', 'clear-theme' ); ?>">
+		<section class="post-list" aria-labelledby="latest-stories-heading">
+			<h2 id="latest-stories-heading" class="screen-reader-text"><?php esc_html_e( 'Latest stories', 'clear-theme' ); ?></h2>
 			<?php while ( have_posts() ) : ?>
 				<?php the_post(); ?>
 				<?php get_template_part( 'template-parts/content', 'list' ); ?>
@@ -52,7 +54,7 @@ if ( have_posts() ) :
 		<?php
 	endif;
 	?>
-	<section class="archive-read-more" aria-label="<?php esc_attr_e( 'Read more', 'clear-theme' ); ?>">
+	<section class="archive-read-more" aria-label="<?php esc_attr_e( 'Read more posts', 'clear-theme' ); ?>">
 		<h2><?php esc_html_e( 'Read more', 'clear-theme' ); ?></h2>
 		<?php get_template_part( 'template-parts/pagination' ); ?>
 	</section>

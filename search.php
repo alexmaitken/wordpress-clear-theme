@@ -15,8 +15,12 @@ get_header();
 		?>
 	</h1>
 </header>
+<section class="search-results-summary" aria-label="<?php esc_attr_e( 'Search tools', 'clear-theme' ); ?>">
+	<?php get_search_form(); ?>
+</section>
 <?php if ( have_posts() ) : ?>
-	<section class="post-list" aria-label="<?php esc_attr_e( 'Search results', 'clear-theme' ); ?>">
+	<section class="post-list" aria-labelledby="search-results-heading">
+		<h2 id="search-results-heading" class="screen-reader-text"><?php esc_html_e( 'Search results', 'clear-theme' ); ?></h2>
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>
 			<?php get_template_part( 'template-parts/content', 'list' ); ?>
@@ -27,7 +31,6 @@ get_header();
 	<section class="empty-state">
 		<h2><?php esc_html_e( 'No results found', 'clear-theme' ); ?></h2>
 		<p><?php esc_html_e( 'We could not find posts matching your search. Try a different phrase or browse recent stories below.', 'clear-theme' ); ?></p>
-		<?php get_search_form(); ?>
 	</section>
 <?php endif; ?>
 <?php get_footer(); ?>
