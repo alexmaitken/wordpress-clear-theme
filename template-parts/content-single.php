@@ -29,12 +29,6 @@ $hero_image    = clrthm_get_featured_image_html( $entry_id );
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<div class="single-hero__meta">
 				<?php echo wp_kses_post( clrthm_get_post_byline() ); ?>
-				<?php if ( get_the_modified_time( 'U' ) !== get_the_time( 'U' ) ) : ?>
-					<p class="post-modified">
-						<?php esc_html_e( 'Updated', 'clear-theme' ); ?>:
-						<time datetime="<?php echo esc_attr( get_the_modified_date( DATE_W3C ) ); ?>"><?php echo esc_html( get_the_modified_date() ); ?></time>
-					</p>
-				<?php endif; ?>
 			</div>
 			<?php if ( has_excerpt() ) : ?>
 				<div class="single-hero__excerpt"><?php the_excerpt(); ?></div>
