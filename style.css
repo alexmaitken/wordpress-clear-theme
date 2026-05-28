@@ -708,7 +708,13 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	line-height: 1.5;
 }
 .entry-content .alignwide { width: min(100vw - 2.5rem, 64rem); max-width: 64rem; margin-left: 50%; transform: translateX(-50%); }
-.entry-content .alignfull { width: 100vw; max-width: 100vw; margin-left: 50%; transform: translateX(-50%); }
+.entry-content .alignfull {
+	width: 100vw;
+	max-width: 100vw;
+	margin-left: calc(50% - 50vw);
+	margin-right: calc(50% - 50vw);
+	transform: none;
+}
 
 /* Author/related/comments/navigation */
 .single-entry__inner,
@@ -1094,4 +1100,3 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 		width: 100%;
 	}
 }
-

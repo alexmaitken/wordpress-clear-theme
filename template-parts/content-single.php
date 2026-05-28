@@ -9,7 +9,7 @@ $entry_id      = get_the_ID();
 $layout_class  = clrthm_get_single_layout_class( $entry_id );
 $category_list = clrthm_get_public_terms_html( $entry_id, 'category' );
 $tag_list      = clrthm_get_public_terms_html( $entry_id, 'post_tag' );
-$hero_image    = clrthm_get_featured_image_html( $entry_id );
+$hero_image    = clrthm_should_render_featured_image( $entry_id ) ? clrthm_get_featured_image_html( $entry_id ) : '';
 ?>
 <article <?php post_class( 'single-entry ' . $layout_class ); ?> id="post-<?php the_ID(); ?>">
 	<header class="single-hero">
