@@ -4,6 +4,7 @@
  *
  * @package Clear
  */
+
 ?>
 <article <?php post_class( 'post-list__item' ); ?> id="post-<?php the_ID(); ?>">
 	<?php if ( has_post_thumbnail() ) : ?>
