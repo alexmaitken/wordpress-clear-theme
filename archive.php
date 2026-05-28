@@ -11,23 +11,18 @@ get_header();
 	<h1><?php the_archive_title(); ?></h1>
 	<?php the_archive_description( '<div>', '</div>' ); ?>
 </header>
-<div class="entry-list">
-	<?php if ( have_posts() ) : ?>
+<?php if ( have_posts() ) : ?>
+	<section class="post-list" aria-label="<?php esc_attr_e( 'Archive stories', 'clear-theme' ); ?>">
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>
-			<?php get_template_part( 'template-parts/content', 'card' ); ?>
+			<?php get_template_part( 'template-parts/content', 'list' ); ?>
 		<?php endwhile; ?>
-		<?php
-		the_posts_pagination(
-			array(
-				'prev_text'          => esc_html__( 'Previous page', 'clear-theme' ),
-				'next_text'          => esc_html__( 'Next page', 'clear-theme' ),
-				'screen_reader_text' => esc_html__( 'Posts navigation', 'clear-theme' ),
-			)
-		);
-		?>
-	<?php else : ?>
-		<p><?php esc_html_e( 'Nothing found in this archive.', 'clear-theme' ); ?></p>
-	<?php endif; ?>
-</div>
+	</section>
+	<?php get_template_part( 'template-parts/pagination' ); ?>
+<?php else : ?>
+	<section class="empty-state">
+		<h2><?php esc_html_e( 'No posts in this archive yet', 'clear-theme' ); ?></h2>
+		<p><?php esc_html_e( 'Try another archive section, or check back soon for new writing.', 'clear-theme' ); ?></p>
+	</section>
+<?php endif; ?>
 <?php get_footer(); ?>
