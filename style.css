@@ -1,9 +1,9 @@
 /*
 Theme Name: Clear
-Theme URI: https://example.com/clear-theme
+Theme URI: https://alexaitken.nz/clear-theme
 Author: Alex Aitken
 Author URI: https://alexaitken.nz/
-Description: A minimalist editorial WordPress theme for text-first publishing with refined typography, calm spacing, and elegant archives.
+Description: A minimalist, privacy-friendly editorial WordPress theme for text-first publishing with calm spacing and accessible defaults.
 Version: 1.1.4
 Requires at least: 6.4
 Tested up to: 6.6
@@ -11,12 +11,12 @@ Requires PHP: 7.4
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: clear-theme
-Tags: blog, one-column, two-columns, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, rtl-language-support, editor-style
+Tags: blog, one-column, two-columns, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, rtl-language-support, editor-style, accessibility-ready
 */
 
 /* Design tokens */
 :root {
-	--clrthm-font-sans: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	--clrthm-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 	--clrthm-font-ui: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
 	--clrthm-content-width: 72rem;

@@ -1,65 +1,115 @@
 # Clear WordPress Theme
 
-A minimalist editorial WordPress theme focused on readability and calm visual rhythm.
+Clear is a minimalist editorial WordPress theme designed for text-first publishing, predictable typography, and privacy-friendly defaults suitable for open-source distribution.
 
-## Local quality checks
+## Theme goals
 
-### 1) Install test tooling
+- Readable, calm layouts for articles and archives.
+- Minimal visual noise with good spacing and hierarchy.
+- Accessibility-conscious defaults (visible focus, semantic landmarks, keyboard-friendly navigation).
+- Privacy-first behavior by default (no external font requests unless explicitly enabled).
+
+## Customization options
+
+In **Appearance → Customize → Theme Presentation**:
+
+- Accent color
+- Header layout (left/centered)
+- Show/hide reading time
+- Show/hide featured author strip on homepage
+- Show/hide related posts
+- Show/hide homepage tagline
+- Link author names/avatars to author pages
+- Optional footer copyright text
+- Optional opt-in for Google-hosted Inter font
+
+### Font strategy (privacy by default)
+
+By default, Clear uses a system font stack and makes no remote font requests.
+
+You can opt into Google Fonts either:
+
+1. Via Customizer: enable **"Enable hosted Inter font from Google Fonts (external request)"**.
+2. Via filter in a plugin or child theme:
+
+```php
+add_filter( 'clrthm_load_google_fonts', '__return_true' );
+```
+
+You can also override the URL:
+
+```php
+add_filter( 'clrthm_google_fonts_url', function () {
+	return 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap';
+} );
+```
+
+The same behavior applies in both frontend and block editor to keep typography aligned.
+
+## Menu setup
+
+Clear registers three locations:
+
+- **Primary Menu** — main navigation
+- **Utility Menu** — secondary links
+- **Footer Menu** — footer links
+
+Assign menus in **Appearance → Menus**. Empty locations do not output unused navigation landmarks.
+
+## Post layout notes
+
+Clear supports:
+
+- Featured images with theme-defined crop sizes
+- Reading-time byline
+- Related posts section
+- Optional author strip
+
+Recommended tags/categories: use meaningful editorial taxonomy (for example, section/category + topic tags) so archive and related content layouts remain useful.
+
+## Recommended image sizes
+
+- Post thumbnail default: `1600 x 900` (hard crop)
+- Card image (`clrthm-card`): `960 x 640` (hard crop)
+- Single hero (`clrthm-single-hero`): `1400 x 900` (hard crop)
+
+For best results, upload featured images at or above the largest target size.
+
+## Local development
 
 ```bash
 composer install
+composer test
 ```
 
-### 2) Run checks
-
-```bash
-composer lint   # PHP syntax checks
-composer phpcs  # WordPress Coding Standards + Theme Review sniffs
-composer test   # lint + phpcs + smoke tests
-```
-
-`composer test` is the primary local and CI command.
-
-## Docker local WordPress environment
-
-Start WordPress + MySQL:
+Optional local WordPress stack:
 
 ```bash
 docker compose up -d
 ```
 
-Theme mount:
+Then open <http://localhost:8080> and activate **Clear**.
 
-- Current repository is mounted to `/var/www/html/wp-content/themes/clear-theme` in the WordPress container.
-
-Open WordPress at http://localhost:8080 and activate **Clear Theme**.
-
-### Debug mode
-
-`WP_DEBUG`, `WP_DEBUG_LOG`, and `SCRIPT_DEBUG` are enabled by default through `WORDPRESS_CONFIG_EXTRA` in `docker-compose.yml`.
-
-### Optional Theme Check
-
-You can run Theme Check inside the WordPress container (requires running containers):
+## Testing commands
 
 ```bash
-composer docker:theme-check
+composer lint             # PHP syntax checks
+composer phpcs            # WPCS + Theme Review sniffs
+composer smoke            # required file/header checks
+composer test             # lint + phpcs + smoke
+composer validate-version -- vX.Y.Z
+composer build-release
 ```
 
-## Theme Unit Test data import
+## Theme Unit Test instructions
 
-You can import the Theme Unit Test XML data either manually in wp-admin or via WP-CLI.
+Manual import:
 
-### Manual import
+1. Download the Theme Unit Test XML data.
+2. In wp-admin: **Tools → Import → WordPress**.
+3. Upload XML and assign authors.
 
-1. Download the Theme Unit Test XML file.
-2. In wp-admin, go to **Tools → Import → WordPress**.
-3. Upload the XML file and assign authors.
-
-### WP-CLI import (inside container, requires WP-CLI in `wordpress:php8.2-apache`)
-
-> The `wordpress:php8.2-apache` image does not include `wp` by default.
-> Install WP-CLI in that container, or run these commands from a dedicated WP-CLI image.
+WP-CLI flow:
 
 ```bash
 docker compose exec -T wordpress wp plugin install wordpress-importer --activate --allow-root
@@ -67,28 +117,24 @@ docker compose exec -T wordpress bash -lc 'curl -fsSL https://raw.githubusercont
 docker compose exec -T wordpress wp import /tmp/themeunittestdata.wordpress.xml --authors=create --allow-root
 ```
 
-## CI
+## Release/version process
 
-GitHub Actions runs the same command used locally:
+Keep these versions in sync:
 
-```bash
-composer test
-```
+- `style.css` → `Version:`
+- `readme.txt` → `Stable tag:`
+- `composer.json` → `version`
 
-Workflow file: `.github/workflows/ci.yml`.
-
-
-## Release version bumps
-
-When asked to bump the theme version, update all three locations together so release tooling stays in sync:
-
-- `style.css` header `Version:`
-- `readme.txt` `Stable tag:`
-- `composer.json` `version`
-
-Then validate with:
+Validate:
 
 ```bash
 composer validate-version -- vX.Y.Z
 ```
 
+Build package:
+
+```bash
+composer build-release
+```
+
+CI and release workflows run these checks automatically.
