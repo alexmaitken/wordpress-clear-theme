@@ -235,7 +235,7 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 }
 .home-author-strip__item a:hover,
 .home-author-strip__item a:focus-visible { text-decoration-thickness: 2px; }
-.featured-grid { display: grid; gap: var(--clrthm-space-xl); margin-bottom: var(--clrthm-space-2xl); }
+.featured-grid { display: grid; gap: var(--clrthm-space-xl); margin-bottom: var(--clrthm-space-2xl); min-width: 0; }
 .home .site-footer { border: 0; }
 
 /* Post cards */
@@ -346,6 +346,9 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	border-radius: var(--clrthm-radius-xl);
 	overflow: hidden;
 	min-height: clamp(14rem, 34vw, 24rem);
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
 }
 .post-card--feature-hero .post-card__media,
 .post-card--feature-hero .post-card__media--placeholder {
