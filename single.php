@@ -21,7 +21,7 @@ if ( have_posts() ) :
 			comments_template();
 		}
 
-		the_post_navigation();
+		clrthm_render_post_navigation();
 	endwhile;
 endif;
 

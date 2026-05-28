@@ -239,20 +239,53 @@ function clrthm_get_post_byline() {
 			$author_name
 		);
 	}
-	$date   = sprintf(
+	$date  = sprintf(
 		'<time class="byline-date" datetime="%1$s">%2$s</time>',
 		esc_attr( get_the_date( DATE_W3C ) ),
 		esc_html( get_the_date() )
 	);
-	$author = '<span class="byline-author">' . $author . '</span>';
+	$parts = array(
+		'<span class="byline-author"><span class="screen-reader-text">' . esc_html__( 'By ', 'clear-theme' ) . '</span>' . $author . '</span>',
+		'<span class="byline-separator" aria-hidden="true">·</span>',
+		'<span class="byline-published"><span class="screen-reader-text">' . esc_html__( 'Published ', 'clear-theme' ) . '</span>' . $date . '</span>',
+	);
+
 	if ( get_theme_mod( 'clrthm_show_reading_time', 1 ) ) {
-		$read = '<span class="byline-read">' . esc_html( clrthm_get_reading_time() ) . '</span>';
-		/* translators: 1: post author, 2: post date, 3: reading time. */
-		return sprintf( __( 'By %1$s on %2$s · %3$s', 'clear-theme' ), $author, $date, $read );
+		$parts[] = '<span class="byline-separator" aria-hidden="true">·</span>';
+		$parts[] = '<span class="byline-read">' . esc_html( clrthm_get_reading_time() ) . '</span>';
 	}
 
-	/* translators: 1: post author, 2: post date. */
-	return sprintf( __( 'By %1$s on %2$s', 'clear-theme' ), $author, $date );
+	return '<p class="post-byline">' . implode( '', $parts ) . '</p>';
+}
+
+/**
+ * Render editorial post navigation.
+ */
+function clrthm_render_post_navigation() {
+	$previous_post = get_previous_post();
+	$next_post     = get_next_post();
+
+	if ( ! $previous_post && ! $next_post ) {
+		return;
+	}
+	?>
+	<nav class="post-navigation post-navigation--editorial" aria-label="<?php esc_attr_e( 'Post navigation', 'clear-theme' ); ?>">
+		<div class="post-navigation__grid">
+			<?php if ( $previous_post ) : ?>
+				<a class="post-nav-card post-nav-card--prev" href="<?php echo esc_url( get_permalink( $previous_post ) ); ?>" rel="prev">
+					<span class="post-nav-card__kicker"><?php esc_html_e( 'Previous story', 'clear-theme' ); ?></span>
+					<span class="post-nav-card__title"><?php echo esc_html( get_the_title( $previous_post ) ); ?></span>
+				</a>
+			<?php endif; ?>
+			<?php if ( $next_post ) : ?>
+				<a class="post-nav-card post-nav-card--next" href="<?php echo esc_url( get_permalink( $next_post ) ); ?>" rel="next">
+					<span class="post-nav-card__kicker"><?php esc_html_e( 'Next story', 'clear-theme' ); ?></span>
+					<span class="post-nav-card__title"><?php echo esc_html( get_the_title( $next_post ) ); ?></span>
+				</a>
+			<?php endif; ?>
+		</div>
+	</nav>
+	<?php
 }
 
 /**

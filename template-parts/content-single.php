@@ -27,7 +27,7 @@ $hero_image    = clrthm_get_featured_image_html( $entry_id );
 				</p>
 			<?php endif; ?>
 			<h1 class="entry-title"><?php the_title(); ?></h1>
-			<p class="single-hero__meta"><?php echo wp_kses_post( clrthm_get_post_byline() ); ?></p>
+			<div class="single-hero__meta"><?php echo wp_kses_post( clrthm_get_post_byline() ); ?></div>
 			<?php if ( has_excerpt() ) : ?>
 				<div class="single-hero__excerpt"><?php the_excerpt(); ?></div>
 			<?php endif; ?>
@@ -35,16 +35,17 @@ $hero_image    = clrthm_get_featured_image_html( $entry_id );
 	</header>
 
 	<div class="single-entry__inner">
+		<div class="entry-content">
+			<?php the_content(); ?>
+			<?php wp_link_pages(); ?>
+		</div>
 		<nav class="single-share" aria-label="<?php esc_attr_e( 'Share this post', 'clear-theme' ); ?>">
+			<p class="single-share__label"><?php esc_html_e( 'Share', 'clear-theme' ); ?></p>
 			<ul>
 				<li><a href="<?php echo esc_url( 'https://x.com/intent/tweet?url=' . rawurlencode( get_permalink() ) . '&text=' . rawurlencode( get_the_title() ) ); ?>" aria-label="<?php esc_attr_e( 'Share on X', 'clear-theme' ); ?>"><span aria-hidden="true">𝕏</span></a></li>
 				<li><a href="<?php echo esc_url( 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencode( get_permalink() ) ); ?>" aria-label="<?php esc_attr_e( 'Share on LinkedIn', 'clear-theme' ); ?>"><span aria-hidden="true">in</span></a></li>
 				<li><a href="<?php echo esc_url( 'mailto:?subject=' . rawurlencode( get_the_title() ) . '&body=' . rawurlencode( get_permalink() ) ); ?>" aria-label="<?php esc_attr_e( 'Share via Email', 'clear-theme' ); ?>"><span aria-hidden="true">✉</span></a></li>
 			</ul>
 		</nav>
-		<div class="entry-content">
-			<?php the_content(); ?>
-			<?php wp_link_pages(); ?>
-		</div>
 	</div>
 </article>
