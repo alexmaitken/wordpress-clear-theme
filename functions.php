@@ -122,11 +122,13 @@ function clrthm_add_presentation_css_variables() {
 	$bg_color = $bg_color ? $bg_color : '#ffffff';
 
 	$bg_style = clrthm_sanitize_background_style( get_theme_mod( 'clrthm_background_style', 'solid' ) );
+	$bg_alpha = clrthm_sanitize_background_alpha( get_theme_mod( 'clrthm_background_radial_alpha', 0.12 ) );
 
 	if ( 'radial' === $bg_style ) {
 		$bg_gradient = sprintf(
-			'radial-gradient(120% 70% at 50%% 0%%, %1$s 0%%, %2$s 68%%)',
-			clrthm_hex_to_rgba( $bg_color, 0.12 ),
+			'radial-gradient(85%% 60%% at 50%% 0%%, %1$s 0%%, %2$s 16%%, %3$s 34%%, rgba(255, 255, 255, 1) 100%%)',
+			clrthm_hex_to_rgba( $bg_color, $bg_alpha ),
+			clrthm_hex_to_rgba( $bg_color, $bg_alpha * 0.35 ),
 			clrthm_hex_to_rgba( $bg_color, 0 )
 		);
 	} else {
@@ -195,6 +197,27 @@ function clrthm_sanitize_background_style( $value ) {
 	$allowed = array( 'solid', 'radial' );
 
 	return in_array( $value, $allowed, true ) ? $value : 'solid';
+}
+
+
+/**
+ * Sanitize background radial alpha.
+ *
+ * @param mixed $value Alpha value.
+ * @return float
+ */
+function clrthm_sanitize_background_alpha( $value ) {
+	$value = is_numeric( $value ) ? (float) $value : 0.12;
+
+	if ( $value < 0 ) {
+		return 0;
+	}
+
+	if ( $value > 1 ) {
+		return 1;
+	}
+
+	return round( $value, 2 );
 }
 
 /**
@@ -293,6 +316,28 @@ function clrthm_customize_register( $wp_customize ) {
 			'choices' => array(
 				'solid'  => esc_html__( 'Solid color', 'clear-theme' ),
 				'radial' => esc_html__( 'Minimal radial gradient', 'clear-theme' ),
+			),
+		)
+	);
+
+	$wp_customize->add_setting(
+		'clrthm_background_radial_alpha',
+		array(
+			'default'           => 0.12,
+			'sanitize_callback' => 'clrthm_sanitize_background_alpha',
+		)
+	);
+	$wp_customize->add_control(
+		'clrthm_background_radial_alpha',
+		array(
+			'type'        => 'range',
+			'label'       => esc_html__( 'Radial gradient intensity', 'clear-theme' ),
+			'section'     => 'clrthm_presentation',
+			'description' => esc_html__( 'Controls the transparency of the radial color burst.', 'clear-theme' ),
+			'input_attrs' => array(
+				'min'  => 0,
+				'max'  => 1,
+				'step' => 0.01,
 			),
 		)
 	);
