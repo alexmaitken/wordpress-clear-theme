@@ -696,7 +696,7 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 		justify-items: stretch;
 		text-align: left;
 	}
-	.menu-toggle { display: inline-flex; width: fit-content; }
+	.js .menu-toggle { display: inline-flex; width: fit-content; }
 	.js .site-header__navs { display: none; }
 	.js .site-header__navs.is-open {
 		display: grid;

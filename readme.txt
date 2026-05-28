@@ -31,7 +31,7 @@ Clear registers three menu locations:
 
 Navigation landmarks are only rendered when a menu is assigned to that location, so empty `<nav>` landmarks are not output.
 
-On smaller screens, the header uses a progressively enhanced Menu toggle. Without JavaScript, assigned menus remain visible. With JavaScript enabled, the toggle controls the menu panel and updates `aria-expanded`.
+On smaller screens, the header uses a progressively enhanced menu toggle. Without JavaScript, assigned menus remain visible. With JavaScript enabled, the toggle controls the menu panel and updates `aria-expanded`.
 
 The header also includes the standard WordPress search form as a low-emphasis affordance.
 
