@@ -437,8 +437,12 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	flex: 1 1 18rem;
 	display: grid;
 	grid-template-columns: 1fr;
-	gap: var(--clrthm-space-lg);
+	gap: 0.3rem;
 	align-items: start;
+}
+.post-card--entry-row .post-card__author {
+	margin-top: 0.3rem;
+	padding-top: 0.3rem;
 }
 .post-card--entry-row .post-card__media { max-width: 100%; }
 .post-card__media:focus-visible {
