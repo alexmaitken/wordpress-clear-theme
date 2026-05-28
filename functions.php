@@ -239,12 +239,12 @@ function clrthm_get_post_byline() {
 			$author_name
 		);
 	}
-	$date   = sprintf(
+	$date  = sprintf(
 		'<time class="byline-date" datetime="%1$s">%2$s</time>',
 		esc_attr( get_the_date( DATE_W3C ) ),
 		esc_html( get_the_date() )
 	);
-	$parts  = array(
+	$parts = array(
 		'<span class="byline-author"><span class="screen-reader-text">' . esc_html__( 'By ', 'clear-theme' ) . '</span>' . $author . '</span>',
 		'<span class="byline-separator" aria-hidden="true">·</span>',
 		'<span class="byline-published"><span class="screen-reader-text">' . esc_html__( 'Published ', 'clear-theme' ) . '</span>' . $date . '</span>',
