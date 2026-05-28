@@ -43,30 +43,18 @@ if ( have_posts() ) :
 
 	if ( have_posts() ) :
 		?>
-		<section class="entry-list" aria-label="<?php esc_attr_e( 'Latest stories', 'clear-theme' ); ?>">
-			<?php
-			set_query_var( 'clrthm_card_context', 'entry-list' );
-			while ( have_posts() ) :
-				the_post();
-				get_template_part( 'template-parts/content', 'card' );
-			endwhile;
-			?>
+		<section class="post-list" aria-label="<?php esc_attr_e( 'Latest stories', 'clear-theme' ); ?>">
+			<?php while ( have_posts() ) : ?>
+				<?php the_post(); ?>
+				<?php get_template_part( 'template-parts/content', 'list' ); ?>
+			<?php endwhile; ?>
 		</section>
 		<?php
 	endif;
 	?>
 	<section class="archive-read-more" aria-label="<?php esc_attr_e( 'Read more', 'clear-theme' ); ?>">
 		<h2><?php esc_html_e( 'Read more', 'clear-theme' ); ?></h2>
-		<?php
-		the_posts_pagination(
-			array(
-				'mid_size'           => 1,
-				'prev_text'          => esc_html__( 'Previous page', 'clear-theme' ),
-				'next_text'          => esc_html__( 'Next page', 'clear-theme' ),
-				'screen_reader_text' => esc_html__( 'Posts navigation', 'clear-theme' ),
-			)
-		);
-		?>
+		<?php get_template_part( 'template-parts/pagination' ); ?>
 	</section>
 	<?php
 else :

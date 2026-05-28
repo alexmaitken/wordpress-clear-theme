@@ -603,3 +603,89 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 		transform: none;
 	}
 }
+
+/* Text-first list layout */
+.post-list {
+	display: grid;
+	gap: var(--clrthm-space-xl);
+	margin-top: var(--clrthm-space-xl);
+}
+.post-list__item {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--clrthm-space-md);
+	padding: 0 0 var(--clrthm-space-xl);
+	border-bottom: 1px solid var(--clrthm-border);
+}
+.post-list__thumb {
+	max-width: 16rem;
+	display: block;
+}
+.post-list__thumb img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 10;
+	object-fit: cover;
+	border-radius: var(--clrthm-radius-sm);
+}
+.post-list__title {
+	margin: 0;
+	line-height: 1.3;
+	font-size: clamp(1.2rem, 1.08rem + 0.5vw, 1.6rem);
+}
+.post-list__title a { color: inherit; text-decoration: none; }
+.post-list__meta,
+.post-list__tax {
+	margin: 0;
+	font-size: var(--clrthm-type-small);
+	color: var(--clrthm-muted);
+}
+.post-list__tax a { color: inherit; }
+.post-list__excerpt p { margin: var(--clrthm-space-sm) 0 0; }
+
+.pagination {
+	margin-top: var(--clrthm-space-2xl);
+}
+.pagination .nav-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--clrthm-space-sm);
+}
+.pagination .page-numbers {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 2.2rem;
+	min-height: 2.2rem;
+	padding: 0.3rem 0.7rem;
+	border: 1px solid var(--clrthm-border);
+	border-radius: var(--clrthm-radius-pill);
+	text-decoration: none;
+	color: var(--clrthm-text);
+}
+.pagination .page-numbers.current {
+	background: var(--clrthm-text);
+	color: var(--clrthm-inverse);
+	border-color: var(--clrthm-text);
+}
+.pagination a.page-numbers:hover,
+.pagination a.page-numbers:focus-visible {
+	background: var(--clrthm-hover-bg);
+	border-color: var(--clrthm-focus);
+	outline: none;
+}
+
+@media (min-width: 48rem) {
+	.post-list__item {
+		grid-template-columns: minmax(0, 1fr) minmax(12rem, 16rem);
+		align-items: start;
+	}
+	.post-list__thumb {
+		order: 2;
+		justify-self: end;
+	}
+	.post-list__content {
+		order: 1;
+	}
+}

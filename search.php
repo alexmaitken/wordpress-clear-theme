@@ -15,26 +15,19 @@ get_header();
 		?>
 	</h1>
 </header>
-<div class="entry-list">
-	<?php if ( have_posts() ) : ?>
+<?php if ( have_posts() ) : ?>
+	<section class="post-list" aria-label="<?php esc_attr_e( 'Search results', 'clear-theme' ); ?>">
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>
-			<?php get_template_part( 'template-parts/content', 'card' ); ?>
+			<?php get_template_part( 'template-parts/content', 'list' ); ?>
 		<?php endwhile; ?>
-		<?php
-		the_posts_pagination(
-			array(
-				'prev_text'          => esc_html__( 'Previous page', 'clear-theme' ),
-				'next_text'          => esc_html__( 'Next page', 'clear-theme' ),
-				'screen_reader_text' => esc_html__( 'Posts navigation', 'clear-theme' ),
-			)
-		);
-		?>
-	<?php else : ?>
-		<section class="empty-state">
-			<p><?php esc_html_e( 'No matching stories were found. Try another search term or browse recent posts.', 'clear-theme' ); ?></p>
-			<?php get_search_form(); ?>
-		</section>
-	<?php endif; ?>
-</div>
+	</section>
+	<?php get_template_part( 'template-parts/pagination' ); ?>
+<?php else : ?>
+	<section class="empty-state">
+		<h2><?php esc_html_e( 'No results found', 'clear-theme' ); ?></h2>
+		<p><?php esc_html_e( 'We could not find posts matching your search. Try a different phrase or browse recent stories below.', 'clear-theme' ); ?></p>
+		<?php get_search_form(); ?>
+	</section>
+<?php endif; ?>
 <?php get_footer(); ?>
