@@ -741,13 +741,13 @@ function clrthm_get_public_terms_html( $post_id, $taxonomy ) {
 			continue;
 		}
 		$items[] = sprintf(
-			'<a href="%1$s">%2$s</a>',
+			'<a class="clrthm-term-pill" href="%1$s">%2$s</a>',
 			esc_url( get_term_link( $term ) ),
 			esc_html( $term->name )
 		);
 	}
 
-	return implode( ', ', $items );
+	return implode( ' ', $items );
 }
 
 /**

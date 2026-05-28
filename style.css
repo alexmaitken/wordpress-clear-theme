@@ -1036,7 +1036,24 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	font-size: var(--clrthm-type-small);
 	color: var(--clrthm-muted);
 }
-.post-list__tax a { color: inherit; }
+.post-list__tax a,
+.single-hero__tax a {
+	color: inherit;
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	font-size: 0.78rem;
+	background: var(--clrthm-chip-bg);
+	padding: var(--clrthm-space-2xs) 0.55rem;
+	border-radius: var(--clrthm-radius-pill);
+	display: inline-block;
+	margin-right: var(--clrthm-space-xs);
+}
+.post-list__tax a:hover,
+.post-list__tax a:focus-visible,
+.single-hero__tax a:hover,
+.single-hero__tax a:focus-visible {
+	border-bottom-color: currentcolor;
+}
 .post-list__excerpt {
 	display: -webkit-box;
 	-webkit-line-clamp: 3;
