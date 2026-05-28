@@ -211,3 +211,34 @@ body.block-editor-page .editor-styles-wrapper {
 	border-top: 1px solid var(--clrthm-border);
 	margin: 2rem 0;
 }
+
+body.post-type-page .editor-styles-wrapper .is-root-container {
+	padding-top: clamp(1.5rem, 4vw, 3rem);
+	padding-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+body.post-type-page .editor-styles-wrapper .wp-block-separator {
+	max-width: 7rem;
+	margin: clamp(2rem, 4vw, 3.2rem) auto;
+	opacity: 0.6;
+}
+
+body.post-type-page .editor-styles-wrapper .wp-block-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: center;
+}
+
+body.post-type-page .editor-styles-wrapper .wp-block-button__link,
+body.post-type-page .editor-styles-wrapper .wp-element-button {
+	border-radius: 999px;
+	padding: 0.55rem 1.1rem;
+}
+
+body.post-type-page .editor-styles-wrapper .is-root-container > p.has-large-font-size:first-child,
+body.post-type-page .editor-styles-wrapper .is-root-container > p.has-x-large-font-size:first-child {
+	color: var(--clrthm-excerpt);
+	font-size: clamp(1.2rem, 2vw, 1.5rem) !important;
+	line-height: 1.62;
+}

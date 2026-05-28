@@ -457,6 +457,57 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 }
 .single-entry .entry-content p { margin: 0 0 1.45em; }
 
+/* Pages */
+.page-entry {
+	display: grid;
+	gap: var(--clrthm-space-xl);
+	padding: clamp(1rem, 2vw, 2rem) 0;
+}
+.page-entry__header,
+.page-entry__inner {
+	width: min(100%, var(--clrthm-reading-width));
+	margin-inline: auto;
+}
+.page-entry__header .entry-title {
+	font-family: var(--clrthm-font-ui);
+	font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+	letter-spacing: -0.015em;
+	line-height: 1.2;
+	margin: 0;
+	max-width: var(--clrthm-title-width);
+}
+.page .entry-content {
+	background: transparent;
+	border: 0;
+	padding: 0;
+	font-size: var(--clrthm-type-body);
+	line-height: 1.76;
+}
+.page .entry-content > * + * { margin-top: 1.4em; }
+.page .entry-content .wp-block-separator {
+	max-width: 7rem;
+	border-top-width: 1px;
+	opacity: 0.6;
+	margin: clamp(2rem, 4vw, 3.2rem) auto;
+}
+.page .entry-content .wp-block-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: center;
+}
+.page .entry-content .wp-block-button__link,
+.page .entry-content .wp-element-button {
+	border-radius: var(--clrthm-radius-pill);
+	padding: 0.55rem 1.1rem;
+}
+.page .entry-content > p.has-large-font-size:first-child,
+.page .entry-content > p.has-x-large-font-size:first-child {
+	color: var(--clrthm-excerpt);
+	font-size: clamp(1.2rem, 2vw, 1.5rem) !important;
+	line-height: 1.62;
+}
+
 /* Entry content */
 .entry-content {
 	background: var(--clrthm-surface);
@@ -683,6 +734,19 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	.post-card--right .post-card__media { order: 2; }
 	.post-card--feature,
 	.post-card--compact { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 48rem) {
+	.page-entry {
+		gap: var(--clrthm-space-lg);
+		padding-top: var(--clrthm-space-md);
+	}
+	.page-entry__header .entry-title {
+		font-size: clamp(1.7rem, 7vw, 2.2rem);
+	}
+	.page .entry-content > * + * {
+		margin-top: 1.25em;
+	}
 }
 @media (min-width: 62rem) {
 	.single-layout--left-image .single-hero,
