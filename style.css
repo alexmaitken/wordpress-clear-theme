@@ -51,6 +51,7 @@ Tags: blog, one-column, two-columns, custom-logo, custom-menu, featured-images, 
 	--clrthm-radius-pill: 999px;
 
 	--clrthm-bg: #ffffff;
+	--clrthm-bg-gradient: none;
 	--clrthm-surface: #ffffff;
 	--clrthm-text: #181818;
 	--clrthm-muted: #555;
@@ -79,7 +80,10 @@ Tags: blog, one-column, two-columns, custom-logo, custom-menu, featured-images, 
 html { font-size: 100%; }
 body {
 	margin: 0;
-	background: var(--clrthm-bg);
+	background-color: var(--clrthm-bg);
+	background-image: var(--clrthm-bg-gradient);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 	color: var(--clrthm-text);
 	font-family: var(--clrthm-font-sans);
 	font-size: var(--clrthm-type-body);
