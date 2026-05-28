@@ -17,6 +17,8 @@ body.block-editor-page .editor-styles-wrapper {
 	--clrthm-border: #dfdfdf;
 	--clrthm-focus: #0a66d1;
 	--clrthm-accent: #0a66d1;
+	--clrthm-code-bg: #f4f6f8;
+	--clrthm-surface-subtle: #fafafa;
 
 	font-family: var(--clrthm-font-sans);
 	font-size: var(--clrthm-type-body);
@@ -150,7 +152,7 @@ body.block-editor-page .editor-styles-wrapper {
 .editor-styles-wrapper samp {
 	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
 	font-size: var(--clrthm-type-code);
-	background: #f4f6f8;
+	background: var(--clrthm-code-bg);
 	padding: 0.08em 0.35em;
 	border-radius: 0.25rem;
 }
@@ -185,7 +187,7 @@ body.block-editor-page .editor-styles-wrapper {
 
 .editor-styles-wrapper th {
 	font-weight: 600;
-	background: #fafafa;
+	background: var(--clrthm-surface-subtle);
 }
 
 .editor-styles-wrapper figure {
