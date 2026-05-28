@@ -8,7 +8,8 @@
 ?>
 <article <?php post_class( 'post-list__item' ); ?> id="post-<?php the_ID(); ?>">
 	<?php if ( has_post_thumbnail() ) : ?>
-		<a class="post-list__thumb" href="<?php the_permalink(); ?>" aria-label="<?php printf( esc_attr__( 'Read: %s', 'clear-theme' ), get_the_title() ); ?>">
+		<?php /* translators: %s: post title. */ ?>
+		<a class="post-list__thumb" href="<?php the_permalink(); ?>" aria-label="<?php printf( esc_attr__( 'Read: %s', 'clear-theme' ), esc_attr( get_the_title() ) ); ?>">
 			<?php the_post_thumbnail( 'medium' ); ?>
 		</a>
 	<?php endif; ?>

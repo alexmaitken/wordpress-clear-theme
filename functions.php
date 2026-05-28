@@ -450,8 +450,8 @@ function clrthm_output_structured_data() {
 			return;
 		}
 
-		$post_id    = get_queried_object_id();
-		$schema     = array(
+		$post_id = get_queried_object_id();
+		$schema  = array(
 			'@context'         => 'https://schema.org',
 			'@type'            => 'BlogPosting',
 			'headline'         => wp_strip_all_tags( get_the_title( $post_id ) ),
@@ -499,6 +499,6 @@ function clrthm_output_structured_data() {
 	if ( empty( $schema ) || ! is_array( $schema ) ) {
 		return;
 	}
-	echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>';
+	echo '<script type="application/ld+json">' . wp_json_encode( $schema ) . '</script>';
 }
 add_action( 'wp_head', 'clrthm_output_structured_data', 30 );
