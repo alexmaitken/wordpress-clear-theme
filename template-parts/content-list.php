@@ -16,7 +16,16 @@
 
 	<div class="post-list__content">
 		<h2 class="post-list__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-		<div class="post-list__meta"><?php echo wp_kses_post( clrthm_get_post_byline() ); ?></div>
+		<div class="post-list__author">
+			<?php if ( get_theme_mod( 'clrthm_link_author_pages', 0 ) ) : ?>
+				<a class="post-list__avatar" href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" aria-label="<?php echo esc_attr( get_the_author() ); ?>">
+					<?php echo wp_kses_post( clrthm_get_author_avatar( get_the_author_meta( 'ID' ), 36 ) ); ?>
+				</a>
+			<?php else : ?>
+				<span class="post-list__avatar"><?php echo wp_kses_post( clrthm_get_author_avatar( get_the_author_meta( 'ID' ), 36 ) ); ?></span>
+			<?php endif; ?>
+			<div class="post-list__meta"><?php echo wp_kses_post( clrthm_get_post_byline() ); ?></div>
+		</div>
 
 		<?php
 		$cats = clrthm_get_public_terms_html( get_the_ID(), 'category' );
