@@ -54,13 +54,19 @@ add_action( 'after_setup_theme', 'clrthm_setup' );
  * Scripts.
  */
 function clrthm_scripts() {
-	wp_enqueue_style(
-		'clrthm-inter-font',
-		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap',
-		array(),
-		wp_get_theme()->get( 'Version' )
-	);
-	wp_enqueue_style( 'clrthm-style', get_stylesheet_uri(), array( 'clrthm-inter-font' ), wp_get_theme()->get( 'Version' ) );
+	$theme_version = wp_get_theme()->get( 'Version' );
+
+	if ( clrthm_should_load_google_fonts() ) {
+		wp_enqueue_style(
+			'clrthm-inter-font',
+			clrthm_get_google_fonts_url(),
+			array(),
+			$theme_version
+		);
+	}
+
+	$style_dependencies = clrthm_should_load_google_fonts() ? array( 'clrthm-inter-font' ) : array();
+	wp_enqueue_style( 'clrthm-style', get_stylesheet_uri(), $style_dependencies, $theme_version );
 
 	wp_enqueue_script(
 		'clrthm-navigation',
@@ -72,6 +78,55 @@ function clrthm_scripts() {
 }
 
 add_action( 'wp_enqueue_scripts', 'clrthm_scripts' );
+
+/**
+ * Get theme Google Fonts URL.
+ *
+ * @return string
+ */
+function clrthm_get_google_fonts_url() {
+	$fonts_url = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap';
+
+	/**
+	 * Filters the theme Google Fonts URL.
+	 *
+	 * @param string $fonts_url Google Fonts URL.
+	 */
+	return esc_url_raw( apply_filters( 'clrthm_google_fonts_url', $fonts_url ) );
+}
+
+/**
+ * Determine whether Google Fonts should be loaded.
+ *
+ * @return bool
+ */
+function clrthm_should_load_google_fonts() {
+	$enabled = (bool) get_theme_mod( 'clrthm_enable_google_fonts', 0 );
+
+	/**
+	 * Filters whether the theme should load Google Fonts.
+	 *
+	 * @param bool $enabled Whether Google Fonts are enabled.
+	 */
+	return (bool) apply_filters( 'clrthm_load_google_fonts', $enabled );
+}
+
+/**
+ * Enqueue editor fonts.
+ *
+ * @return void
+ */
+function clrthm_editor_assets() {
+	if ( clrthm_should_load_google_fonts() ) {
+		wp_enqueue_style(
+			'clrthm-inter-font',
+			clrthm_get_google_fonts_url(),
+			array(),
+			wp_get_theme()->get( 'Version' )
+		);
+	}
+}
+add_action( 'enqueue_block_editor_assets', 'clrthm_editor_assets' );
 
 /**
  * Sanitize checkbox.
@@ -131,18 +186,20 @@ function clrthm_customize_register( $wp_customize ) {
 	);
 
 	$checkbox_controls = array(
-		'clrthm_show_reading_time'  => esc_html__( 'Show reading time', 'clear-theme' ),
-		'clrthm_show_author_strip'  => esc_html__( 'Show featured authors strip on homepage', 'clear-theme' ),
-		'clrthm_show_related_posts' => esc_html__( 'Show related posts', 'clear-theme' ),
-		'clrthm_show_site_tagline'  => esc_html__( 'Show homepage tagline', 'clear-theme' ),
-		'clrthm_link_author_pages'  => esc_html__( 'Link author names and avatars to author pages', 'clear-theme' ),
+		'clrthm_enable_google_fonts' => esc_html__( 'Enable hosted Inter font from Google Fonts (external request)', 'clear-theme' ),
+		'clrthm_show_reading_time'   => esc_html__( 'Show reading time', 'clear-theme' ),
+		'clrthm_show_author_strip'   => esc_html__( 'Show featured authors strip on homepage', 'clear-theme' ),
+		'clrthm_show_related_posts'  => esc_html__( 'Show related posts', 'clear-theme' ),
+		'clrthm_show_site_tagline'   => esc_html__( 'Show homepage tagline', 'clear-theme' ),
+		'clrthm_link_author_pages'   => esc_html__( 'Link author names and avatars to author pages', 'clear-theme' ),
 	);
 	$checkbox_defaults = array(
-		'clrthm_show_reading_time'  => 1,
-		'clrthm_show_author_strip'  => 0,
-		'clrthm_show_related_posts' => 1,
-		'clrthm_show_site_tagline'  => 1,
-		'clrthm_link_author_pages'  => 0,
+		'clrthm_enable_google_fonts' => 0,
+		'clrthm_show_reading_time'   => 1,
+		'clrthm_show_author_strip'   => 0,
+		'clrthm_show_related_posts'  => 1,
+		'clrthm_show_site_tagline'   => 1,
+		'clrthm_link_author_pages'   => 0,
 	);
 
 	foreach ( $checkbox_controls as $setting_id => $label ) {

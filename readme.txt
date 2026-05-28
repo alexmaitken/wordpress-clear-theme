@@ -1,6 +1,6 @@
 === Clear ===
 Contributors: alexaitken
-Tags: blog, editorial, minimal
+Tags: blog, one-column, two-columns, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, rtl-language-support, editor-style, accessibility-ready
 Requires at least: 6.4
 Tested up to: 6.6
 Requires PHP: 7.4
@@ -8,62 +8,112 @@ Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Clear is a minimalist editorial WordPress theme focused on readability and calm visual rhythm.
+A minimalist, privacy-friendly editorial theme for text-first WordPress publishing.
 
 == Description ==
 
-Clear provides text-first layouts, featured image cards, archive pages, and polished typography using the Inter webfont with system fallbacks.
+Clear is built for readable long-form content, calm archives, and practical customization.
+
+Theme goals:
+
+- clean editorial layouts
+- accessible defaults
+- predictable typography
+- privacy-friendly behavior by default
+
+Font behavior:
+
+- By default, Clear uses a system font stack and does not request remote fonts.
+- Optional: enable hosted Inter font from Google Fonts in **Appearance → Customize → Theme Presentation**.
+- Developers can force or disable this behavior with the `clrthm_load_google_fonts` filter and customize URL with `clrthm_google_fonts_url`.
 
 == Installation ==
 
 1. Upload the theme folder to `/wp-content/themes/`.
-2. Activate Clear in Appearance > Themes.
-3. Configure menus in Appearance > Menus.
+2. Activate Clear in **Appearance → Themes**.
+3. Assign menus in **Appearance → Menus**.
+4. Optional: configure presentation settings in **Appearance → Customize**.
 
+== Customization options ==
 
-== Menus & Header Behavior ==
+In **Theme Presentation**:
+
+- Accent color
+- Header layout (left or centered)
+- Reading time toggle
+- Author strip toggle
+- Related posts toggle
+- Homepage tagline toggle
+- Author link toggle
+- Footer copyright text
+- Optional external Google Fonts toggle
+
+== Menus ==
 
 Clear registers three menu locations:
 
-- **Primary Menu**: main navigation.
-- **Utility Menu**: secondary links (e.g., About, Contact, Subscribe).
-- **Footer Menu**: optional links in the site footer.
+- Primary Menu
+- Utility Menu
+- Footer Menu
 
-Navigation landmarks are only rendered when a menu is assigned to that location, so empty `<nav>` landmarks are not output.
+Unassigned locations do not output empty nav landmarks.
 
-On smaller screens, the header uses a progressively enhanced menu toggle. Without JavaScript, assigned menus remain visible. With JavaScript enabled, the toggle controls the menu panel and updates `aria-expanded`.
+== Post layout tags and media guidance ==
 
-The header also includes the standard WordPress search form as a low-emphasis affordance.
+Use categories and tags consistently so archive pages and related posts remain meaningful.
+
+Recommended image sizes:
+
+- Featured image default: 1600x900
+- Card (`clrthm-card`): 960x640
+- Single hero (`clrthm-single-hero`): 1400x900
 
 == Development & Testing ==
 
-Run quality checks locally:
+Commands:
 
-1. `composer install`
-2. `composer test`
+- `composer lint`
+- `composer phpcs`
+- `composer smoke`
+- `composer test`
+- `composer validate-version -- vX.Y.Z`
+- `composer build-release`
 
-Available commands:
-
-- `composer lint` for PHP syntax validation.
-- `composer phpcs` for WordPress coding standards and theme review sniffs.
-- `composer test` for lint + coding standards + smoke checks.
-
-Docker local WordPress environment:
+Local stack:
 
 1. `docker compose up -d`
 2. Open `http://localhost:8080`
-3. Activate **Clear Theme**
+3. Activate Clear
 
-The docker configuration enables `WP_DEBUG`, `WP_DEBUG_LOG`, and `SCRIPT_DEBUG`.
+== Theme Unit Test ==
 
-Optional Theme Check command:
+Manual import:
 
-- `composer docker:theme-check`
+1. Download Theme Unit Test XML data.
+2. In wp-admin: **Tools → Import → WordPress**.
+3. Upload file and assign authors.
 
-Theme Unit Test content import:
+WP-CLI import:
 
-- Manual: wp-admin → Tools → Import → WordPress importer.
-- WP-CLI: install `wordpress-importer`, download XML from WPTRT, run `wp import`.
+1. `wp plugin install wordpress-importer --activate`
+2. Download XML from the WPTRT Theme Unit Test repository.
+3. `wp import /path/to/themeunittestdata.wordpress.xml --authors=create`
+
+== Release/version process ==
+
+For each release, keep these in sync:
+
+- `style.css` Version
+- `readme.txt` Stable tag
+- `composer.json` version
+
+Validate with:
+
+- `composer validate-version -- vX.Y.Z`
+
+Then build:
+
+- `composer build-release`
 
 == Changelog ==
 

@@ -26,3 +26,6 @@ jobs:
 
       - name: Run theme test suite
         run: composer test
+
+      - name: Validate version consistency
+        run: composer validate-version
