@@ -61,7 +61,16 @@ function clrthm_scripts() {
 		wp_get_theme()->get( 'Version' )
 	);
 	wp_enqueue_style( 'clrthm-style', get_stylesheet_uri(), array( 'clrthm-inter-font' ), wp_get_theme()->get( 'Version' ) );
+
+	wp_enqueue_script(
+		'clrthm-navigation',
+		get_template_directory_uri() . '/assets/js/navigation.js',
+		array(),
+		wp_get_theme()->get( 'Version' ),
+		true
+	);
 }
+
 add_action( 'wp_enqueue_scripts', 'clrthm_scripts' );
 
 /**

@@ -5,6 +5,10 @@
  * @package Clear
  */
 
+$header_layout  = get_theme_mod( 'clrthm_header_layout', 'left' );
+$has_primary    = has_nav_menu( 'primary' );
+$has_utility    = has_nav_menu( 'util' );
+$show_menu_wrap = $has_primary || $has_utility;
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -15,7 +19,7 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <a class="skip-link" href="#content"><?php esc_html_e( 'Skip to content', 'clear-theme' ); ?></a>
-<header class="site-header site-header--<?php echo esc_attr( get_theme_mod( 'clrthm_header_layout', 'left' ) ); ?>">
+<header class="site-header site-header--<?php echo esc_attr( $header_layout ); ?>">
 	<div class="site-branding">
 		<?php if ( has_custom_logo() ) : ?>
 			<div class="site-logo"><?php the_custom_logo(); ?></div>
@@ -26,27 +30,45 @@
 			<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
 		<?php endif; ?>
 	</div>
-		<div class="site-header__navs">
-			<nav class="main-navigation" aria-label="<?php esc_attr_e( 'Primary menu', 'clear-theme' ); ?>">
-				<?php
-				wp_nav_menu(
-					array(
-						'theme_location' => 'primary',
-						'fallback_cb'    => false,
-					)
-				);
-				?>
-			</nav>
-			<nav class="util-navigation" aria-label="<?php esc_attr_e( 'Utility menu', 'clear-theme' ); ?>">
-				<?php
-				wp_nav_menu(
-					array(
-						'theme_location' => 'util',
-						'fallback_cb'    => false,
-					)
-				);
-				?>
-			</nav>
+
+	<?php if ( $show_menu_wrap ) : ?>
+		<button
+			class="menu-toggle"
+			type="button"
+			aria-expanded="false"
+			aria-controls="site-header-nav"
+		>
+			<span class="menu-toggle__text"><?php esc_html_e( 'Menu', 'clear-theme' ); ?></span>
+		</button>
+		<div id="site-header-nav" class="site-header__navs">
+			<?php if ( $has_primary ) : ?>
+				<nav class="main-navigation" aria-label="<?php esc_attr_e( 'Primary menu', 'clear-theme' ); ?>">
+					<?php
+					wp_nav_menu(
+						array(
+							'theme_location' => 'primary',
+							'fallback_cb'    => false,
+						)
+					);
+					?>
+				</nav>
+			<?php endif; ?>
+
+			<?php if ( $has_utility ) : ?>
+				<nav class="util-navigation" aria-label="<?php esc_attr_e( 'Utility menu', 'clear-theme' ); ?>">
+					<?php
+					wp_nav_menu(
+						array(
+							'theme_location' => 'util',
+							'fallback_cb'    => false,
+						)
+					);
+					?>
+				</nav>
+			<?php endif; ?>
+
+			<?php get_search_form(); ?>
 		</div>
+	<?php endif; ?>
 </header>
 <main id="content" class="site-main">

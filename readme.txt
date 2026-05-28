@@ -20,6 +20,21 @@ Clear provides text-first layouts, featured image cards, archive pages, and poli
 2. Activate Clear in Appearance > Themes.
 3. Configure menus in Appearance > Menus.
 
+
+== Menus & Header Behavior ==
+
+Clear registers three menu locations:
+
+- **Primary Menu**: main navigation.
+- **Utility Menu**: secondary links (e.g., About, Contact, Subscribe).
+- **Footer Menu**: optional links in the site footer.
+
+Navigation landmarks are only rendered when a menu is assigned to that location, so empty `<nav>` landmarks are not output.
+
+On smaller screens, the header uses a progressively enhanced Menu toggle. Without JavaScript, assigned menus remain visible. With JavaScript enabled, the toggle controls the menu panel and updates `aria-expanded`.
+
+The header also includes the standard WordPress search form as a low-emphasis affordance.
+
 == Development & Testing ==
 
 Run quality checks locally:
