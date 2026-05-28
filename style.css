@@ -83,7 +83,8 @@ body {
 	background-color: var(--clrthm-bg);
 	background-image: var(--clrthm-bg-gradient);
 	background-repeat: no-repeat;
-	background-attachment: fixed;
+	background-attachment: scroll;
+	background-size: 100% min(600px, 65vh);
 	color: var(--clrthm-text);
 	font-family: var(--clrthm-font-sans);
 	font-size: var(--clrthm-type-body);
