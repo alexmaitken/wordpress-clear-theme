@@ -10,12 +10,8 @@ get_header();
 if ( have_posts() ) :
 	while ( have_posts() ) :
 		the_post();
-		?>
-		<article <?php post_class(); ?>>
-			<header class="entry-header"><h1 class="entry-title"><?php the_title(); ?></h1></header>
-			<div class="entry-content"><?php the_content(); ?></div>
-		</article>
-		<?php
+		get_template_part( 'template-parts/content', 'page' );
+
 		if ( comments_open() || get_comments_number() ) {
 			comments_template();
 		}
