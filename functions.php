@@ -440,9 +440,10 @@ function clrthm_get_featured_image_width_choices() {
  */
 function clrthm_get_featured_image_position_choices() {
 	return array(
-		'above' => esc_html__( 'Above title', 'clear-theme' ),
-		'left'  => esc_html__( 'Left of title', 'clear-theme' ),
-		'right' => esc_html__( 'Right of title', 'clear-theme' ),
+		'hidden' => esc_html__( 'Hide featured image', 'clear-theme' ),
+		'above'  => esc_html__( 'Above title', 'clear-theme' ),
+		'left'   => esc_html__( 'Left of title', 'clear-theme' ),
+		'right'  => esc_html__( 'Right of title', 'clear-theme' ),
 	);
 }
 
@@ -500,7 +501,8 @@ function clrthm_get_featured_image_position( $post_id ) {
  * Register post layout meta box.
  */
 function clrthm_register_post_layout_meta_box() {
-	add_meta_box( 'clrthm_post_layout', esc_html__( 'Clear post layout', 'clear-theme' ), 'clrthm_render_post_layout_meta_box', 'post', 'side', 'default' );
+	add_meta_box( 'clrthm_post_layout', esc_html__( 'Clear layout', 'clear-theme' ), 'clrthm_render_post_layout_meta_box', 'post', 'side', 'default' );
+	add_meta_box( 'clrthm_post_layout', esc_html__( 'Clear layout', 'clear-theme' ), 'clrthm_render_post_layout_meta_box', 'page', 'side', 'default' );
 }
 add_action( 'add_meta_boxes', 'clrthm_register_post_layout_meta_box' );
 
@@ -548,7 +550,7 @@ function clrthm_save_post_layout_meta( $post_id ) {
 		return;
 	}
 
-	if ( 'post' !== get_post_type( $post_id ) ) {
+	if ( ! in_array( get_post_type( $post_id ), array( 'post', 'page' ), true ) ) {
 		return;
 	}
 
@@ -586,11 +588,26 @@ function clrthm_get_single_layout_class( $post_id ) {
 	$width   = clrthm_get_featured_image_width( $post_id );
 	$pos     = clrthm_get_featured_image_position( $post_id );
 
-	if ( ! has_post_thumbnail( $post_id ) ) {
+	if ( ! clrthm_should_render_featured_image( $post_id ) ) {
 		return 'single-featured-position--' . sanitize_html_class( $pos );
 	}
 
 	return sprintf( 'single-featured-width--%1$s single-featured-position--%2$s', sanitize_html_class( $width ), sanitize_html_class( $pos ) );
+}
+
+/**
+ * Whether the featured image should render in the hero area.
+ *
+ * @param int $post_id Post ID.
+ * @return bool
+ */
+function clrthm_should_render_featured_image( $post_id ) {
+	$post_id = absint( $post_id );
+	if ( ! has_post_thumbnail( $post_id ) ) {
+		return false;
+	}
+
+	return 'hidden' !== clrthm_get_featured_image_position( $post_id );
 }
 
 /**
