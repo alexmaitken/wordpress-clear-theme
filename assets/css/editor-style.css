@@ -1,4 +1,4 @@
-body.block-editor-page .editor-styles-wrapper {
+.editor-styles-wrapper {
 	/* Shared design tokens mirrored from style.css */
 	--clrthm-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 	--clrthm-font-ui: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
