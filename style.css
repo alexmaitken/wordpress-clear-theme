@@ -445,7 +445,7 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	align-items: start;
 }
 .post-card--entry-row .post-card__author {
-	margin-top: 0.3rem;
+	margin-top: 0.8rem;
 	padding-top: 0.3rem;
 }
 .post-card--entry-row .post-card__media { max-width: 100%; }
