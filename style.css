@@ -951,6 +951,10 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	.post-card:focus-within .post-card__media img {
 		transform: none;
 	}
+	.post-list__item:hover .post-list__thumb img,
+	.post-list__item:focus-within .post-list__thumb img {
+		transform: none;
+	}
 }
 
 /* Text-first list layout */
@@ -982,7 +986,12 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	height: 100%;
 	object-fit: cover;
 	object-position: center;
+	transform: scale(1);
+	transform-origin: center;
+	transition: transform var(--clrthm-motion-medium) var(--clrthm-ease-emphasized);
 }
+.post-list__item:hover .post-list__thumb img,
+.post-list__item:focus-within .post-list__thumb img { transform: scale(var(--clrthm-media-zoom-scale)); }
 .post-list__title {
 	margin: 0;
 	line-height: 1.3;
