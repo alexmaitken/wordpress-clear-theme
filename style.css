@@ -51,7 +51,8 @@ Tags: blog, one-column, two-columns, custom-logo, custom-menu, featured-images, 
 	--clrthm-radius-pill: 999px;
 
 	--clrthm-bg: #ffffff;
-	--clrthm-bg-gradient: none;
+	--clrthm-bg-highlight: rgb(255 255 255 / 0%);
+	--clrthm-bg-gradient: radial-gradient(circle at top, var(--clrthm-bg-highlight) 0%, var(--clrthm-bg) 50%);
 	--clrthm-surface: #ffffff;
 	--clrthm-text: #181818;
 	--clrthm-muted: #555;
@@ -84,7 +85,7 @@ body {
 	background-image: var(--clrthm-bg-gradient);
 	background-repeat: no-repeat;
 	background-attachment: scroll;
-	background-size: 100% min(600px, 65vh);
+	background-size: 100% 100vh;
 	color: var(--clrthm-text);
 	font-family: var(--clrthm-font-sans);
 	font-size: var(--clrthm-type-body);
@@ -385,6 +386,9 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 
 .post-card--feature-tile {
 	display: grid;
+	background: var(--clrthm-surface);
+	border-radius: var(--clrthm-radius-lg);
+	padding: 0.65rem;
 	grid-template-columns: 5.4rem minmax(0, 1fr);
 	grid-template-areas:
 		"media content"
