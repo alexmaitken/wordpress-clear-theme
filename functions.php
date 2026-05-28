@@ -25,7 +25,7 @@ if ( ! function_exists( 'clrthm_setup' ) ) {
 		add_theme_support(
 			'custom-logo',
 			array(
-				'height'      => 120,
+				'height' => 120,
 				'width'       => 320,
 				'flex-height' => true,
 				'flex-width'  => true,
@@ -121,8 +121,8 @@ function clrthm_add_presentation_css_variables() {
 	$bg_color = sanitize_hex_color( get_theme_mod( 'clrthm_background_color', '#ffffff' ) );
 	$bg_color = $bg_color ? $bg_color : '#ffffff';
 
-	$bg_style       = clrthm_sanitize_background_style( get_theme_mod( 'clrthm_background_style', 'solid' ) );
-	$bg_alpha       = clrthm_sanitize_background_alpha( get_theme_mod( 'clrthm_background_radial_alpha', 0.12 ) );
+	$bg_style = clrthm_sanitize_background_style( get_theme_mod( 'clrthm_background_style', 'solid' ) );
+	$bg_alpha = clrthm_sanitize_background_alpha( get_theme_mod( 'clrthm_background_radial_alpha', 0.12 ) );
 
 	if ( 'radial' === $bg_style ) {
 		$bg_gradient = sprintf(
