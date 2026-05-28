@@ -312,16 +312,16 @@ function clrthm_get_post_byline() {
 	);
 	$parts = array(
 		'<span class="byline-author"><span class="screen-reader-text">' . esc_html__( 'By ', 'clear-theme' ) . '</span>' . $author . '</span>',
-		'<span class="byline-separator" aria-hidden="true">·</span>',
 		'<span class="byline-published"><span class="screen-reader-text">' . esc_html__( 'Published ', 'clear-theme' ) . '</span>' . $date . '</span>',
 	);
 
 	if ( get_theme_mod( 'clrthm_show_reading_time', 1 ) ) {
-		$parts[] = '<span class="byline-separator" aria-hidden="true">·</span>';
 		$parts[] = '<span class="byline-read">' . esc_html( clrthm_get_reading_time() ) . '</span>';
 	}
 
-	return '<p class="post-byline">' . implode( '', $parts ) . '</p>';
+	$byline = implode( '<span class="byline-separator" aria-hidden="true">&nbsp;·&nbsp;</span>', $parts );
+
+	return '<p class="post-byline">' . $byline . '</p>';
 }
 
 /**
