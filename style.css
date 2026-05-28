@@ -477,26 +477,27 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 }
 .single-hero__excerpt p { margin-bottom: 0; }
 .single-hero__media {
-	aspect-ratio: 495 / 323;
+	aspect-ratio: 16 / 9;
 	width: 100%;
-	max-height: 646px;
+	max-height: min(68vh, 42rem);
 	margin: 0;
 	margin-inline: auto;
 	overflow: hidden;
 	border-radius: var(--clrthm-radius-lg);
 	isolation: isolate;
 }
-.single-featured-width--content .single-hero__media {
+.single-featured-position--above.single-featured-width--content .single-hero__media {
 	width: min(100%, var(--clrthm-reading-width));
 }
-.single-featured-width--large .single-hero__media {
-	width: min(100%, calc(var(--clrthm-reading-width) + 14rem));
+.single-featured-position--above.single-featured-width--large .single-hero__media {
+	width: min(100%, calc(var(--clrthm-reading-width) + clamp(4rem, 12vw, 11rem)));
 }
-.single-featured-width--full .single-hero__media {
-	width: min(100vw - var(--clrthm-space-2xl), calc(var(--clrthm-content-width) + 8rem));
+.single-featured-position--above.single-featured-width--full .single-hero__media {
+	width: min(100vw - clamp(1rem, 4vw, 2.5rem), calc(var(--clrthm-content-width) + 10rem));
 	max-width: none;
 	margin-left: 50%;
 	transform: translateX(-50%);
+	border-radius: clamp(0.25rem, 0.8vw, var(--clrthm-radius-md));
 }
 .single-featured-position--left .single-hero__media,
 .single-featured-position--right .single-hero__media {
@@ -603,9 +604,6 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	padding: clamp(1rem, 2.4vw, 2rem);
 }
 .single-featured-width--full .entry-content { background: var(--clrthm-surface); border: 0; }
-.single-featured-width--full .single-hero__media img {
-	max-height: min(62vh, 34rem);
-}
 .single-featured-position--left .single-hero__content,
 .single-featured-position--right .single-hero__content {
 	width: auto;
@@ -1041,3 +1039,21 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 		align-self: stretch;
 	}
 }
+
+@media (max-width: 48rem) {
+	.single-featured-position--above .single-hero__media {
+		aspect-ratio: 16 / 10;
+		max-height: none;
+	}
+
+	.single-featured-position--above.single-featured-width--full .single-hero__media {
+		width: calc(100vw - 1rem);
+		border-radius: var(--clrthm-radius-sm);
+	}
+
+	.single-featured-position--above.single-featured-width--large .single-hero__media,
+	.single-featured-position--above.single-featured-width--content .single-hero__media {
+		width: 100%;
+	}
+}
+
