@@ -23,7 +23,7 @@ if ( 'featured' === $context && null !== $slot && $slot >= 0 ) {
 ?>
 <article <?php post_class( 'post-card ' . $layout_class ); ?> id="post-<?php the_ID(); ?>">
 	<?php if ( has_post_thumbnail() ) : ?>
-		<a class="post-card__media" href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr( get_the_title() ); ?>">
+		<a class="post-card__media" href="<?php the_permalink(); ?>" aria-label="View featured image for <?php echo esc_attr( get_the_title() ); ?>">
 			<?php the_post_thumbnail( 'clrthm-card' ); ?>
 		</a>
 	<?php else : ?>

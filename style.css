@@ -198,7 +198,6 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	transform: scale(1);
 	transform-origin: center;
 	transition: transform var(--clrthm-motion-medium) var(--clrthm-ease-emphasized);
-	will-change: transform;
 }
 .post-card__media--placeholder {
 	background: linear-gradient(135deg, var(--clrthm-placeholder-a), var(--clrthm-placeholder-b));
@@ -319,7 +318,7 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 .post-card--entry-row .post-card__media { max-width: 100%; }
 .post-card__media:focus-visible {
 	outline: 3px solid var(--clrthm-focus);
-	outline-offset: 3px;
+	outline-offset: 2px;
 }
 .post-card--entry-row .post-card__media img,
 .post-card--entry-row .post-card__media--placeholder { aspect-ratio: 16 / 10; border-radius: var(--clrthm-radius-lg); }
