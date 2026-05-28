@@ -467,7 +467,7 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 .single-hero__content {
 	width: min(100%, var(--clrthm-reading-width));
 	margin-inline: auto;
-	text-align: left;
+	text-align: start;
 }
 .single-hero__excerpt p { margin-bottom: 0; }
 .single-hero__media {
