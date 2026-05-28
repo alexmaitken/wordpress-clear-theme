@@ -12,7 +12,8 @@ get_header();
 	<?php the_archive_description( '<div>', '</div>' ); ?>
 </header>
 <?php if ( have_posts() ) : ?>
-	<section class="post-list" aria-label="<?php esc_attr_e( 'Archive stories', 'clear-theme' ); ?>">
+	<section class="post-list" aria-labelledby="archive-stories-heading">
+		<h2 id="archive-stories-heading" class="screen-reader-text"><?php esc_html_e( 'Archive stories', 'clear-theme' ); ?></h2>
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>
 			<?php get_template_part( 'template-parts/content', 'list' ); ?>

@@ -440,3 +440,65 @@ function clrthm_get_featured_image_html( $post_id, $size = 'clrthm-single-hero' 
 		)
 	);
 }
+
+/**
+ * Output lightweight JSON-LD for theme templates.
+ */
+function clrthm_output_structured_data() {
+	if ( is_singular( 'post' ) ) {
+		if ( ! apply_filters( 'clrthm_enable_single_post_schema', true ) ) {
+			return;
+		}
+
+		$post_id    = get_queried_object_id();
+		$schema     = array(
+			'@context'         => 'https://schema.org',
+			'@type'            => 'BlogPosting',
+			'headline'         => wp_strip_all_tags( get_the_title( $post_id ) ),
+			'datePublished'    => get_post_time( DATE_W3C, true, $post_id ),
+			'dateModified'     => get_post_modified_time( DATE_W3C, true, $post_id ),
+			'mainEntityOfPage' => get_permalink( $post_id ),
+			'author'           => array(
+				'@type' => 'Person',
+				'name'  => get_the_author_meta( 'display_name', (int) get_post_field( 'post_author', $post_id ) ),
+			),
+			'publisher'        => array(
+				'@type' => 'Organization',
+				'name'  => get_bloginfo( 'name' ),
+			),
+		);
+
+		if ( has_excerpt( $post_id ) ) {
+			$schema['description'] = wp_strip_all_tags( get_the_excerpt( $post_id ) );
+		}
+		if ( has_post_thumbnail( $post_id ) ) {
+			$image = wp_get_attachment_image_url( get_post_thumbnail_id( $post_id ), 'full' );
+			if ( $image ) {
+				$schema['image'] = $image;
+			}
+		}
+
+		$schema = apply_filters( 'clrthm_single_post_schema_data', $schema, $post_id );
+	} elseif ( is_home() || is_front_page() ) {
+		if ( ! apply_filters( 'clrthm_enable_home_schema', true ) ) {
+			return;
+		}
+		$schema = apply_filters(
+			'clrthm_home_schema_data',
+			array(
+				'@context' => 'https://schema.org',
+				'@type'    => 'WebSite',
+				'name'     => get_bloginfo( 'name' ),
+				'url'      => home_url( '/' ),
+			)
+		);
+	} else {
+		return;
+	}
+
+	if ( empty( $schema ) || ! is_array( $schema ) ) {
+		return;
+	}
+	echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>';
+}
+add_action( 'wp_head', 'clrthm_output_structured_data', 30 );

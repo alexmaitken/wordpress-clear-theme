@@ -11,14 +11,16 @@ if ( post_password_required() ) {
 ?>
 <section id="comments" class="comments-area">
 	<?php if ( have_comments() ) : ?>
-		<h2>
+		<h2 class="comments-title">
 			<?php
 			/* translators: %s: number of comments. */
 			echo esc_html( sprintf( _n( '%s comment', '%s comments', get_comments_number(), 'clear-theme' ), number_format_i18n( get_comments_number() ) ) );
 			?>
 		</h2>
-			<?php the_comments_navigation(); ?>
-			<ol>
+			<nav class="comments-navigation comments-navigation--top" aria-label="<?php esc_attr_e( 'Comments navigation', 'clear-theme' ); ?>">
+				<?php the_comments_navigation(); ?>
+			</nav>
+			<ol class="comment-list">
 				<?php
 				wp_list_comments(
 					array(
@@ -28,7 +30,12 @@ if ( post_password_required() ) {
 				);
 				?>
 			</ol>
-		<?php the_comments_navigation(); ?>
+		<nav class="comments-navigation comments-navigation--bottom" aria-label="<?php esc_attr_e( 'Comments navigation', 'clear-theme' ); ?>">
+			<?php the_comments_navigation(); ?>
+		</nav>
 	<?php endif; ?>
-	<?php comment_form(); ?>
+	<div class="comment-form-wrap">
+		<h3 class="comment-reply-title"><?php esc_html_e( 'Leave a comment', 'clear-theme' ); ?></h3>
+		<?php comment_form( array( 'title_reply' => '' ) ); ?>
+	</div>
 </section>
