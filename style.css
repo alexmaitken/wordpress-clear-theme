@@ -903,6 +903,38 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	font-size: clamp(1.2rem, 1.08rem + 0.5vw, 1.6rem);
 }
 .post-list__title a { color: inherit; text-decoration: none; }
+.post-list__author {
+	display: flex;
+	align-items: center;
+	gap: 0.65rem;
+	margin: 0;
+}
+.post-list__meta .post-byline,
+.post-card__meta .post-byline {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.45rem;
+	margin: 0;
+}
+.post-list__meta .byline-separator,
+.post-card__meta .byline-separator {
+	color: var(--clrthm-border);
+	padding-inline: 0;
+}
+.post-list__avatar {
+	line-height: 0;
+	flex: 0 0 auto;
+}
+.post-list__avatar .post-card__avatar-image {
+	width: 2.15rem;
+	height: 2.15rem;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+	border-radius: var(--clrthm-radius-pill);
+	display: block;
+	flex: 0 0 auto;
+}
 .post-list__meta,
 .post-list__tax {
 	margin: 0;

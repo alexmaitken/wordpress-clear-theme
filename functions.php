@@ -319,7 +319,7 @@ function clrthm_get_post_byline() {
 		$parts[] = '<span class="byline-read">' . esc_html( clrthm_get_reading_time() ) . '</span>';
 	}
 
-	$byline = implode( '<span class="byline-separator" aria-hidden="true">&nbsp;·&nbsp;</span>', $parts );
+	$byline = implode( '<span class="byline-separator" aria-hidden="true"> · </span>', $parts );
 
 	return '<p class="post-byline">' . $byline . '</p>';
 }
