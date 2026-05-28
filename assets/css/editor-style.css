@@ -1,29 +1,72 @@
 body.block-editor-page .editor-styles-wrapper {
+	/* Shared design tokens mirrored from style.css */
 	--clrthm-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 	--clrthm-font-ui: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 	--clrthm-reading-width: 720px;
-	--clrthm-muted: #6c6c6c;
-	--clrthm-border: #dfdfdf;
-	--clrthm-text: #181818;
-	--clrthm-excerpt: #242424;
 	--clrthm-type-body: clamp(1.05rem, 0.98rem + 0.24vw, 1.16rem);
-	--clrthm-type-excerpt: clamp(1.08rem, 1.02rem + 0.32vw, 1.3rem);
 	--clrthm-type-caption: 0.9rem;
 	--clrthm-type-code: 0.95rem;
+	--clrthm-space-2xl: 2rem;
+	--clrthm-space-fluid: clamp(1rem, 2vw, 1.75rem);
+	--clrthm-radius-sm: 0.35rem;
+	--clrthm-bg: #ffffff;
+	--clrthm-surface: #ffffff;
+	--clrthm-text: #181818;
+	--clrthm-muted: #555;
+	--clrthm-excerpt: #242424;
+	--clrthm-border: #dfdfdf;
+	--clrthm-focus: #0a66d1;
+	--clrthm-accent: #0a66d1;
+
 	font-family: var(--clrthm-font-sans);
-	color: var(--clrthm-text);
 	font-size: var(--clrthm-type-body);
 	line-height: 1.72;
+	color: var(--clrthm-text);
+	background: var(--clrthm-bg);
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizelegibility;
+}
+
+.editor-styles-wrapper :focus-visible {
+	outline: 3px solid var(--clrthm-focus);
+	outline-offset: 2px;
+}
+
+.editor-styles-wrapper .is-root-container {
+	max-width: var(--clrthm-reading-width);
+	margin-inline: auto;
+	padding: var(--clrthm-space-fluid);
+}
+
+.editor-styles-wrapper .wp-block {
 	max-width: var(--clrthm-reading-width);
 }
 
-.editor-styles-wrapper .wp-block { max-width: var(--clrthm-reading-width); }
-.editor-styles-wrapper .alignwide { max-width: 64rem; }
-.editor-styles-wrapper .alignfull { max-width: none; }
+.editor-styles-wrapper .wp-block[data-align='wide'],
+.editor-styles-wrapper .wp-block.alignwide {
+	max-width: 64rem;
+}
+
+.editor-styles-wrapper .wp-block[data-align='full'],
+.editor-styles-wrapper .wp-block.alignfull {
+	max-width: none;
+}
+
 .editor-styles-wrapper p,
 .editor-styles-wrapper ul,
-.editor-styles-wrapper ol { line-height: 1.76; }
-.editor-styles-wrapper p { margin-bottom: 1.45em; }
+.editor-styles-wrapper ol {
+	line-height: 1.76;
+}
+
+.editor-styles-wrapper p {
+	margin: 0 0 1.45em;
+}
+
+.editor-styles-wrapper ul,
+.editor-styles-wrapper ol {
+	padding-left: 1.35em;
+}
+
 .editor-styles-wrapper h1,
 .editor-styles-wrapper h2,
 .editor-styles-wrapper h3,
@@ -33,10 +76,49 @@ body.block-editor-page .editor-styles-wrapper {
 	line-height: 1.28;
 	margin-bottom: 0.45em;
 }
-.editor-styles-wrapper h1 { font-size: clamp(2rem, 3.8vw, 3.2rem); line-height: 1.14; }
-.editor-styles-wrapper h2 { font-size: clamp(1.55rem, 1.35rem + 1vw, 2rem); margin-top: 2.2em; }
-.editor-styles-wrapper h3 { font-size: clamp(1.3rem, 1.18rem + 0.7vw, 1.65rem); margin-top: 1.9em; }
-.editor-styles-wrapper h4 { font-size: clamp(1.14rem, 1.08rem + 0.35vw, 1.3rem); margin-top: 1.7em; }
+
+.editor-styles-wrapper h1 {
+	font-size: clamp(1.7rem, 3vw, 2.5rem);
+	line-height: 1.2;
+	margin-top: 0;
+}
+
+.editor-styles-wrapper h2 {
+	font-size: clamp(1.55rem, 1.35rem + 1vw, 2rem);
+	margin-top: 2.2em;
+}
+
+.editor-styles-wrapper h3 {
+	font-size: clamp(1.3rem, 1.18rem + 0.7vw, 1.65rem);
+	margin-top: 1.9em;
+}
+
+.editor-styles-wrapper h4 {
+	font-size: clamp(1.14rem, 1.08rem + 0.35vw, 1.3rem);
+	margin-top: 1.7em;
+}
+
+.editor-styles-wrapper a {
+	color: var(--clrthm-accent);
+	text-underline-offset: 0.2em;
+	text-decoration-thickness: 1px;
+}
+
+.editor-styles-wrapper a:hover,
+.editor-styles-wrapper a:focus-visible {
+	text-decoration-thickness: 2px;
+}
+
+.editor-styles-wrapper .wp-element-button,
+.editor-styles-wrapper .wp-block-button__link,
+.editor-styles-wrapper button {
+	border: 1px solid var(--clrthm-border);
+	border-radius: 999px;
+	padding: 0.45rem 0.9rem;
+	font-family: var(--clrthm-font-ui);
+	font-size: 0.95em;
+	line-height: 1.2;
+}
 
 .editor-styles-wrapper blockquote {
 	border-left: 3px solid var(--clrthm-border);
@@ -44,17 +126,20 @@ body.block-editor-page .editor-styles-wrapper {
 	padding: 0.2em 0 0.2em 1.15em;
 	color: var(--clrthm-excerpt);
 }
+
 .editor-styles-wrapper .wp-block-pullquote {
 	border-top: 1px solid var(--clrthm-border);
 	border-bottom: 1px solid var(--clrthm-border);
 	padding: 1.1em 0;
 	text-align: left;
 }
+
 .editor-styles-wrapper .wp-block-pullquote blockquote {
 	border-left: 0;
 	padding: 0;
 	margin: 0;
 }
+
 .editor-styles-wrapper .wp-block-pullquote p {
 	font-size: clamp(1.2rem, 1.08rem + 0.55vw, 1.55rem);
 	line-height: 1.5;
@@ -69,27 +154,60 @@ body.block-editor-page .editor-styles-wrapper {
 	padding: 0.08em 0.35em;
 	border-radius: 0.25rem;
 }
+
 .editor-styles-wrapper pre {
 	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
 	font-size: var(--clrthm-type-code);
 	line-height: 1.6;
 	background: #f7f8fa;
 	padding: 1rem 1.1rem;
-	border-radius: 0.35rem;
+	border-radius: var(--clrthm-radius-sm);
 	overflow-x: auto;
 }
-.editor-styles-wrapper pre code { background: transparent; padding: 0; }
 
-.editor-styles-wrapper table { border-collapse: collapse; font-size: 0.97em; }
+.editor-styles-wrapper pre code {
+	background: transparent;
+	padding: 0;
+}
+
+.editor-styles-wrapper table {
+	max-width: 100%;
+	border-collapse: collapse;
+	font-size: 0.97em;
+}
+
 .editor-styles-wrapper th,
-.editor-styles-wrapper td { border: 1px solid var(--clrthm-border); padding: 0.55rem 0.7rem; text-align: left; }
-.editor-styles-wrapper th { font-weight: 600; background: #fafafa; }
+.editor-styles-wrapper td {
+	border: 1px solid var(--clrthm-border);
+	padding: 0.55rem 0.7rem;
+	text-align: left;
+}
 
-.editor-styles-wrapper figure { margin: 2rem 0; }
+.editor-styles-wrapper th {
+	font-weight: 600;
+	background: #fafafa;
+}
+
+.editor-styles-wrapper figure {
+	margin: 2rem 0;
+}
+
+.editor-styles-wrapper img {
+	max-width: 100%;
+	height: auto;
+}
+
 .editor-styles-wrapper figcaption,
 .editor-styles-wrapper .wp-element-caption {
 	font-size: var(--clrthm-type-caption);
 	color: var(--clrthm-muted);
 	line-height: 1.5;
 	margin-top: 0.6rem;
+}
+
+.editor-styles-wrapper hr,
+.editor-styles-wrapper .wp-block-separator {
+	border: 0;
+	border-top: 1px solid var(--clrthm-border);
+	margin: 2rem 0;
 }
