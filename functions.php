@@ -125,19 +125,21 @@ function clrthm_add_presentation_css_variables() {
 	$bg_alpha = clrthm_sanitize_background_alpha( get_theme_mod( 'clrthm_background_radial_alpha', 0.12 ) );
 
 	if ( 'radial' === $bg_style ) {
-		$bg_gradient = sprintf(
-			'radial-gradient(85%% 60%% at 50%% 0%%, %1$s 0%%, %2$s 16%%, %3$s 34%%, rgba(255, 255, 255, 1) 100%%)',
-			clrthm_hex_to_rgba( $bg_color, $bg_alpha ),
-			clrthm_hex_to_rgba( $bg_color, $bg_alpha * 0.35 ),
-			clrthm_hex_to_rgba( $bg_color, 0 )
+		$bg_highlight = clrthm_hex_to_rgba( $bg_color, $bg_alpha );
+		$bg_gradient  = sprintf(
+			'radial-gradient(circle at top, %1$s 0%%, %2$s 50%%)',
+			$bg_highlight,
+			'#ffffff'
 		);
 	} else {
-		$bg_gradient = 'none';
+		$bg_highlight = 'rgb(255 255 255 / 0%)';
+		$bg_gradient  = 'none';
 	}
 
 	$css = sprintf(
-		':root{--clrthm-bg:%1$s;--clrthm-bg-gradient:%2$s;}',
-		$bg_color,
+		':root{--clrthm-bg:%1$s;--clrthm-bg-highlight:%2$s;--clrthm-bg-gradient:%3$s;}',
+		'#ffffff',
+		$bg_highlight,
 		$bg_gradient
 	);
 
