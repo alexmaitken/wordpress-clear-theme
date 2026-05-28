@@ -111,6 +111,38 @@ function clrthm_should_load_google_fonts() {
 	return (bool) apply_filters( 'clrthm_load_google_fonts', $enabled );
 }
 
+
+/**
+ * Add presentation CSS variables based on Customizer settings.
+ *
+ * @return void
+ */
+function clrthm_add_presentation_css_variables() {
+	$bg_color = sanitize_hex_color( get_theme_mod( 'clrthm_background_color', '#ffffff' ) );
+	$bg_color = $bg_color ? $bg_color : '#ffffff';
+
+	$bg_style = clrthm_sanitize_background_style( get_theme_mod( 'clrthm_background_style', 'solid' ) );
+
+	if ( 'radial' === $bg_style ) {
+		$bg_gradient = sprintf(
+			'radial-gradient(120% 70% at 50%% 0%%, %1$s 0%%, %2$s 68%%)',
+			clrthm_hex_to_rgba( $bg_color, 0.12 ),
+			clrthm_hex_to_rgba( $bg_color, 0 )
+		);
+	} else {
+		$bg_gradient = 'none';
+	}
+
+	$css = sprintf(
+		':root{--clrthm-bg:%1$s;--clrthm-bg-gradient:%2$s;}',
+		$bg_color,
+		$bg_gradient
+	);
+
+	wp_add_inline_style( 'clrthm-style', $css );
+}
+add_action( 'wp_enqueue_scripts', 'clrthm_add_presentation_css_variables', 20 );
+
 /**
  * Enqueue editor fonts.
  *
@@ -151,6 +183,47 @@ function clrthm_sanitize_header_layout( $value ) {
 	return in_array( $value, $allowed, true ) ? $value : 'left';
 }
 
+
+/**
+ * Sanitize background style.
+ *
+ * @param string $value Background style.
+ * @return string
+ */
+function clrthm_sanitize_background_style( $value ) {
+	$value   = sanitize_key( $value );
+	$allowed = array( 'solid', 'radial' );
+
+	return in_array( $value, $allowed, true ) ? $value : 'solid';
+}
+
+/**
+ * Convert a hex color to rgba().
+ *
+ * @param string $hex   Hex color.
+ * @param float  $alpha Alpha channel between 0 and 1.
+ * @return string
+ */
+function clrthm_hex_to_rgba( $hex, $alpha ) {
+	$hex = sanitize_hex_color( $hex );
+
+	if ( ! $hex ) {
+		return 'rgba(255, 255, 255, 0)';
+	}
+
+	$hex = ltrim( $hex, '#' );
+
+	if ( 3 === strlen( $hex ) ) {
+		$hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+	}
+
+	$red   = hexdec( substr( $hex, 0, 2 ) );
+	$green = hexdec( substr( $hex, 2, 2 ) );
+	$blue  = hexdec( substr( $hex, 4, 2 ) );
+
+	return sprintf( 'rgba(%d, %d, %d, %.2f)', $red, $green, $blue, $alpha );
+}
+
 /**
  * Register Customizer settings.
  *
@@ -182,6 +255,45 @@ function clrthm_customize_register( $wp_customize ) {
 				'label'   => esc_html__( 'Accent color', 'clear-theme' ),
 				'section' => 'clrthm_presentation',
 			)
+		)
+	);
+
+	$wp_customize->add_setting(
+		'clrthm_background_color',
+		array(
+			'default'           => '#ffffff',
+			'sanitize_callback' => 'sanitize_hex_color',
+		)
+	);
+	$wp_customize->add_control(
+		new WP_Customize_Color_Control(
+			$wp_customize,
+			'clrthm_background_color',
+			array(
+				'label'       => esc_html__( 'Background primary color', 'clear-theme' ),
+				'section'     => 'clrthm_presentation',
+				'description' => esc_html__( 'Used for both solid and radial background styles.', 'clear-theme' ),
+			)
+		)
+	);
+
+	$wp_customize->add_setting(
+		'clrthm_background_style',
+		array(
+			'default'           => 'solid',
+			'sanitize_callback' => 'clrthm_sanitize_background_style',
+		)
+	);
+	$wp_customize->add_control(
+		'clrthm_background_style',
+		array(
+			'type'    => 'radio',
+			'label'   => esc_html__( 'Background style', 'clear-theme' ),
+			'section' => 'clrthm_presentation',
+			'choices' => array(
+				'solid'  => esc_html__( 'Solid color', 'clear-theme' ),
+				'radial' => esc_html__( 'Minimal radial gradient', 'clear-theme' ),
+			),
 		)
 	);
 
