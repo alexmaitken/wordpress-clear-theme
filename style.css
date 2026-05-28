@@ -390,6 +390,7 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 		"author author";
 	gap: 0.75rem;
 	align-items: start;
+	align-content: start;
 }
 .post-card--feature-tile .post-card__content {
 	display: grid;
@@ -443,6 +444,7 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	grid-template-columns: 1fr;
 	gap: 0.3rem;
 	align-items: start;
+	align-content: start;
 }
 .post-card--entry-row .post-card__author {
 	margin-top: 0.8rem;
@@ -891,7 +893,11 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	}
 }
 @media (min-width: 64rem) {
-	.featured-grid { grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr); }
+	.featured-grid {
+		grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
+		grid-template-rows: repeat(3, minmax(0, 1fr));
+		align-items: stretch;
+	}
 	.post-card--feature-hero { grid-row: span 3; }
 	.featured-grid .post-card:first-child { grid-row: span 3; }
 	.featured-grid .post-card:first-child .post-card__media img,
