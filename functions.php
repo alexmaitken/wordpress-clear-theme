@@ -441,9 +441,9 @@ function clrthm_get_featured_image_width_choices() {
 function clrthm_get_featured_image_position_choices() {
 	return array(
 		'hidden' => esc_html__( 'Hide featured image', 'clear-theme' ),
-		'above' => esc_html__( 'Above title', 'clear-theme' ),
-		'left'  => esc_html__( 'Left of title', 'clear-theme' ),
-		'right' => esc_html__( 'Right of title', 'clear-theme' ),
+		'above'  => esc_html__( 'Above title', 'clear-theme' ),
+		'left'   => esc_html__( 'Left of title', 'clear-theme' ),
+		'right'  => esc_html__( 'Right of title', 'clear-theme' ),
 	);
 }
 
