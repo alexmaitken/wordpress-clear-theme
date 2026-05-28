@@ -61,9 +61,17 @@ Assign menus in **Appearance → Menus**. Empty locations do not output unused n
 Clear supports:
 
 - Featured images with theme-defined crop sizes
+- Per-post **Clear post layout** controls in the post editor sidebar (Featured image width + Featured image position)
 - Reading-time byline
 - Related posts section
 - Optional author strip
+
+For single posts, you can set:
+
+- **Featured image width**: Content width, Large, Full width
+- **Featured image position**: Above title, Left of title, Right of title
+
+Backwards compatibility: older layout-control tags (`layout-left-image`, `layout-right-image`, `layout-full-width-image`) are still honored when meta settings are not set, and remain hidden from public tag output.
 
 Recommended tags/categories: use meaningful editorial taxonomy (for example, section/category + topic tags) so archive and related content layouts remain useful.
 

@@ -58,7 +58,14 @@ Clear registers three menu locations:
 
 Unassigned locations do not output empty nav landmarks.
 
-== Post layout tags and media guidance ==
+== Post layout and media guidance ==
+
+In the post editor sidebar, Clear adds a **Clear post layout** settings box with:
+
+- Featured image width: Content width, Large, Full width
+- Featured image position: Above title, Left of title, Right of title
+
+Backwards compatibility: existing layout tags (`layout-left-image`, `layout-right-image`, `layout-full-width-image`) are still supported as fallback behavior when new per-post settings are not set, and these control tags are hidden from public tag output.
 
 Use categories and tags consistently so archive pages and related posts remain meaningful.
 

@@ -421,6 +421,161 @@ function clrthm_get_layout_control_tag_slugs() {
 }
 
 /**
+ * Get featured image width choices.
+ *
+ * @return array<string, string>
+ */
+function clrthm_get_featured_image_width_choices() {
+	return array(
+		'content' => esc_html__( 'Content width', 'clear-theme' ),
+		'large'   => esc_html__( 'Large', 'clear-theme' ),
+		'full'    => esc_html__( 'Full width', 'clear-theme' ),
+	);
+}
+
+/**
+ * Get featured image position choices.
+ *
+ * @return array<string, string>
+ */
+function clrthm_get_featured_image_position_choices() {
+	return array(
+		'above' => esc_html__( 'Above title', 'clear-theme' ),
+		'left'  => esc_html__( 'Left of title', 'clear-theme' ),
+		'right' => esc_html__( 'Right of title', 'clear-theme' ),
+	);
+}
+
+/**
+ * Get featured image width for a post.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function clrthm_get_featured_image_width( $post_id ) {
+	$post_id = absint( $post_id );
+	$value   = sanitize_key( (string) get_post_meta( $post_id, '_clrthm_featured_image_width', true ) );
+	$allowed = array_keys( clrthm_get_featured_image_width_choices() );
+
+	if ( in_array( $value, $allowed, true ) ) {
+		return $value;
+	}
+
+	if ( has_tag( 'layout-full-width-image', $post_id ) ) {
+		return 'full';
+	}
+	if ( has_tag( 'layout-left-image', $post_id ) || has_tag( 'layout-right-image', $post_id ) ) {
+		return 'large';
+	}
+
+	return 'large';
+}
+
+/**
+ * Get featured image position for a post.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function clrthm_get_featured_image_position( $post_id ) {
+	$post_id = absint( $post_id );
+	$value   = sanitize_key( (string) get_post_meta( $post_id, '_clrthm_featured_image_position', true ) );
+	$allowed = array_keys( clrthm_get_featured_image_position_choices() );
+
+	if ( in_array( $value, $allowed, true ) ) {
+		return $value;
+	}
+
+	if ( has_tag( 'layout-left-image', $post_id ) ) {
+		return 'left';
+	}
+	if ( has_tag( 'layout-right-image', $post_id ) ) {
+		return 'right';
+	}
+
+	return 'above';
+}
+
+/**
+ * Register post layout meta box.
+ */
+function clrthm_register_post_layout_meta_box() {
+	add_meta_box( 'clrthm_post_layout', esc_html__( 'Clear post layout', 'clear-theme' ), 'clrthm_render_post_layout_meta_box', 'post', 'side', 'default' );
+}
+add_action( 'add_meta_boxes', 'clrthm_register_post_layout_meta_box' );
+
+/**
+ * Render post layout meta box.
+ *
+ * @param WP_Post $post Post object.
+ */
+function clrthm_render_post_layout_meta_box( $post ) {
+	$width_value    = clrthm_get_featured_image_width( $post->ID );
+	$position_value = clrthm_get_featured_image_position( $post->ID );
+
+	wp_nonce_field( 'clrthm_save_post_layout', 'clrthm_post_layout_nonce' );
+	?>
+	<p>
+		<label for="clrthm_featured_image_width"><strong><?php esc_html_e( 'Featured image width', 'clear-theme' ); ?></strong></label><br />
+		<select id="clrthm_featured_image_width" name="clrthm_featured_image_width" class="widefat">
+			<?php foreach ( clrthm_get_featured_image_width_choices() as $value => $label ) : ?>
+				<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $width_value, $value ); ?>><?php echo esc_html( $label ); ?></option>
+			<?php endforeach; ?>
+		</select>
+	</p>
+	<p>
+		<label for="clrthm_featured_image_position"><strong><?php esc_html_e( 'Featured image position', 'clear-theme' ); ?></strong></label><br />
+		<select id="clrthm_featured_image_position" name="clrthm_featured_image_position" class="widefat">
+			<?php foreach ( clrthm_get_featured_image_position_choices() as $value => $label ) : ?>
+				<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $position_value, $value ); ?>><?php echo esc_html( $label ); ?></option>
+			<?php endforeach; ?>
+		</select>
+	</p>
+	<?php
+}
+
+/**
+ * Save post layout meta values.
+ *
+ * @param int $post_id Post ID.
+ */
+function clrthm_save_post_layout_meta( $post_id ) {
+	if ( ! isset( $_POST['clrthm_post_layout_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['clrthm_post_layout_nonce'] ) ), 'clrthm_save_post_layout' ) ) {
+		return;
+	}
+
+	if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
+		return;
+	}
+
+	if ( 'post' !== get_post_type( $post_id ) ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+
+	$allowed_widths    = array_keys( clrthm_get_featured_image_width_choices() );
+	$allowed_positions = array_keys( clrthm_get_featured_image_position_choices() );
+
+	if ( isset( $_POST['clrthm_featured_image_width'] ) ) {
+		$width = sanitize_key( wp_unslash( $_POST['clrthm_featured_image_width'] ) );
+		if ( in_array( $width, $allowed_widths, true ) ) {
+			update_post_meta( $post_id, '_clrthm_featured_image_width', $width );
+		}
+	}
+
+	if ( isset( $_POST['clrthm_featured_image_position'] ) ) {
+		$position = sanitize_key( wp_unslash( $_POST['clrthm_featured_image_position'] ) );
+		if ( in_array( $position, $allowed_positions, true ) ) {
+			update_post_meta( $post_id, '_clrthm_featured_image_position', $position );
+		}
+	}
+}
+add_action( 'save_post', 'clrthm_save_post_layout_meta' );
+
+/**
  * Get single layout class.
  *
  * @param int $post_id Post ID.
@@ -428,18 +583,14 @@ function clrthm_get_layout_control_tag_slugs() {
  */
 function clrthm_get_single_layout_class( $post_id ) {
 	$post_id = absint( $post_id );
+	$width   = clrthm_get_featured_image_width( $post_id );
+	$pos     = clrthm_get_featured_image_position( $post_id );
 
-	if ( has_tag( 'layout-left-image', $post_id ) ) {
-		return 'single-layout--left-image';
-	}
-	if ( has_tag( 'layout-right-image', $post_id ) ) {
-		return 'single-layout--right-image';
-	}
-	if ( has_tag( 'layout-full-width-image', $post_id ) || has_post_thumbnail( $post_id ) ) {
-		return 'single-layout--full-width-image';
+	if ( ! has_post_thumbnail( $post_id ) ) {
+		return 'single-featured-position--' . sanitize_html_class( $pos );
 	}
 
-	return 'single-layout--text-first';
+	return sprintf( 'single-featured-width--%1$s single-featured-position--%2$s', sanitize_html_class( $width ), sanitize_html_class( $pos ) );
 }
 
 /**
