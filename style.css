@@ -449,13 +449,13 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 }
 
 /* Single posts */
-.single-entry { display: grid; gap: var(--clrthm-space-2xl); }
+.single-entry { display: grid; gap: var(--clrthm-space-xl); }
 .single-hero {
 	display: grid;
-	gap: var(--clrthm-space-lg);
+	gap: var(--clrthm-space-md);
 	background: var(--clrthm-surface);
 	border: 0;
-	padding: clamp(0.5rem, 1.6vw, 1.25rem) 0;
+	padding: clamp(0.25rem, 1.2vw, 0.75rem) 0;
 }
 .single-layout--left-image .single-hero,
 .single-layout--right-image .single-hero { align-items: center; }
@@ -464,15 +464,21 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 .single-hero__tax,
 .single-hero__meta { margin: 0; color: var(--clrthm-muted); font-size: 0.95rem; }
 .single-hero__excerpt { max-width: var(--clrthm-title-width); }
-.single-hero__content { text-align: left; }
+.single-hero__content {
+	width: min(100%, var(--clrthm-reading-width));
+	margin-inline: auto;
+	text-align: left;
+}
 .single-hero__excerpt p { margin-bottom: 0; }
 .single-hero__media {
 	aspect-ratio: 495 / 323;
 	width: 100%;
 	max-height: 646px;
+	margin: 0;
 	margin-inline: auto;
 	overflow: hidden;
-	border-radius: var(--clrthm-radius-md);
+	border-radius: var(--clrthm-radius-lg);
+	isolation: isolate;
 }
 .single-hero__media img {
 	display: block;
@@ -511,7 +517,7 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 .single-entry .entry-content {
 	background: var(--clrthm-surface);
 	border: 0;
-	padding: clamp(0.5rem, 1vw, 1rem) 0 0;
+	padding: 0;
 	font-size: var(--clrthm-type-body);
 	line-height: 1.76;
 }
@@ -577,6 +583,11 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 .single-layout--full-width-image .entry-content { background: var(--clrthm-surface); border: 0; }
 .single-layout--full-width-image .single-hero__media img {
 	max-height: min(62vh, 34rem);
+}
+.single-layout--left-image .single-hero__content,
+.single-layout--right-image .single-hero__content {
+	width: auto;
+	margin-inline: 0;
 }
 .single-layout--text-first .single-hero {
 	padding-top: 0;
@@ -738,7 +749,6 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	gap: var(--clrthm-space-md);
 	margin-top: 1.5rem;
 }
-.post-modified { margin: var(--clrthm-space-xs) 0 0; font-size: var(--clrthm-type-small); color: var(--clrthm-muted); }
 .search-results-summary { margin-bottom: var(--clrthm-space-xl); }
 .comment-list { padding-left: 1.3rem; }
 .comments-navigation { margin: var(--clrthm-space-md) 0; }
