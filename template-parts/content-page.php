@@ -4,6 +4,7 @@
  *
  * @package Clear
  */
+
 ?>
 <article <?php post_class( 'page-entry' ); ?> id="post-<?php the_ID(); ?>">
 	<header class="page-entry__header">
