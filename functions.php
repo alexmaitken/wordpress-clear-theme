@@ -25,7 +25,7 @@ if ( ! function_exists( 'clrthm_setup' ) ) {
 		add_theme_support(
 			'custom-logo',
 			array(
-				'height' => 120,
+				'height'      => 120,
 				'width'       => 320,
 				'flex-height' => true,
 				'flex-width'  => true,
