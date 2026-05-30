@@ -1093,10 +1093,11 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 }
 .post-list__meta,
 .post-list__tax {
-	margin: 0;
 	font-size: var(--clrthm-type-small);
 	color: var(--clrthm-muted);
 }
+.post-list__meta { margin: 0; }
+.post-list__tax { margin: var(--clrthm-space-sm) 0 0; }
 .post-list__tax a,
 .single-hero__tax a {
 	color: inherit;
