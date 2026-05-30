@@ -1,6 +1,6 @@
 {
   "name": "clear-theme-assets",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "private": true,
   "description": "CSS quality checks for the Clear WordPress theme.",
   "scripts": {
