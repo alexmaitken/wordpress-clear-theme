@@ -907,12 +907,17 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	}
 }
 @media (min-width: 62rem) {
-	.single-featured-position--left .single-hero,
+	.single-featured-position--left .single-hero {
+		grid-template-columns: minmax(14rem, clamp(16rem, 34vw, 24rem)) minmax(0, 1fr);
+		column-gap: clamp(1rem, 2.5vw, 2rem);
+	}
 	.single-featured-position--right .single-hero {
 		grid-template-columns: minmax(0, 1fr) minmax(14rem, clamp(16rem, 34vw, 24rem));
 		column-gap: clamp(1rem, 2.5vw, 2rem);
 	}
-	.single-featured-position--left.single-featured-width--content .single-hero,
+	.single-featured-position--left.single-featured-width--content .single-hero {
+		grid-template-columns: minmax(12rem, clamp(13rem, 32vw, 19rem)) minmax(0, 1fr);
+	}
 	.single-featured-position--right.single-featured-width--content .single-hero {
 		grid-template-columns: minmax(0, 1fr) minmax(12rem, clamp(13rem, 32vw, 19rem));
 	}
