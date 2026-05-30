@@ -522,8 +522,9 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 .single-featured-position--above.single-featured-width--full .single-hero__media {
 	width: min(100vw - clamp(1rem, 4vw, 2.5rem), calc(var(--clrthm-content-width) + 10rem));
 	max-width: none;
-	margin-left: 50%;
-	transform: translateX(-50%);
+	justify-self: center;
+	margin-inline: auto;
+	transform: none;
 	border-radius: clamp(0.25rem, 0.8vw, var(--clrthm-radius-md));
 }
 .single-featured-position--left .single-hero__media,
