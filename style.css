@@ -485,7 +485,8 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	gap: var(--clrthm-space-md);
 	background: var(--clrthm-surface);
 	border: 0;
-	padding: clamp(0.25rem, 1.2vw, 0.75rem) 0;
+	border-radius: var(--clrthm-radius-lg);
+	padding: clamp(0.75rem, 2vw, 1.5rem);
 }
 .single-featured-position--left .single-hero,
 .single-featured-position--right .single-hero {
