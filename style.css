@@ -485,7 +485,8 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	gap: var(--clrthm-space-md);
 	background: var(--clrthm-surface);
 	border: 0;
-	padding: clamp(0.25rem, 1.2vw, 0.75rem) 0;
+	border-radius: var(--clrthm-radius-lg);
+	padding: clamp(0.75rem, 2vw, 1.5rem);
 }
 .single-featured-position--left .single-hero,
 .single-featured-position--right .single-hero {
@@ -526,6 +527,10 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	margin-left: 50%;
 	transform: translateX(-50%);
 	border-radius: 0;
+	justify-self: center;
+	margin-inline: auto;
+	transform: none;
+	border-radius: clamp(0.25rem, 0.8vw, var(--clrthm-radius-md));
 }
 .single-featured-position--left .single-hero__media,
 .single-featured-position--right .single-hero__media {
@@ -908,12 +913,17 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	}
 }
 @media (min-width: 62rem) {
-	.single-featured-position--left .single-hero,
+	.single-featured-position--left .single-hero {
+		grid-template-columns: minmax(14rem, clamp(16rem, 34vw, 24rem)) minmax(0, 1fr);
+		column-gap: clamp(1rem, 2.5vw, 2rem);
+	}
 	.single-featured-position--right .single-hero {
 		grid-template-columns: minmax(0, 1fr) minmax(14rem, clamp(16rem, 34vw, 24rem));
 		column-gap: clamp(1rem, 2.5vw, 2rem);
 	}
-	.single-featured-position--left.single-featured-width--content .single-hero,
+	.single-featured-position--left.single-featured-width--content .single-hero {
+		grid-template-columns: minmax(12rem, clamp(13rem, 32vw, 19rem)) minmax(0, 1fr);
+	}
 	.single-featured-position--right.single-featured-width--content .single-hero {
 		grid-template-columns: minmax(0, 1fr) minmax(12rem, clamp(13rem, 32vw, 19rem));
 	}
