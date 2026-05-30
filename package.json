@@ -1,0 +1,13 @@
+{
+  "name": "clear-theme-assets",
+  "version": "1.4.3",
+  "private": true,
+  "description": "CSS quality checks for the Clear WordPress theme.",
+  "scripts": {
+    "css:lint": "stylelint \"style.css\" \"assets/css/**/*.css\"",
+    "test": "npm run css:lint"
+  },
+  "devDependencies": {
+    "stylelint": "^16.19.1"
+  }
+}
