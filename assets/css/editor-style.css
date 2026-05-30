@@ -3,18 +3,23 @@
 	--clrthm-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 	--clrthm-font-ui: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 	--clrthm-reading-width: 720px;
+	--clrthm-wide-width: 64rem;
 	--clrthm-type-body: clamp(1.05rem, 0.98rem + 0.24vw, 1.16rem);
 	--clrthm-type-caption: 0.9rem;
 	--clrthm-type-code: 0.95rem;
 	--clrthm-space-2xl: 2rem;
 	--clrthm-space-fluid: clamp(1rem, 2vw, 1.75rem);
 	--clrthm-radius-sm: 0.35rem;
+	--clrthm-radius-pill: 999px;
 	--clrthm-bg: #ffffff;
 	--clrthm-surface: #ffffff;
 	--clrthm-text: #181818;
 	--clrthm-muted: #555;
 	--clrthm-excerpt: #242424;
 	--clrthm-border: #dfdfdf;
+	--clrthm-code-bg: #f4f6f8;
+	--clrthm-pre-bg: #f7f8fa;
+	--clrthm-table-header-bg: #fafafa;
 	--clrthm-focus: #0a66d1;
 	--clrthm-accent: #0a66d1;
 
@@ -44,7 +49,7 @@
 
 .editor-styles-wrapper .wp-block[data-align='wide'],
 .editor-styles-wrapper .wp-block.alignwide {
-	max-width: 64rem;
+	max-width: var(--clrthm-wide-width);
 }
 
 .editor-styles-wrapper .wp-block[data-align='full'],
@@ -113,7 +118,7 @@
 .editor-styles-wrapper .wp-block-button__link,
 .editor-styles-wrapper button {
 	border: 1px solid var(--clrthm-border);
-	border-radius: 999px;
+	border-radius: var(--clrthm-radius-pill);
 	padding: 0.45rem 0.9rem;
 	font-family: var(--clrthm-font-ui);
 	font-size: 0.95em;
@@ -150,7 +155,7 @@
 .editor-styles-wrapper samp {
 	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
 	font-size: var(--clrthm-type-code);
-	background: #f4f6f8;
+	background: var(--clrthm-code-bg);
 	padding: 0.08em 0.35em;
 	border-radius: 0.25rem;
 }
@@ -159,7 +164,7 @@
 	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
 	font-size: var(--clrthm-type-code);
 	line-height: 1.6;
-	background: #f7f8fa;
+	background: var(--clrthm-pre-bg);
 	padding: 1rem 1.1rem;
 	border-radius: var(--clrthm-radius-sm);
 	overflow-x: auto;
@@ -185,7 +190,7 @@
 
 .editor-styles-wrapper th {
 	font-weight: 600;
-	background: #fafafa;
+	background: var(--clrthm-table-header-bg);
 }
 
 .editor-styles-wrapper figure {
@@ -232,7 +237,7 @@ body.post-type-page .editor-styles-wrapper .wp-block-buttons {
 
 body.post-type-page .editor-styles-wrapper .wp-block-button__link,
 body.post-type-page .editor-styles-wrapper .wp-element-button {
-	border-radius: 999px;
+	border-radius: var(--clrthm-radius-pill);
 	padding: 0.55rem 1.1rem;
 }
 
