@@ -104,6 +104,7 @@ body {
 	text-rendering: optimizelegibility;
 }
 img { max-width: 100%; height: auto; }
+h1, h2, h3, h4, h5, h6 { overflow-wrap: anywhere; }
 a {
 	color: var(--clrthm-accent);
 	text-underline-offset: 0.2em;
@@ -118,10 +119,11 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 .site-header,
 .site-main,
 .site-footer {
-	width: min(100% - var(--clrthm-space-2xl), var(--clrthm-content-width));
+	width: min(calc(100% - var(--clrthm-space-2xl)), var(--clrthm-content-width));
+	max-width: 100%;
 	margin-inline: auto;
 }
-.site-main { padding: var(--clrthm-space-2xl) 0 var(--clrthm-space-section); }
+.site-main { padding: var(--clrthm-space-2xl) 0 var(--clrthm-space-section); min-width: 0; }
 .editorial-intro, .page-header { margin-bottom: var(--clrthm-space-2xl); }
 .editorial-intro p { color: var(--clrthm-muted); max-width: 55ch; }
 
@@ -289,6 +291,7 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 }
 .post-card--feature .post-card__media img,
 .post-card--feature .post-card__media--placeholder { aspect-ratio: 16 / 9; }
+.post-card__content { min-width: 0; }
 .post-card__title { margin: 0; line-height: 1.28; font-size: var(--clrthm-type-card-title); letter-spacing: -0.01em; }
 .post-card__excerpt {
 	display: -webkit-box;
@@ -530,6 +533,7 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 }
 .post-list__item:hover .post-list__thumb img,
 .post-list__item:focus-within .post-list__thumb img { transform: scale(var(--clrthm-media-zoom-scale)); }
+.post-list__content { min-width: 0; }
 .post-list__title {
 	margin: 0;
 	line-height: 1.3;
@@ -745,6 +749,9 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	font-size: 0.82em;
 }
 .single-entry .entry-content {
+	min-width: 0;
+	max-width: 100%;
+	overflow-wrap: break-word;
 	background: var(--clrthm-surface);
 	border: 0;
 	padding: 0;
@@ -757,11 +764,15 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 .page-entry {
 	display: grid;
 	gap: var(--clrthm-space-xl);
+	min-width: 0;
+	max-width: 100%;
 	padding: clamp(1rem, 2vw, 2rem) 0;
 }
 .page-entry__header,
 .page-entry__inner {
 	width: min(100%, var(--clrthm-reading-width));
+	max-width: 100%;
+	min-width: 0;
 	margin-inline: auto;
 }
 .page-entry__header .entry-title {
@@ -806,6 +817,9 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 
 /* Entry content */
 .entry-content {
+	min-width: 0;
+	max-width: 100%;
+	overflow-wrap: break-word;
 	background: var(--clrthm-surface);
 	border: 1px solid var(--clrthm-border);
 	padding: clamp(1rem, 2.4vw, 2rem);
@@ -818,6 +832,7 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 .single-featured-position--above .single-hero {
 	padding-top: 0;
 }
+.entry-content > * { max-width: 100%; }
 .entry-content > * + * { margin-top: 1.25em; }
 .entry-content h2,
 .entry-content h3,
@@ -901,7 +916,7 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	margin-top: 0.6rem;
 	line-height: 1.5;
 }
-.entry-content .alignwide { width: min(100vw - var(--clrthm-full-bleed-gutter), var(--clrthm-wide-width)); max-width: var(--clrthm-wide-width); margin-left: 50%; transform: translateX(-50%); }
+.entry-content .alignwide { width: min(calc(100vw - var(--clrthm-full-bleed-gutter)), var(--clrthm-wide-width)); max-width: min(calc(100vw - var(--clrthm-full-bleed-gutter)), var(--clrthm-wide-width)); margin-left: 50%; transform: translateX(-50%); }
 .entry-content .alignfull {
 	width: 100vw;
 	max-width: 100vw;
@@ -1062,9 +1077,11 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 		max-height: none;
 	}
 	.single-featured-position--above.single-featured-width--full .single-hero__media {
-		width: 100vw;
+		width: 100%;
+		max-width: 100%;
 		max-height: 68vh;
-		border-radius: 0;
+		margin-inline: auto;
+		border-radius: var(--clrthm-radius-lg);
 	}
 	.single-featured-position--above.single-featured-width--large .single-hero__media,
 	.single-featured-position--above.single-featured-width--content .single-hero__media {
@@ -1100,6 +1117,8 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 }
 @media (max-width: 40rem) {
 	.single-entry__inner,
+	.page-entry__header,
+	.page-entry__inner,
 	.single-entry .entry-content {
 		max-width: 100%;
 		min-width: 0;
