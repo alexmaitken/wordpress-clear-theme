@@ -5,11 +5,13 @@
  * @package Clear
  */
 
-$entry_id     = get_the_ID();
-$layout_class = clrthm_get_single_layout_class( $entry_id );
-$hero_image   = clrthm_should_render_featured_image( $entry_id ) ? clrthm_get_featured_image_html( $entry_id ) : '';
+$entry_id      = get_the_ID();
+$layout_class  = clrthm_get_single_layout_class( $entry_id );
+$hero_image    = clrthm_should_render_featured_image( $entry_id ) ? clrthm_get_featured_image_html( $entry_id ) : '';
+$header_class  = $hero_image ? 'page-entry--has-hero' : 'page-entry--no-hero';
+$article_class = trim( 'page-entry single-entry ' . $layout_class . ' ' . $header_class );
 ?>
-<article <?php post_class( 'page-entry single-entry ' . $layout_class ); ?> id="post-<?php the_ID(); ?>">
+<article <?php post_class( $article_class ); ?> id="post-<?php the_ID(); ?>">
 	<header class="page-entry__header single-hero">
 		<?php if ( $hero_image ) : ?>
 			<figure class="single-hero__media"><?php echo $hero_image; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></figure>
