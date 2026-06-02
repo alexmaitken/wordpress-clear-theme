@@ -1088,6 +1088,17 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 		width: 100%;
 	}
 }
+
+@media (min-width: 48rem) and (max-width: 63.9375rem) {
+	.featured-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		align-items: stretch;
+	}
+	.post-card--feature-hero,
+	.featured-grid .post-card--feature-tile:nth-of-type(2) { grid-column: auto; }
+	.featured-grid .post-card--feature-tile:nth-of-type(n+3) { grid-column: span 1; }
+}
+
 @media (min-width: 62rem) {
 	.single-featured-position--left .single-hero {
 		grid-template-columns: minmax(14rem, clamp(16rem, 34vw, 24rem)) minmax(0, 1fr);
