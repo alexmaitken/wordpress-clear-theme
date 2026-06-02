@@ -783,6 +783,11 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 	margin: 0;
 	max-width: var(--clrthm-title-width);
 }
+.page-entry--no-hero .page-entry__header {
+	background: transparent;
+	border-radius: 0;
+	padding: 0;
+}
 .page .entry-content {
 	background: transparent;
 	border: 0;
