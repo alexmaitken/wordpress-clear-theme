@@ -770,6 +770,30 @@ function clrthm_should_render_featured_image( $post_id ) {
 }
 
 /**
+ * Add a body class when an above-positioned featured image spans the viewport.
+ *
+ * @param string[] $classes Body classes.
+ * @return string[]
+ */
+function clrthm_add_full_width_featured_image_body_class( $classes ) {
+	if ( ! is_singular() ) {
+		return $classes;
+	}
+
+	$post_id = get_queried_object_id();
+	if (
+		clrthm_should_render_featured_image( $post_id ) &&
+		'full' === clrthm_get_featured_image_width( $post_id ) &&
+		'above' === clrthm_get_featured_image_position( $post_id )
+	) {
+		$classes[] = 'clrthm-full-width-featured-image';
+	}
+
+	return $classes;
+}
+add_filter( 'body_class', 'clrthm_add_full_width_featured_image_body_class' );
+
+/**
  * Get public terms html.
  *
  * @param int    $post_id  Post ID.
