@@ -826,6 +826,80 @@ function clrthm_get_featured_image_html( $post_id, $size = 'clrthm-single-hero' 
 }
 
 /**
+ * Get a concise description for social link previews.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function clrthm_get_social_description( $post_id ) {
+	$post_id     = absint( $post_id );
+	$description = wp_strip_all_tags( get_the_excerpt( $post_id ) );
+	$description = preg_replace( '/\s+/', ' ', $description );
+	$description = trim( (string) $description );
+
+	if ( get_theme_mod( 'clrthm_show_reading_time', 1 ) ) {
+		$reading_time = clrthm_get_reading_time( $post_id );
+		$description  = $description ? $reading_time . ' — ' . $description : $reading_time;
+	}
+
+	/**
+	 * Filters the description used in social link previews.
+	 *
+	 * @param string $description Social preview description.
+	 * @param int    $post_id     Post ID.
+	 */
+	return (string) apply_filters( 'clrthm_social_description', $description, $post_id );
+}
+
+/**
+ * Output Open Graph and Twitter Card metadata for single posts.
+ */
+function clrthm_output_social_meta() {
+	if ( ! is_singular( 'post' ) || ! apply_filters( 'clrthm_enable_social_meta', true ) ) {
+		return;
+	}
+
+	$post_id     = get_queried_object_id();
+	$title       = wp_strip_all_tags( get_the_title( $post_id ) );
+	$description = clrthm_get_social_description( $post_id );
+	$url         = get_permalink( $post_id );
+	$image_id    = get_post_thumbnail_id( $post_id );
+	$image       = $image_id ? wp_get_attachment_image_src( $image_id, 'full' ) : false;
+	$image_alt   = $image_id ? trim( (string) get_post_meta( $image_id, '_wp_attachment_image_alt', true ) ) : '';
+
+	if ( '' === $image_alt ) {
+		$image_alt = $title;
+	}
+	?>
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="<?php echo esc_attr( $title ); ?>">
+	<meta property="og:url" content="<?php echo esc_url( $url ); ?>">
+	<meta property="og:site_name" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
+	<?php if ( $description ) : ?>
+		<meta property="og:description" content="<?php echo esc_attr( $description ); ?>">
+	<?php endif; ?>
+	<meta property="article:published_time" content="<?php echo esc_attr( get_post_time( DATE_W3C, true, $post_id ) ); ?>">
+	<meta property="article:modified_time" content="<?php echo esc_attr( get_post_modified_time( DATE_W3C, true, $post_id ) ); ?>">
+	<?php if ( $image ) : ?>
+		<meta property="og:image" content="<?php echo esc_url( $image[0] ); ?>">
+		<meta property="og:image:width" content="<?php echo esc_attr( $image[1] ); ?>">
+		<meta property="og:image:height" content="<?php echo esc_attr( $image[2] ); ?>">
+		<meta property="og:image:alt" content="<?php echo esc_attr( $image_alt ); ?>">
+	<?php endif; ?>
+	<meta name="twitter:card" content="<?php echo $image ? 'summary_large_image' : 'summary'; ?>">
+	<meta name="twitter:title" content="<?php echo esc_attr( $title ); ?>">
+	<?php if ( $description ) : ?>
+		<meta name="twitter:description" content="<?php echo esc_attr( $description ); ?>">
+	<?php endif; ?>
+	<?php if ( $image ) : ?>
+		<meta name="twitter:image" content="<?php echo esc_url( $image[0] ); ?>">
+		<meta name="twitter:image:alt" content="<?php echo esc_attr( $image_alt ); ?>">
+	<?php endif; ?>
+	<?php
+}
+add_action( 'wp_head', 'clrthm_output_social_meta', 20 );
+
+/**
  * Output lightweight JSON-LD for theme templates.
  */
 function clrthm_output_structured_data() {
