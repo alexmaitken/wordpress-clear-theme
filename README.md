@@ -83,6 +83,18 @@ Recommended tags/categories: use meaningful editorial taxonomy (for example, sec
 
 For best results, upload featured images at or above the largest target size.
 
+## Social link previews
+
+On single blog posts, Clear outputs Open Graph and Twitter Card metadata so services such as Slack can display the post title, reading time, excerpt, and featured image. Set a featured image and, for the most predictable preview text, add a manual excerpt to the post.
+
+Social metadata can be disabled when an SEO or social-sharing plugin already provides it:
+
+```php
+add_filter( 'clrthm_enable_social_meta', '__return_false' );
+```
+
+The preview description is also available through the `clrthm_social_description` filter.
+
 ## Local development
 
 ```bash
