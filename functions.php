@@ -415,6 +415,25 @@ function clrthm_customize_register( $wp_customize ) {
 			'description' => esc_html__( 'Optional. If empty, a default copyright line is shown.', 'clear-theme' ),
 		)
 	);
+
+	$wp_customize->add_setting(
+		'clrthm_social_fallback_image',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'esc_url_raw',
+		)
+	);
+	$wp_customize->add_control(
+		new WP_Customize_Image_Control(
+			$wp_customize,
+			'clrthm_social_fallback_image',
+			array(
+				'label'       => esc_html__( 'Social preview fallback image', 'clear-theme' ),
+				'section'     => 'clrthm_presentation',
+				'description' => esc_html__( 'Used for Open Graph and X/Twitter cards when a post or page has no featured image. Recommended size: 1200 × 627px.', 'clear-theme' ),
+			)
+		)
+	);
 }
 add_action( 'customize_register', 'clrthm_customize_register' );
 
@@ -850,21 +869,41 @@ function clrthm_get_featured_image_html( $post_id, $size = 'clrthm-single-hero' 
 }
 
 /**
+ * Determine whether the theme should output social metadata.
+ *
+ * @return bool
+ */
+function clrthm_should_output_social_meta() {
+	$seo_plugin_active = defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) || defined( 'AIOSEO_VERSION' );
+
+	/**
+	 * Filters whether the theme should output social link preview metadata.
+	 *
+	 * Disable this when another plugin is already managing Open Graph or Twitter Card tags.
+	 *
+	 * @param bool $enabled Whether social metadata should be output.
+	 */
+	return (bool) apply_filters( 'clrthm_enable_social_meta', ! $seo_plugin_active );
+}
+
+/**
  * Get a concise description for social link previews.
  *
  * @param int $post_id Post ID.
  * @return string
  */
 function clrthm_get_social_description( $post_id ) {
-	$post_id     = absint( $post_id );
-	$description = wp_strip_all_tags( get_the_excerpt( $post_id ) );
+	$post_id = absint( $post_id );
+
+	if ( has_excerpt( $post_id ) ) {
+		$description = get_the_excerpt( $post_id );
+	} else {
+		$description = wp_trim_words( get_post_field( 'post_content', $post_id ), 30, '' );
+	}
+
+	$description = wp_strip_all_tags( strip_shortcodes( (string) $description ) );
 	$description = preg_replace( '/\s+/', ' ', $description );
 	$description = trim( (string) $description );
-
-	if ( get_theme_mod( 'clrthm_show_reading_time', 1 ) ) {
-		$reading_time = clrthm_get_reading_time( $post_id );
-		$description  = $description ? $reading_time . ' — ' . $description : $reading_time;
-	}
 
 	/**
 	 * Filters the description used in social link previews.
@@ -876,10 +915,33 @@ function clrthm_get_social_description( $post_id ) {
 }
 
 /**
- * Output Open Graph and Twitter Card metadata for single posts.
+ * Get the image URL used for social link previews.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function clrthm_get_social_image_url( $post_id ) {
+	$post_id  = absint( $post_id );
+	$image_id = get_post_thumbnail_id( $post_id );
+
+	if ( $image_id ) {
+		$image = wp_get_attachment_image_src( $image_id, 'full' );
+
+		if ( ! empty( $image[0] ) ) {
+			return $image[0];
+		}
+	}
+
+	$fallback_image = get_theme_mod( 'clrthm_social_fallback_image', '' );
+
+	return $fallback_image ? esc_url_raw( $fallback_image ) : '';
+}
+
+/**
+ * Output Open Graph and Twitter Card metadata for posts and pages.
  */
 function clrthm_output_social_meta() {
-	if ( ! is_singular( 'post' ) || ! apply_filters( 'clrthm_enable_social_meta', true ) ) {
+	if ( ! is_singular( array( 'post', 'page' ) ) || ! clrthm_should_output_social_meta() ) {
 		return;
 	}
 
@@ -887,37 +949,22 @@ function clrthm_output_social_meta() {
 	$title       = wp_strip_all_tags( get_the_title( $post_id ) );
 	$description = clrthm_get_social_description( $post_id );
 	$url         = get_permalink( $post_id );
-	$image_id    = get_post_thumbnail_id( $post_id );
-	$image       = $image_id ? wp_get_attachment_image_src( $image_id, 'full' ) : false;
-	$image_alt   = $image_id ? trim( (string) get_post_meta( $image_id, '_wp_attachment_image_alt', true ) ) : '';
-
-	if ( '' === $image_alt ) {
-		$image_alt = $title;
-	}
+	$image_url   = clrthm_get_social_image_url( $post_id );
+	$og_type     = is_singular( 'post' ) ? 'article' : 'website';
 	?>
-	<meta property="og:type" content="article">
+	<meta property="og:type" content="<?php echo esc_attr( $og_type ); ?>">
 	<meta property="og:title" content="<?php echo esc_attr( $title ); ?>">
+	<meta property="og:description" content="<?php echo esc_attr( $description ); ?>">
 	<meta property="og:url" content="<?php echo esc_url( $url ); ?>">
 	<meta property="og:site_name" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
-	<?php if ( $description ) : ?>
-		<meta property="og:description" content="<?php echo esc_attr( $description ); ?>">
+	<?php if ( $image_url ) : ?>
+		<meta property="og:image" content="<?php echo esc_url( $image_url ); ?>">
 	<?php endif; ?>
-	<meta property="article:published_time" content="<?php echo esc_attr( get_post_time( DATE_W3C, true, $post_id ) ); ?>">
-	<meta property="article:modified_time" content="<?php echo esc_attr( get_post_modified_time( DATE_W3C, true, $post_id ) ); ?>">
-	<?php if ( $image ) : ?>
-		<meta property="og:image" content="<?php echo esc_url( $image[0] ); ?>">
-		<meta property="og:image:width" content="<?php echo esc_attr( $image[1] ); ?>">
-		<meta property="og:image:height" content="<?php echo esc_attr( $image[2] ); ?>">
-		<meta property="og:image:alt" content="<?php echo esc_attr( $image_alt ); ?>">
-	<?php endif; ?>
-	<meta name="twitter:card" content="<?php echo $image ? 'summary_large_image' : 'summary'; ?>">
+	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="<?php echo esc_attr( $title ); ?>">
-	<?php if ( $description ) : ?>
-		<meta name="twitter:description" content="<?php echo esc_attr( $description ); ?>">
-	<?php endif; ?>
-	<?php if ( $image ) : ?>
-		<meta name="twitter:image" content="<?php echo esc_url( $image[0] ); ?>">
-		<meta name="twitter:image:alt" content="<?php echo esc_attr( $image_alt ); ?>">
+	<meta name="twitter:description" content="<?php echo esc_attr( $description ); ?>">
+	<?php if ( $image_url ) : ?>
+		<meta name="twitter:image" content="<?php echo esc_url( $image_url ); ?>">
 	<?php endif; ?>
 	<?php
 }
