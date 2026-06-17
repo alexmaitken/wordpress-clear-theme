@@ -945,7 +945,12 @@ function clrthm_output_social_meta() {
 		return;
 	}
 
-	$post_id     = get_queried_object_id();
+	$post_id = get_queried_object_id();
+
+	if ( $post_id && post_password_required( $post_id ) ) {
+		return;
+	}
+
 	$title       = wp_strip_all_tags( get_the_title( $post_id ) );
 	$description = clrthm_get_social_description( $post_id );
 	$url         = get_permalink( $post_id );
@@ -960,7 +965,7 @@ function clrthm_output_social_meta() {
 	<?php if ( $image_url ) : ?>
 		<meta property="og:image" content="<?php echo esc_url( $image_url ); ?>">
 	<?php endif; ?>
-	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:card" content="<?php echo esc_attr( $image_url ? 'summary_large_image' : 'summary' ); ?>">
 	<meta name="twitter:title" content="<?php echo esc_attr( $title ); ?>">
 	<meta name="twitter:description" content="<?php echo esc_attr( $description ); ?>">
 	<?php if ( $image_url ) : ?>
