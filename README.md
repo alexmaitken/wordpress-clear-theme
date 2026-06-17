@@ -22,6 +22,7 @@ In **Appearance → Customize → Theme Presentation**:
 - Link author names/avatars to author pages
 - Optional footer copyright text
 - Optional opt-in for Google-hosted Inter font
+- Social preview fallback image for Open Graph and X/Twitter cards
 
 ### Font strategy (privacy by default)
 
@@ -85,9 +86,13 @@ For best results, upload featured images at or above the largest target size.
 
 ## Social link previews
 
-On single blog posts, Clear outputs Open Graph and Twitter Card metadata so services such as Slack can display the post title, reading time, excerpt, and featured image. Set a featured image and, for the most predictable preview text, add a manual excerpt to the post.
+Clear outputs Open Graph and X/Twitter Card metadata for single posts and static pages when a dedicated SEO plugin is not already managing those tags. For best results, use preview images sized **1200 × 627px**.
 
-Social metadata can be disabled when an SEO or social-sharing plugin already provides it:
+To set the fallback preview image for posts or pages without a featured image, go to **Appearance → Customize → Theme Presentation → Social preview fallback image** and upload or select an image. Featured images take priority over the fallback image.
+
+To verify the rendered tags, open a post or page on the frontend, use your browser's **View Source** command, and search for `og:title`, `og:image`, and `twitter:card`.
+
+Social metadata can be disabled when another plugin already provides it:
 
 ```php
 add_filter( 'clrthm_enable_social_meta', '__return_false' );
