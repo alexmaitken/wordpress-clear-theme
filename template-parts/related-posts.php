@@ -56,6 +56,10 @@ if ( empty( $clrthm_related ) ) {
 			$related_title = get_the_title( $related_id );
 			?>
 			<article class="related-posts__item">
+			<article class="related-posts__item">
+				<?php
+				/* translators: %s: Post title */
+				?>
 				<a class="related-posts__media" href="<?php echo esc_url( get_permalink( $related_id ) ); ?>" aria-label="<?php echo esc_attr( sprintf( __( 'Read %s', 'clear-theme' ), $related_title ) ); ?>">
 					<?php if ( has_post_thumbnail( $related_id ) ) : ?>
 						<?php echo get_the_post_thumbnail( $related_id, 'clrthm-card' ); ?>
